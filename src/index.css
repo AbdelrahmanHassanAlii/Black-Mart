@@ -7,6 +7,8 @@
   --white-color: rgb(255, 255, 255);
   --red-color-100: rgb(255, 51, 51);
   --red-color-10: rgb(255, 51, 51, 0.1);
+  --red-color-hover: rgb(224, 117, 117);
+  --red-color-2: rgb(219, 68, 68);
   --black-color-100: rgb(0, 0, 0);
   --black-color-10: rgb(0, 0, 0, 0.1);
   --black-color-40: rgb(0, 0, 0, 0.4);
@@ -16,6 +18,19 @@
 
   /* Fonts */
   --font-satoshi: "Satoshi", sans-serif;
+
+  /* container */
+  --container-width-lg: 80%;
+  --container-width-md: 85%;
+  --container-width-sm: 90%;
+  --container-margin: 0 auto;
+
+  /* box shadow */
+  --box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  --box-shadow-hover: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  /* transition */
+  --transition: all 0.3s ease;
 }
 
 * {
@@ -27,3 +42,30 @@
 body {
   font-family: var(--font-satoshi);
 }
+
+/* Shared */
+
+/* start title */
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.title::before {
+  content: "";
+  display: inline-block;
+  width: 0.7rem;
+  height: 100%;
+  background-color: var(--yellow-color);
+  position: absolute;
+  top: 0;
+  left: -1.5rem;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+
+/* end title */

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CategoryCard from "./CategoryCard";
-import { useEffect } from "react";
 import { getAllCategories } from "../../../Helper/Apis/Shared/Category/getAllCategories";
+import style from "../../../assets/CSS/Shared/CategoriesContainer.module.css";
 
 export default function CategoryContainer() {
   const [categories, setCategories] = useState([]);
@@ -13,11 +13,23 @@ export default function CategoryContainer() {
     };
     getCategories();
   }, []);
+
   return (
-    <div className="category-container">
-      {categories.map((category, index) => (
-        <CategoryCard key={index} image={category.img} name={category.name} />
-      ))}
+    <div className={style.Categories}>
+      <p className="title">Categories</p>
+      {categories.length > 0 ? (
+        <div className={style.categoriesCardsContainer}>
+          {categories.map((category, index) => (
+            <CategoryCard
+              key={index}
+              image={category.img}
+              name={category.name}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className={style.loading}>Loading...</p>
+      )}
     </div>
   );
 }
