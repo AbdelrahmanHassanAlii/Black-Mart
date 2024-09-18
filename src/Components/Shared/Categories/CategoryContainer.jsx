@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CategoryCard from "./CategoryCard";
 import { getAllCategories } from "../../../Helper/Apis/Shared/Category/getAllCategories";
 import style from "../../../assets/CSS/Shared/CategoriesContainer.module.css";
+import Loading from "../Loaders/Loading";
 
 export default function CategoryContainer() {
   const [categories, setCategories] = useState([]);
@@ -11,7 +12,10 @@ export default function CategoryContainer() {
       let categoriesData = await getAllCategories();
       setCategories(categoriesData.data.categories);
     };
-    getCategories();
+    setTimeout(() => {
+      getCategories();
+    }, 3000);
+    // getCategories();
   }, []);
 
   return (
@@ -28,7 +32,7 @@ export default function CategoryContainer() {
           ))}
         </div>
       ) : (
-        <p className={style.loading}>Loading...</p>
+        <Loading />
       )}
     </div>
   );
