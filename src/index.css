@@ -1,1 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;800;900&display=swap");
 
+:root {
+  /* Colors */
+  --gray-color: rgb(240, 238, 237);
+  --gray-color-2: rgb(240, 240, 240);
+  --white-color: rgb(255, 255, 255);
+  --red-color-100: rgb(255, 51, 51);
+  --red-color-10: rgb(255, 51, 51, 0.1);
+  --black-color-100: rgb(0, 0, 0);
+  --black-color-10: rgb(0, 0, 0, 0.1);
+  --black-color-40: rgb(0, 0, 0, 0.4);
+  --black-color-60: rgb(0, 0, 0, 0.6);
+  --yellow-color: rgb(255, 198, 51);
+  --green-color-100: rgb(1, 171, 49);
+
+  /* Fonts */
+  --font-satoshi: "Satoshi", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-satoshi);
+}
