@@ -1,5 +1,4 @@
 import './App.css'
-import AddCategoryForm from './Components/Admin/AddCategoryForm'
 
 function App() {
 
