@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { addCategory } from "../../Helper/Apis/Admin/addCategory";
+import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 
 export default function AddCategoryForm() {
   const [category, setCategory] = useState({
