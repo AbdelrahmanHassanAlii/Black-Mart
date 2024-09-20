@@ -4,6 +4,8 @@ import SignUpForm from "../../Components/Shared/Auth/Signup";
 import SignInForm from "../../Components/Shared/Auth/Signin";
 import FormPanels from "../../Components/Shared/Auth/FormPanels";
 
+import "../../assets/CSS/Shared/sign.css";
+
 export default function Sign() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
 

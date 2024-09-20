@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
+import SignSVG from "../../../assets/SVGs/Sign up-rafiki.svg";
+import LoginSVG from "../../../assets/SVGs/Forgot password-rafiki.svg";
 export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
   return (
     <div className="panels-container">
@@ -19,7 +21,8 @@ export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
           </button>
         </div>
         <img
-          src="https://i.ibb.co/6HXL6q1/Privacy-policy-rafiki.png"
+          // src="https://i.ibb.co/6HXL6q1/Privacy-policy-rafiki.png"
+          src={LoginSVG}
           className="image"
           alt=""
         />
@@ -40,7 +43,8 @@ export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
           </button>
         </div>
         <img
-          src="https://i.ibb.co/nP8H853/Mobile-login-rafiki.png"
+          // src="https://i.ibb.co/nP8H853/Mobile-login-rafiki.png"
+          src={SignSVG}
           className="image"
           alt=""
         />

@@ -2,6 +2,10 @@
 // Components/SignInForm.js
 export default function SignInForm() {
 
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+    };
+
   return (
     <form action="#" className="sign-in-form" onSubmit={handleFormSubmit}>
       <h2 className="title">Sign in</h2>
