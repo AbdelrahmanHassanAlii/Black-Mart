@@ -1,7 +1,7 @@
 .signContainer {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--white-color);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -49,14 +49,14 @@
 
 .signContainer .form-title {
   font-size: 2.2rem;
-  color: black;
+  color: var(--black-color-100);
   margin-bottom: 10px;
 }
 
 .signContainer .input-field {
   max-width: 380px;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: var(--gray-color);
   margin: 10px 0;
   height: 55px;
   border-radius: 5px;
@@ -69,7 +69,7 @@
 .signContainer .input-field i {
   text-align: center;
   line-height: 55px;
-  color: #acacac;
+  color: var(--gray-color-3);
   transition: 0.5s;
   font-size: 1.1rem;
 }
@@ -81,11 +81,11 @@
   line-height: 1;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--gray-color-2);
 }
 
 .signContainer .input-field input::placeholder {
-  color: #aaa;
+  color: var(--gray-color-3);
   font-weight: 500;
 }
 
@@ -121,12 +121,12 @@
 
 .signContainer .btn {
   width: 150px;
-  background-color: black;
+  background-color: var(--black-color-100);
   border: none;
   outline: none;
   height: 49px;
   border-radius: 4px;
-  color: #fff;
+  color: var(--white-color);
   text-transform: uppercase;
   font-weight: 600;
   margin: 10px 0;
@@ -135,8 +135,8 @@
 }
 
 .signContainer .btn:hover {
-  background-color: #000000;
-  color: white;
+  background-color: var(--black-color-100);
+  color: var(--white-color);
 }
 .signContainer .panels-container {
   position: absolute;
@@ -156,8 +156,6 @@
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  /* background-image: linear-gradient(-45deg, black 0%, #008dda 100%);
-   */
   background-image: linear-gradient(
     -45deg,
     var(--black-color-10) 0%,
@@ -194,7 +192,7 @@
 }
 
 .signContainer .panel .content {
-  color: #fff;
+  color: var(--white-color);
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
@@ -215,14 +213,18 @@
 .signContainer .btn.transparent {
   margin: 0;
   background: none;
-  border: 2px solid #fff;
+  border: 2px solid var(--white-color);
   width: 130px;
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
-
+.signContainer .btn.transparent:hover {
+  background-color: var(--yellow-color);
+  color: var(--white-color);
+  border-color: var(--yellow-color);
+}
 
 .signContainer .right-panel .image,
 .signContainer .right-panel .content {
@@ -398,12 +400,12 @@
 }
 
 .error {
-  color: red;
+  color: var(--red-color-100);
 }
 
 .error.backEndError {
-  color: red;
-  background-color: rgba(255, 0, 0, 0.148);
+  color: var(--red-color-100);
+  background-color: var(--red-color-10);
   padding: 5px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
