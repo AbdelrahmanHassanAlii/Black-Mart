@@ -19,7 +19,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   left: 75%;
-  width: 50%;
+  width: 100%;
   transition: 1s 0.7s ease-in-out;
   display: grid;
   grid-template-columns: 1fr;
@@ -36,15 +36,19 @@
   overflow: hidden;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+  width: 100%;
 }
 
 .signContainer form.sign-up-form {
   opacity: 0;
   z-index: 1;
+  width: 100%;
 }
 
 .signContainer form.sign-in-form {
+  width: 100%;
   z-index: 2;
+  width: 100%;
 }
 
 .signContainer .form-title {
@@ -82,9 +86,14 @@
 }
 
 .input-field.email .right {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--gray-color-3);
   font-weight: bold;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
 }
 
 .signContainer .input-field i {
@@ -93,6 +102,14 @@
   color: var(--gray-color-3);
   transition: 0.5s;
   font-size: 1.1rem;
+}
+
+.signContainer .input-field:has(input:focus) i {
+  color: var(--yellow-color);
+}
+
+.signContainer .input-field:has(input:focus) .right {
+  color: var(--black-color-60);
 }
 
 .signContainer .input-field input {
@@ -156,7 +173,7 @@
 }
 
 .signContainer .btn:hover {
-  background-color: var(--black-color-100);
+  background-color: var(--yellow-color);
   color: var(--white-color);
 }
 .signContainer .panels-container {

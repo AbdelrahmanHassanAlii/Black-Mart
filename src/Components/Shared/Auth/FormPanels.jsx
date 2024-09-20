@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import SignSVG from "../../../assets/SVGs/Sign up-rafiki.svg";
+import SignSVG from "../../../assets/SVGs/Mobile login-rafiki.svg";
 import LoginSVG from "../../../assets/SVGs/Forgot password-rafiki.svg";
 export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
   return (
