@@ -1,4 +1,5 @@
 import "./App.css";
+<<<<<<< HEAD
 import "./index.css"
 import CategoryContainer from './Components/Shared/Categories/CategoryContainer';
 import Footer from "./Components/Shared/Footer/Footer";
@@ -23,6 +24,17 @@ function App() {
       <Topselling/>
       <Footer/>
     </div>
+=======
+import CategoryContainer from "./Components/Shared/Categories/CategoryContainer";
+import Sign from "./Pages/Shared/Sign";
+
+function App() {
+  return (
+    <>
+      {/* <h1>hello</h1> */}
+      <Sign />
+    </>
+>>>>>>> 8b34033c77a2e389ff5d5203fcba17a276dd1346
   );
 }
 

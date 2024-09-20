@@ -6,7 +6,8 @@
 :root {
   /* Colors */
   --gray-color: rgb(240, 238, 237);
-  --gray-color-2: rgb(240, 240, 240);
+  --gray-color-2: #333;
+  --gray-color-3: #aaa;
   --white-color: rgb(255, 255, 255);
   --red-color-100: rgb(255, 51, 51);
   --red-color-10: rgb(255, 51, 51, 0.1);
@@ -17,9 +18,14 @@
   --black-color-40: rgb(0, 0, 0, 0.4);
   --black-color-60: rgb(0, 0, 0, 0.6);
   --yellow-color: rgb(255, 198, 51);
+  --yellow-color-50: rgb(255, 198, 51, 0.5);
   --green-color-100: rgb(1, 171, 49);
   --blue-color: #299fff;
+<<<<<<< HEAD
   --photo-color:#f2f0f1
+=======
+  --blue-color-2: #008dda;
+>>>>>>> 8b34033c77a2e389ff5d5203fcba17a276dd1346
 
   /* Fonts */
   --font-satoshi: "Satoshi", sans-serif;
