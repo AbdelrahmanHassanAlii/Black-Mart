@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 export default function SignUpForm({ handleSignInClick }) {
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-    }
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+  };
   return (
     <form action="#" className="sign-up-form" onSubmit={handleFormSubmit}>
       <h2 className="form-title">Sign up</h2>
@@ -15,9 +15,12 @@ export default function SignUpForm({ handleSignInClick }) {
         <i className="fas fa-signature"></i>
         <input type="text" name="lastName" placeholder="Last Name" />
       </div>
-      <div className="input-field">
-        <i className="fas fa-envelope"></i>
-        <input type="email" name="email" placeholder="Email" />
+      <div className="input-field email">
+        <div className="left">
+          <i className="fas fa-envelope"></i>
+          <input type="text" name="email" placeholder="Email" />
+        </div>
+        <div className="right">@blackmart</div>
       </div>
       <div className="input-field">
         <i className="fas fa-lock"></i>
