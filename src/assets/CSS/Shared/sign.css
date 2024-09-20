@@ -66,6 +66,27 @@
   position: relative;
 }
 
+.input-field.email {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  align-items: center;
+}
+
+.input-field.email .left {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.input-field.email .left input {
+  width: 70%;
+}
+
+.input-field.email .right {
+  font-size: 15px;
+  color: var(--gray-color-3);
+  font-weight: bold;
+}
+
 .signContainer .input-field i {
   text-align: center;
   line-height: 55px;
