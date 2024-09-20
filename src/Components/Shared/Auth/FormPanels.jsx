@@ -29,7 +29,7 @@ export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
       </div>
       <div className="panel right-panel">
         <div className="content">
-          <h3>Black Mart</h3>
+          <h3 className="">Black Mart</h3>
           <p>
             Thank you for being part of our System. Your presence enriches our
             shared experiences. Let's continue this journey together!

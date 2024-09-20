@@ -47,7 +47,7 @@
   z-index: 2;
 }
 
-.signContainer .title {
+.signContainer .form-title {
   font-size: 2.2rem;
   color: black;
   margin-bottom: 10px;
@@ -203,11 +203,13 @@
   font-weight: 600;
   line-height: 1;
   font-size: 1.5rem;
+  color: var(--yellow-color);
 }
 
 .signContainer .panel p {
   font-size: 0.95rem;
   padding: 0.7rem 0;
+  color: var(--black-color-60);
 }
 
 .signContainer .btn.transparent {
@@ -219,6 +221,8 @@
   font-weight: 600;
   font-size: 0.8rem;
 }
+
+
 
 .signContainer .right-panel .image,
 .signContainer .right-panel .content {
