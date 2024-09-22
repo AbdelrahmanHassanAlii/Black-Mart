@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
-
 import { SiNamecheap } from "react-icons/si";
+import Swal from "sweetalert2"; // Import sweetalert2
 
 export default function AddCategoryForm() {
   const [errors, setErrors] = useState({
@@ -71,19 +71,47 @@ export default function AddCategoryForm() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("name", category.name);
-    formData.append("img", category.img);
+    // SweetAlert confirmation before proceeding
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to add this category?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(255, 198, 51)",
+      cancelButtonColor: "rgb(255, 51, 51)",
+      confirmButtonText: "Yes, add it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const formData = new FormData();
+        formData.append("name", category.name);
+        formData.append("img", category.img);
 
-    try {
-      const response = await addCategory(formData);
-      console.log(response);
-    } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        backEndError: "An error occurred while adding the category.",
-      }));
-    }
+        try {
+          const response = await addCategory(formData);
+          console.log(response);
+
+          // SweetAlert success message
+          Swal.fire({
+            title: "Added!",
+            text: "Category has been added successfully.",
+            icon: "success",
+            confirmButtonText: "OK",
+            confirmButtonColor: "rgb(255, 198, 51)",
+          });
+
+          setCategory({
+            name: "",
+            img: null,
+          });
+          setPreviewImage(null);
+        } catch (error) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            backEndError: "An error occurred while adding the category.",
+          }));
+        }
+      }
+    });
   };
 
   return (

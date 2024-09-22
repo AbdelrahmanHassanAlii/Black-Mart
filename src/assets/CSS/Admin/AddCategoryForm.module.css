@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.inputContainer {
+  margin-bottom: 10px;
+}
+
 .inputField {
   color: var(--gray-color-2);
   border-radius: 5px;

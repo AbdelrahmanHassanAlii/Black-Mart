@@ -5,6 +5,12 @@ export default function CategoryCard({ image, name }) {
     <div className={style.categoryCard}>
       <img className={style.image} src={image} alt={name} />
       <p className={style.name}>{name}</p>
+      <div className={
+        style.buttonsContainer
+      }>
+        <button className={`${style.button} ${style.updateButton}`}>Update</button>
+        <button className={`${style.button} ${style.deleteButton}`}>Delete</button>
+      </div>
     </div>
   );
 }

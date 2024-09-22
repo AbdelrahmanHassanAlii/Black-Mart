@@ -6,6 +6,7 @@ import Sign from "./Pages/Shared/Sign";
 import NewArrivals from "./Components/Shared/NewArrivals/NewArrivals";
 import Signupoffer from "./Components/Shared/Signupoffer/Signupoffer";
 import AddCategoryForm from "./Components/Admin/AddCategoryForm";
+import CategoryContainer from "./Components/Shared/Categories/CategoryContainer";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       {/* <Footer /> */}
       {/* <NewArrivals /> */}
       {/* <Signupoffer /> */}
-      <AddCategoryForm />
+      {/* <AddCategoryForm /> */}
+      <CategoryContainer />
     </>
   );
 }
