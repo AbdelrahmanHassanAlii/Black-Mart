@@ -20,6 +20,10 @@
   -o-transform: scale(1.01);
 }
 
+.categoryCard:hover .name {
+  color: var(--gray-color-2);
+}
+
 @media screen and (min-width: 630px) {
   .categoryCard {
     width: 48%;
@@ -33,10 +37,16 @@
 }
 
 .name {
-  color: #000000;
+  color: var(--gray-color-3);
   font-size: 1.2rem;
   text-align: center;
   margin-top: 0.5rem;
+  font-weight: bold;
+  transition: var(--transition);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
 }
 
 .image {
@@ -47,9 +57,10 @@
 
 .buttonsContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  margin-top: 1rem auto;
+  gap: 5px;
 }
 
 .buttonsContainer button {

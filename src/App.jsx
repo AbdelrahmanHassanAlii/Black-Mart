@@ -17,7 +17,7 @@ function App() {
       {/* <Footer /> */}
       {/* <NewArrivals /> */}
       {/* <Signupoffer /> */}
-      {/* <AddCategoryForm /> */}
+      <AddCategoryForm />
       <CategoryContainer />
     </>
   );

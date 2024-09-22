@@ -14,9 +14,9 @@ export default function CategoryContainer() {
     };
     setTimeout(() => {
       getCategories();
-    }, 3000);
+    }, 1000);
     // getCategories();
-  }, []);
+  }, [categories]);
 
   return (
     <div className={style.Categories}>
@@ -28,6 +28,7 @@ export default function CategoryContainer() {
               key={index}
               image={category.img}
               name={category.name}
+              id={category._id}
             />
           ))}
         </div>
