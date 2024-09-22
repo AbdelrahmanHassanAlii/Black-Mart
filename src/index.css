@@ -9,6 +9,7 @@
   --gray-color-2: #333;
   --gray-color-3: #aaa;
   --white-color: rgb(255, 255, 255);
+  --photo-color: #f2f0f1;
   --red-color-100: rgb(255, 51, 51);
   --red-color-10: rgb(255, 51, 51, 0.1);
   --red-color-hover: rgb(224, 117, 117);
@@ -18,10 +19,9 @@
   --black-color-40: rgb(0, 0, 0, 0.4);
   --black-color-60: rgb(0, 0, 0, 0.6);
   --yellow-color: rgb(255, 198, 51);
-  --yellow-color-50: rgb(255, 198, 51, 0.5);
+  --yellow-color-50: rgb(255, 198, 51, 0.1);
   --green-color-100: rgb(1, 171, 49);
   --blue-color: #299fff;
-  --photo-color:#f2f0f1
   --blue-color-2: #008dda;
 
   /* Fonts */
@@ -39,6 +39,10 @@
 
   /* transition */
   --transition: all 0.3s ease;
+
+  /* border radius */
+  --border-radius: 0.5rem;
+  --border-radius-2: 0.25rem;
 }
 
 * {
@@ -49,6 +53,12 @@
 
 body {
   font-family: var(--font-satoshi);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
 }
 
 /* Shared */
@@ -75,5 +85,28 @@ body {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
 }
-
 /* end title */
+
+/* add-btn  */
+.add-btn {
+  background-color: var(--blue-color);
+  color: var(--white-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-2);
+  cursor: pointer;
+  transition: var(--transition);
+  -webkit-border-radius: var(--border-radius-2);
+  -moz-border-radius: var(--border-radius-2);
+  -ms-border-radius: var(--border-radius-2);
+  -o-border-radius: var(--border-radius-2);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background-color: var(--blue-color-2);
+}
+/* add-btn */
