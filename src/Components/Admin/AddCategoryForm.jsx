@@ -4,6 +4,7 @@ import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
 import { SiNamecheap } from "react-icons/si";
 import Swal from "sweetalert2"; // Import sweetalert2
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 export default function AddCategoryForm() {
   const [errors, setErrors] = useState({
@@ -137,21 +138,30 @@ export default function AddCategoryForm() {
           {errors.name && <span className={style.error}>{errors.name}</span>}
         </div>
         <div className={style.inputContainer}>
-          <label htmlFor="image">Image</label>
-          <input
-            type="file"
-            name="image"
-            placeholder="Upload Image"
-            id="image"
-            onChange={handleChange}
-          />
+          <label className={style.customUpload} htmlFor="file">
+            <div className={style.icon}>
+              <FaCloudUploadAlt className={style.imageIcon} />
+            </div>
+            <div className={style.text}>
+              <p>Upload Image</p>
+            </div>
+            <input
+              className={style.fileInput}
+              type="file"
+              id="file"
+              name="image"
+              onChange={handleChange}
+            />
+          </label>
           {errors.img && <span className={style.error}>{errors.img}</span>}
         </div>
+
         {previewImage && (
           <div className={style.previewImage}>
-            <img src={previewImage} alt="Image Preview" style={{}} />
+            <img src={previewImage} alt="Image Preview" />
           </div>
         )}
+
         <button className="add-btn" type="submit">
           Add Category
         </button>

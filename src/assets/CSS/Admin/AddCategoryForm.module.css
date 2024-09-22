@@ -69,3 +69,16 @@
   width: 300px;
   object-fit: contain;
 }
+
+.imageIcon {
+  font-size: 100px;
+  color: var(--gray-color-3);
+}
+
+.fileInput {
+  display: none;
+}
+
+.customUpload {
+  cursor: pointer;
+}
