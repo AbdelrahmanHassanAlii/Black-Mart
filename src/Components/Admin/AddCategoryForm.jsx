@@ -4,7 +4,7 @@ import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
 import { SiNamecheap } from "react-icons/si";
 import Swal from "sweetalert2"; // Import sweetalert2
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { RiFileCloudLine } from "react-icons/ri";
 
 export default function AddCategoryForm() {
   const [errors, setErrors] = useState({
@@ -140,7 +140,7 @@ export default function AddCategoryForm() {
         <div className={style.inputContainer}>
           <label className={style.customUpload} htmlFor="file">
             <div className={style.icon}>
-              <FaCloudUploadAlt className={style.imageIcon} />
+              <RiFileCloudLine className={style.imageIcon} />
             </div>
             <div className={style.text}>
               <p>Upload Image</p>
