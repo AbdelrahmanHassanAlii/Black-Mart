@@ -61,6 +61,11 @@ button {
   outline: none;
 }
 
+/* a {
+  text-decoration: none;
+  color: var(--black-color-100);
+} */
+
 /* Shared */
 
 /* start title */

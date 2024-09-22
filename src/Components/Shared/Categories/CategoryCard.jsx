@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 import style from "../../../assets/CSS/Shared/CategoryCard.module.css";
 import { deleteCategory } from "../../../Helper/Apis/Admin/Category/deleteCategory";
 import Swal from "sweetalert2"; // Import SweetAlert
@@ -42,7 +43,7 @@ export default function CategoryCard({ image, name, id }) {
           className={`${style.button} ${style.updateButton}`}
           onClick={handleUpdate}
         >
-          Update
+          <Link to={`/admin/update-category/${id}`}>Update</Link>
         </button>
         <button
           className={`${style.button} ${style.deleteButton}`}

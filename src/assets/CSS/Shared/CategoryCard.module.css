@@ -76,8 +76,13 @@
   -ms-transition: var(--transition);
   -o-transition: var(--transition);
   margin: 20px auto;
-  color: var(--white-color);
+  color: var(--white-color) !important;
   font-size: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--white-color);
 }
 
 .updateButton {
