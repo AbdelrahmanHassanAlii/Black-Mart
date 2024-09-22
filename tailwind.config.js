@@ -41,6 +41,15 @@ export default {
         'container-md': '85%',
         'container-sm': '90%',
       },
+    dark:{
+      background: "black",
+      text:"white"
+    },
+    light:{
+      background: "white",
+      text:"black"
+    }
+
     },
   },
   plugins: [],
