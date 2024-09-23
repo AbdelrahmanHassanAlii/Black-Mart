@@ -11,6 +11,12 @@ export default function SignUpForm({ handleSignInClick }) {
     confirmPassword: "",
   });
 
+    const [errors, setErrors] = useState({
+      userName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
 
   const handleChange = (event) => {
@@ -20,7 +26,32 @@ export default function SignUpForm({ handleSignInClick }) {
     });
   };
 
+  const checkErrors = () => {
+    const { userName, email, password, confirmPassword } = userData;
+    const errors = {};
 
+    if (!userName) {
+      errors.userName = "User Name is required";
+    } else if (/^\d+$/.test(userName)) {
+      errors.userName = "User Name cannot contain only numbers";
+    }
+
+    if (!email) {
+      errors.email = "Email is required";
+    }
+
+    if (!password) {
+      errors.password = "Password is required";
+    }
+
+    if (!confirmPassword) {
+      errors.confirmPassword = "Confirm Password is required";
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(errors);
+  };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
