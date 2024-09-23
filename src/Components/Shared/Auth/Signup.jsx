@@ -11,18 +11,24 @@ export default function SignUpForm({ handleSignInClick }) {
     confirmPassword: "",
   });
 
-    const [errors, setErrors] = useState({
-      userName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-
+  const [errors, setErrors] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const handleChange = (event) => {
+    const { name, value } = event.target;
+    let updatedValue = value;
+
+    if (name === "email") {
+      updatedValue = value.toLowerCase().trim() + "@blackmart.com";
+    }
+
     setUserData({
       ...userData,
-      [event.target.name]: event.target.value,
+      [name]: updatedValue,
     });
   };
 
@@ -38,6 +44,8 @@ export default function SignUpForm({ handleSignInClick }) {
 
     if (!email) {
       errors.email = "Email is required";
+    }else if (/^\d+$/.test(email)) {
+      errors.email = "Email cannot contain only numbers";
     }
 
     if (!password) {
@@ -55,7 +63,10 @@ export default function SignUpForm({ handleSignInClick }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(userData);
+    checkErrors();
+    if (Object.keys(errors).length === 0) {
+      console.log(userData);
+    }
   };
   return (
     <form action="#" className="sign-up-form" onSubmit={handleFormSubmit}>
@@ -69,6 +80,7 @@ export default function SignUpForm({ handleSignInClick }) {
           onChange={handleChange}
         />
       </div>
+      {errors.userName && <p className="error">{errors.userName}</p>}
       <div className="input-field email">
         <div className="left">
           <i className="fas fa-envelope"></i>
@@ -81,6 +93,7 @@ export default function SignUpForm({ handleSignInClick }) {
         </div>
         <div className="right">@blackmart.com</div>
       </div>
+      {errors.email && <p className="error">{errors.email}</p>}
       <div className="input-field">
         <i className="fas fa-lock"></i>
         <input
@@ -90,6 +103,7 @@ export default function SignUpForm({ handleSignInClick }) {
           onChange={handleChange}
         />
       </div>
+      {errors.password && <p className="error">{errors.password}</p>}
       <div className="input-field">
         <i className="fas fa-lock"></i>
         <input
@@ -99,6 +113,9 @@ export default function SignUpForm({ handleSignInClick }) {
           onChange={handleChange}
         />
       </div>
+      {errors.confirmPassword && (
+        <p className="error">{errors.confirmPassword}</p>
+      )}
       <input
         type="submit"
         className="btn"
