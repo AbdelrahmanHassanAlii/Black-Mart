@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function ProductCard({ image, price, name }) {
   return (<div className='flex  items-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl ' >
     <div className="max-w-xs  overflow-hidden items rounded-2xl  bg-white">

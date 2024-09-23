@@ -4,6 +4,7 @@ import Loading from "../Loaders/Loading";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ProductPage from "./ProductPage";
+import Signupoffer from "../Signupoffer/Signupoffer";
 
 export default function ProductContainer() {
   const [Products, setProducts] = useState([]);
@@ -20,6 +21,7 @@ export default function ProductContainer() {
   console.log(Products)
   return (
     <div >
+      <Signupoffer/>
       <Header/>
       {Products.length > 0 ? (
         <div>

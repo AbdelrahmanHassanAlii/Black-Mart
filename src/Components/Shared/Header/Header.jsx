@@ -2,13 +2,20 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineMenu } from "react-icons/ai";
+import { useState } from "react";
 
 
-export default function Header() {
+export default function Header({setActive}) {
+  const[baractive,setbaractive]=useState(false)
+  const handleactive=()=>{
+    setbaractive(!baractive)
+    setActive(baractive)
+    console.log(baractive)
+  }
   return (
     <div className='flex flex-wrap sm:items-center sm:justify-around justify-between gap-1 sm:mt-9 mt-3 mb-3 items-start p-3'>
       <div className="flex  gap-2 items-center p-2">
-      <AiOutlineMenu className="text-2xl block sm:hidden font-extrabold" />
+      <AiOutlineMenu className="text-2xl block sm:hidden font-extrabold" onClick={handleactive}  />
       <h1 className="text-3xl md:text-4xl font-extrabold cursor-pointer ">BlackMart.</h1>
     </div>
     <select className="text-md p-1 w-full md:w-auto cursor-pointer sm:block hidden">

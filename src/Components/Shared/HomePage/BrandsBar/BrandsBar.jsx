@@ -1,8 +1,8 @@
 import { SiZara } from "react-icons/si";
-import vlogo from '../../../../public/Brands/Versace.jpg'
-import Glogo from '../../../../public/Brands/GUCCI.jpg'
-import Plogo from '../../../../public/Brands/PRADA.jpg'
-import Clogo from '../../../../public/Brands/CK.jpg'
+import vlogo from '../../../../../public/Brands/Versace.jpg'
+import Glogo from '/Brands/GUCCI.jpg'
+import Plogo from '/Brands/PRADA.jpg'
+import Clogo from '/Brands/CK.jpg'
 
 export default function BrandsBar() {
   return (

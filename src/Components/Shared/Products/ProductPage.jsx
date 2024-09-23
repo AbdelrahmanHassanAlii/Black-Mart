@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { GiSettingsKnobs } from "react-icons/gi";
 import ProductCard from "./ProductCard";
 import { FaCheck } from "react-icons/fa";
+import {addToCart} from "../../../Helper/Funcation/Addtocart"
 export default function ProductPage({
   image,
   name,
@@ -14,7 +15,12 @@ export default function ProductPage({
   description,
   price,
   quantity,
-}) {
+}){
+  const [data,setData]=useState({
+    color:"",
+    size:"",
+    quantity:0
+  })
   const [counter, setcounter] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [img, setImage] = useState(image);
@@ -28,6 +34,20 @@ export default function ProductPage({
   const handleColorClick = (color) => {
     setSelectedColor(color); // Set the selected color when clicked
   };
+  
+  const datahandler = (key, item) => {
+    setData((prevData) => ({
+      ...prevData,
+      [key]: item,
+    }));
+    
+  };
+  useEffect(()=>{
+    console.log(data)
+  },[data])
+  const sendDataHandler=()=>{
+    addToCart(data)
+  }
 
   return (
     <div className="flex flex-col sm:gap-5 justify-center ">
@@ -92,34 +112,24 @@ export default function ProductPage({
           <div className="flex flex-col gap-4 p-3">
             <p className="opacity-75">Select Colors</p>
             <div className="flex gap-3">
-              {/* Lime color */}
-              <div
-                className="relative rounded-full bg-lime-800 h-10 w-10 cursor-pointer"
-                onClick={() => handleColorClick("lime")}
-              >
-                {selectedColor === "lime" && (
-                  <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
-                )}
-              </div>
-              {/* Orange color */}
-              <div
-                className="relative rounded-full bg-orange-700 h-10 w-10 cursor-pointer"
-                onClick={() => handleColorClick("orange")}
-              >
-                {selectedColor === "orange" && (
-                  <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
-                )}
-              </div>
-              {/* Sky color */}
-              <div
-                className="relative rounded-full bg-sky-950 h-10 w-10 cursor-pointer"
-                onClick={() => handleColorClick("sky")}
-              >
-                {selectedColor === "sky" && (
-                  <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
-                )}
-              </div>
-            </div>
+                {[
+                  { name: "lime", bgColor: "bg-lime-800" },
+                  { name: "orange", bgColor: "bg-orange-700" },
+                  { name: "sky", bgColor: "bg-sky-950" },
+                ].map((color, index) => (
+                  <div
+                    key={index}
+                    className={`relative rounded-full h-10 w-10 cursor-pointer ${color.bgColor}`}
+                    onClick={() =>{ handleColorClick(color.name)
+                                    datahandler("color",color.name)}
+                    }
+                  >
+                    {selectedColor === color.name && (
+                      <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
+                    )}
+                  </div>
+                ))}
+          </div>
             {/*Choose Size part */}
             <div className="flex flex-col gap-4 p-3">
               <p className="opacity-75">Choose Size</p>
@@ -132,7 +142,10 @@ export default function ProductPage({
                         ? "bg-black text-white"
                         : "bg-slate-300 text-black"
                     }`}
-                    onClick={() => handleClick(size)}
+                    onClick={() => {handleClick(size)
+                      datahandler("size",size)}
+                      
+                  }
                   >
                     <span>{size}</span>
                   </div>
@@ -146,14 +159,17 @@ export default function ProductPage({
             <div className="flex gap-6">
               <div className=" rounded-full gap-7  items-center bg-slate-300 p-4 cursor-pointer flex">
                 <FaMinus
-                  onClick={() => counter > 0 && setcounter(counter - 1)}
+                  onClick={() => {counter > 0 && setcounter(counter - 1)
+                    datahandler("quantity",counter-1)
+                  }}
                 />
                 <p className="text-xl font-bold">{counter}</p>
-                <FaPlus onClick={() => setcounter(counter + 1)} />
+                <FaPlus onClick={() => {setcounter(counter + 1)
+                                        datahandler("quantity",counter+1)
+                }} />
               </div>
-              <div className=" rounded-full  bg-black text-xl text-center text-white w-72  p-4 cursor-pointer">
-                {" "}
-                Add to Cart{" "}
+              <div className=" rounded-full  bg-black text-xl text-center text-white w-72  p-4 cursor-pointer" onClick={sendDataHandler}>
+                Add to Cart
               </div>
             </div>
           </div>
@@ -237,4 +253,5 @@ export default function ProductPage({
       </div>
     </div>
   );
+
 }
