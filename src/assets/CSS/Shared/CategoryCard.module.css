@@ -57,10 +57,9 @@
 
 .buttonsContainer {
   display: flex;
-  justify-content: space-evenly;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .buttonsContainer button {
@@ -69,13 +68,13 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  width: 40%;
+  width: 45%;
   transition: var(--transition);
   -webkit-transition: var(--transition);
   -moz-transition: var(--transition);
   -ms-transition: var(--transition);
   -o-transition: var(--transition);
-  margin: 20px auto;
+  margin: 10px 0;
   color: var(--white-color) !important;
   font-size: 15px;
 }

@@ -72,7 +72,7 @@
 
 .input-field.email {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 60% 40%;
   align-items: center;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .input-field.email .left input {
-  width: 70%;
+  width: 95%;
 }
 
 .input-field.email .right {
