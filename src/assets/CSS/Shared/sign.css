@@ -439,6 +439,14 @@
 
 .error {
   color: var(--red-color-100);
+  background-color: var(--red-color-10);
+  padding: 5px 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  width: 300px;
 }
 
 .error.backEndError {

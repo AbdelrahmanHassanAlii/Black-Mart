@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react";
+import { signup } from "../../../Helper/Apis/User/Auth/Signup";
 
 /* eslint-disable no-unused-vars */
 export default function SignUpForm({ handleSignInClick }) {
@@ -20,11 +20,6 @@ export default function SignUpForm({ handleSignInClick }) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    let updatedValue = value;
-
-    if (name === "email") {
-      updatedValue = value.toLowerCase().trim() + "@blackmart.com";
-    }
 
     setUserData({
       ...userData,
@@ -32,45 +27,71 @@ export default function SignUpForm({ handleSignInClick }) {
     });
   };
 
-const checkErrors = () => {
-  const { username, email, password, confirmPassword } = userData;
-  const errors = {};
+  const checkErrors = () => {
+    const { username, email, password, confirmPassword } = userData;
+    const errors = {};
 
-  if (!username) {
-    errors.username = "User Name is required";
-  } else if (/^\d+$/.test(username)) {
-    errors.username = "User Name cannot contain only numbers";
-  }
+    if (!username) {
+      errors.username = "User Name is required";
+    } else if (/^\d+$/.test(username)) {
+      errors.username = "User Name cannot contain only numbers";
+    }
 
-  if (!email) {
-    errors.email = "Email is required";
-  } else if (/^\d+$/.test(email)) {
-    errors.email = "Email cannot contain only numbers";
-  }
+    if (!email) {
+      errors.email = "Email is required";
+    } else if (/^\d+$/.test(email)) {
+      errors.email = "Email cannot contain only numbers";
+    }
 
-  if (!password) {
-    errors.password = "Password is required";
-  }
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$/.test(
+        password
+      )
+    ) {
+      errors.password =
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+    }
 
-  if (!confirmPassword) {
-    errors.confirmPassword = "Confirm Password is required";
-  } else if (password !== confirmPassword) {
-    errors.confirmPassword = "Passwords do not match";
-  }
+    if (!confirmPassword) {
+      errors.confirmPassword = "Confirm Password is required";
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
 
-  return errors; 
-};
+    return errors;
+  };
 
-const handleFormSubmit = (event) => {
-  event.preventDefault();
+  const handleEmailRoute = (email) => {
+    if (!email.includes("@blackmart.com")) {
+      return email + "@blackmart.com";
+    }
+    return email;
+  };
 
-  const formErrors = checkErrors(); 
-  setErrors(formErrors);
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-  if (Object.keys(formErrors).length === 0) {
-    console.log(userData);
-  }
-};
+    const formErrors = checkErrors();
+    setErrors(formErrors);
+
+    if (Object.keys(formErrors).length === 0) {
+      const updatedUserData = {
+        ...userData,
+        email: handleEmailRoute(userData.email),
+      };
+
+      console.log(updatedUserData);
+
+      try {
+        const response = await signup(updatedUserData);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <form action="#" className="sign-up-form" onSubmit={handleFormSubmit}>
