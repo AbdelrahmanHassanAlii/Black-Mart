@@ -5,14 +5,14 @@ import { useState } from "react";
 /* eslint-disable no-unused-vars */
 export default function SignUpForm({ handleSignInClick }) {
   const [userData, setUserData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -28,46 +28,50 @@ export default function SignUpForm({ handleSignInClick }) {
 
     setUserData({
       ...userData,
-      [name]: updatedValue,
+      [name]: value,
     });
   };
 
-  const checkErrors = () => {
-    const { userName, email, password, confirmPassword } = userData;
-    const errors = {};
+const checkErrors = () => {
+  const { username, email, password, confirmPassword } = userData;
+  const errors = {};
 
-    if (!userName) {
-      errors.userName = "User Name is required";
-    } else if (/^\d+$/.test(userName)) {
-      errors.userName = "User Name cannot contain only numbers";
-    }
+  if (!username) {
+    errors.username = "User Name is required";
+  } else if (/^\d+$/.test(username)) {
+    errors.username = "User Name cannot contain only numbers";
+  }
 
-    if (!email) {
-      errors.email = "Email is required";
-    }else if (/^\d+$/.test(email)) {
-      errors.email = "Email cannot contain only numbers";
-    }
+  if (!email) {
+    errors.email = "Email is required";
+  } else if (/^\d+$/.test(email)) {
+    errors.email = "Email cannot contain only numbers";
+  }
 
-    if (!password) {
-      errors.password = "Password is required";
-    }
+  if (!password) {
+    errors.password = "Password is required";
+  }
 
-    if (!confirmPassword) {
-      errors.confirmPassword = "Confirm Password is required";
-    } else if (password !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-    }
+  if (!confirmPassword) {
+    errors.confirmPassword = "Confirm Password is required";
+  } else if (password !== confirmPassword) {
+    errors.confirmPassword = "Passwords do not match";
+  }
 
-    setErrors(errors);
-  };
+  return errors; 
+};
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    checkErrors();
-    if (Object.keys(errors).length === 0) {
-      console.log(userData);
-    }
-  };
+const handleFormSubmit = (event) => {
+  event.preventDefault();
+
+  const formErrors = checkErrors(); 
+  setErrors(formErrors);
+
+  if (Object.keys(formErrors).length === 0) {
+    console.log(userData);
+  }
+};
+
   return (
     <form action="#" className="sign-up-form" onSubmit={handleFormSubmit}>
       <h2 className="form-title">Sign up</h2>
@@ -75,12 +79,12 @@ export default function SignUpForm({ handleSignInClick }) {
         <i className="fas fa-signature"></i>
         <input
           type="text"
-          name="userName"
+          name="username"
           placeholder="User Name"
           onChange={handleChange}
         />
       </div>
-      {errors.userName && <p className="error">{errors.userName}</p>}
+      {errors.username && <p className="error">{errors.username}</p>}
       <div className="input-field email">
         <div className="left">
           <i className="fas fa-envelope"></i>
