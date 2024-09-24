@@ -17,10 +17,15 @@ export default function ProductPage({
   quantity,
 }){
   const [data,setData]=useState({
+    name:name,
     color:"",
     size:"",
-    quantity:0
+    quantity:0,
+    image:image,
+    price:price
+
   })
+  
   const [counter, setcounter] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [img, setImage] = useState(image);

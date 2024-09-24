@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 export default function Contentphoto() {
   return (
     <div className="relative bg-photocolor h-[30rem]  md:bg-[url('/Body/Body.jpg')] bg-cover sm:mb-0 mb-[19rem] bg-center sm:h-[30rem] md:h-[40rem] w-full">
@@ -11,7 +12,9 @@ export default function Contentphoto() {
       </p>
       </div>
       <div className="bg-black ml-4  sm:ml-0  text-white rounded-full mt-4 md:mt-5 p-3 md:p-4 w-72 md:w-40 cursor-pointer text-center hover:bg-opacity-75">
-        Shop Now
+        <Link to={`/Sign`}>
+       <span>Join Us Now</span> 
+        </Link>
       </div>
       <div className="flex flex-wrap ml-auto sm:flex-nowrap gap-4 justify-center sm:gap-6 bg-transparent mt-5 md:mt-6">
         <div className="flex flex-col gap-1 justify-start">
