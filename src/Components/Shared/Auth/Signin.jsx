@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signin } from "../../../Helper/Apis/Shared/Auth/Signin";
 
 // Components/SignInForm.js
 export default function SignInForm() {
@@ -44,7 +45,7 @@ export default function SignInForm() {
     return email;
   };
   
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     const formErrors = checkErroes();
@@ -56,6 +57,17 @@ export default function SignInForm() {
         email: handleEmailRoute(userData.email),
       };
       console.log(updatedUserData);
+
+      try {
+        const response = await signin(updatedUserData);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+        setErrors({
+          backEndErrors: "error in username or password",
+        });
+        console.log(error.response.data.message);
+      }
     }
   };
 
@@ -75,6 +87,7 @@ export default function SignInForm() {
         <input type="password" name="password" placeholder="Password" onChange={handleChange} value={userData.password} />
       </div>
       {errors.password && <p className="error">{errors.password}</p>}
+      {errors.backEndErrors && <p className="error">{errors.backEndErrors}</p>}
       <input type="submit" value="Login" className="btn solid" />
     </form>
   );
