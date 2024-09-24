@@ -107,8 +107,19 @@ export default function SignUpForm({ handleSignInClick }) {
           confirmButtonColor: "#299fff",
           confirmButtonText: " Go to Login",
         }).then(() => {
-          setUserData({});
-          setErrors({});
+          setUserData({
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+          setErrors({
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            backEndErrors: "",
+          });
           handleChangeToSignIn();
         })
 
