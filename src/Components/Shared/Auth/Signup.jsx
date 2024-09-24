@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { signup } from "../../../Helper/Apis/User/Auth/Signup";
+import { signup } from "../../../Helper/Apis/Shared/Auth/Signup";
 import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
