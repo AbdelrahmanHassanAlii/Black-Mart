@@ -7,4 +7,3 @@ export const getAllProducts = async () => {
 console.log(response)
   return response;
 };
-getAllProducts()

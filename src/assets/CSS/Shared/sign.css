@@ -439,6 +439,14 @@
 
 .error {
   color: var(--red-color-100);
+  background-color: var(--red-color-10);
+  padding: 5px 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  width: 300px;
 }
 
 .error.backEndError {
@@ -450,4 +458,26 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+}
+
+.hints{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hint{
+  color: var(--gray-color-3);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 5px;
+  background-color: var(--yellow-color-10);
+  padding: 5px 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  /* color: var(--yellow-color);     */
+
 }
