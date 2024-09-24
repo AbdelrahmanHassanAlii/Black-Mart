@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { signup } from "../../../Helper/Apis/User/Auth/Signup";
+import { Navigate } from "react-router-dom";
 
 /* eslint-disable no-unused-vars */
 export default function SignUpForm({ handleSignInClick }) {
@@ -51,7 +52,7 @@ export default function SignUpForm({ handleSignInClick }) {
       )
     ) {
       errors.password =
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+        "more than 8 characters, contain uppercase, lowercase, numbers and special character";
     }
 
     if (!confirmPassword) {
@@ -87,6 +88,7 @@ export default function SignUpForm({ handleSignInClick }) {
       try {
         const response = await signup(updatedUserData);
         console.log(response);
+        Navigate("/");
       } catch (error) {
         console.log(error);
       }
