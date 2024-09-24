@@ -6,7 +6,6 @@ import Header from "../Header/Header";
 export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
   return (
     <>
-    <Header/>
     <div className="panels-container sm:mt-20">
       <div className="panel left-panel">
         <div className="content">
