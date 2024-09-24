@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { signin } from "../../../Helper/Apis/Shared/Auth/Signin";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 // Components/SignInForm.js
 export default function SignInForm() {
+
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
     email: "",
@@ -33,6 +37,10 @@ export default function SignInForm() {
 
     if (!password) {
       errors.password = "Password is required";
+    }else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$/.test(
+      password
+    )){
+      errors.password = "Password Not Following The Pattern";
     }
 
     return errors;
@@ -61,10 +69,29 @@ export default function SignInForm() {
       try {
         const response = await signin(updatedUserData);
         console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have successfully signed in!",
+          showConfirmButton: true,
+          confirmButtonColor: "#299fff",
+          confirmButtonText: "Enter the App",
+        }).then(() => {
+          navigate("/");
+          setUserData({
+            email: "",
+            password: "",
+          });
+          setErrors({
+            email: "",
+            password: "",
+            backEndErrors: "",
+          });
+        })
       } catch (error) {
         console.error(error);
         setErrors({
-          backEndErrors: "error in username or password",
+          backEndErrors: "Invalid email or password",
         });
         console.log(error.response.data.message);
       }
