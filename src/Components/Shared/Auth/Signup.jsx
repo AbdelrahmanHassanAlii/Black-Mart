@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { signup } from "../../../Helper/Apis/User/Auth/Signup";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 /* eslint-disable no-unused-vars */
 export default function SignUpForm({ handleSignInClick }) {
+
+  const handleChangeToSignIn = () => {
+    handleSignInClick();
+  };
+
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -17,7 +23,10 @@ export default function SignUpForm({ handleSignInClick }) {
     email: "",
     password: "",
     confirmPassword: "",
+    backEndErrors: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -88,9 +97,70 @@ export default function SignUpForm({ handleSignInClick }) {
       try {
         const response = await signup(updatedUserData);
         console.log(response);
-        Navigate("/");
+        // navigate("/");
+
+        Swal.fire({
+          icon: "success",
+          title: "Signup Successful",
+          text: "You have successfully signed up!",
+          showConfirmButton: true,
+          confirmButtonColor: "#299fff",
+          confirmButtonText: " Go to Login",
+        }).then(() => {
+          setUserData({});
+          setErrors({});
+          handleChangeToSignIn();
+        })
+
       } catch (error) {
         console.log(error);
+
+        if (error.response && error.response.data) {
+          console.log(error.response.data.message);
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error.response.data.message}  Try Another Email`,
+            showConfirmButton: true,
+            confirmButtonColor: "#299fff",
+            confirmButtonText: "Try Again",
+          }).then(() => {
+            setUserData(() => ({
+              ...userData,
+              email: "",
+            }));
+          })
+        }
+        else if (error) {
+          console.log(error.message);
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error.message}  Try Again Later`,
+            showConfirmButton: true,
+            confirmButtonColor: "#299fff",
+            confirmButtonText: "Try Again",
+          }).then(() => {
+            setUserData({
+              username: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            })
+
+            setErrors({
+              username: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+              backEndErrors: "",
+            })
+          })
+        }
+
+
       }
     }
   };
@@ -105,6 +175,7 @@ export default function SignUpForm({ handleSignInClick }) {
           name="username"
           placeholder="User Name"
           onChange={handleChange}
+          value={userData.username}
         />
       </div>
       {errors.username && <p className="error">{errors.username}</p>}
@@ -116,6 +187,7 @@ export default function SignUpForm({ handleSignInClick }) {
             name="email"
             placeholder="Email"
             onChange={handleChange}
+            value={userData.email}
           />
         </div>
         <div className="right">@blackmart.com</div>
@@ -128,6 +200,7 @@ export default function SignUpForm({ handleSignInClick }) {
           name="password"
           placeholder="Password"
           onChange={handleChange}
+          value={userData.password}
         />
       </div>
       {errors.password && <p className="error">{errors.password}</p>}
@@ -138,6 +211,7 @@ export default function SignUpForm({ handleSignInClick }) {
           name="confirmPassword"
           placeholder="Confirm Password"
           onChange={handleChange}
+          value={userData.confirmPassword}
         />
       </div>
       {errors.confirmPassword && (
