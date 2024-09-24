@@ -61,7 +61,7 @@ export default function SignUpForm({ handleSignInClick }) {
       )
     ) {
       errors.password =
-        "more than 8 characters, contain uppercase, lowercase, numbers and special character";
+        "Password Not Following The Pattern";
     }
 
     if (!confirmPassword) {
@@ -204,6 +204,7 @@ export default function SignUpForm({ handleSignInClick }) {
         <div className="right">@blackmart.com</div>
       </div>
       {errors.email && <p className="error">{errors.email}</p>}
+      
       <div className="input-field">
         <i className="fas fa-lock"></i>
         <input
@@ -213,6 +214,10 @@ export default function SignUpForm({ handleSignInClick }) {
           onChange={handleChange}
           value={userData.password}
         />
+      </div>
+      <div className="hints">
+          <p className="hint">Password must be at least 8 characters</p>
+          <p className="hint">Contain uppercase, lowercase, numbers and special character</p>
       </div>
       {errors.password && <p className="error">{errors.password}</p>}
       <div className="input-field">
