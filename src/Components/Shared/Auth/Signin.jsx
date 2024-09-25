@@ -2,6 +2,9 @@ import { useState } from "react";
 import { signin } from "../../../Helper/Apis/Shared/Auth/Signin";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { addItemToLS } from "../../../Helper/Funcation/LocalStorage/AddItemToLS";
+import { getToken } from "../../../Helper/Funcation/LocalStorage/getToken";
+import { getItemFromLS } from "../../../Helper/Funcation/LocalStorage/GetItemFromLS";
 
 // Components/SignInForm.js
 export default function SignInForm() {
@@ -64,12 +67,17 @@ export default function SignInForm() {
         ...userData,
         email: handleEmailRoute(userData.email),
       };
-      console.log(updatedUserData);
+      // console.log(updatedUserData);
 
       try {
         const response = await signin(updatedUserData);
         console.log(response);
         localStorage.setItem("loginData",JSON.stringify(response.data));
+        // console.log(response);
+        addItemToLS("logingData", response.data);
+        // let token = getToken();
+        // console.log(token);
+        // console.log(getItemFromLS("logingData"));
         Swal.fire({
           icon: "success",
           title: "Login Successful",
@@ -94,7 +102,7 @@ export default function SignInForm() {
         setErrors({
           backEndErrors: "Invalid email or password",
         });
-        console.log(error.response.data.message);
+        // console.log(error.response.data.message);
       }
     }
   };
