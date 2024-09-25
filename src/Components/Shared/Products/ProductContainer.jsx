@@ -12,11 +12,10 @@ export default function ProductContainer() {
   useEffect(() => {
     const getProducts = async () => {
       let ProductsData = await getAllProducts();
-      setProducts(ProductsData.data.products
-      );
+      setProducts(ProductsData.data.products);
     };
   getProducts();
-      
+      console.log(Products)
     }, []);
   console.log(Products)
   return (

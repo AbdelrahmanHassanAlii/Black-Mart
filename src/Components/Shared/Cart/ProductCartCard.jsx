@@ -44,7 +44,7 @@ export default function ProductCartCard({ removeItem }) {
                 <p className="sm:text-2xl font-bold">{product.name}</p>
                 <RiDeleteBin6Fill
                   className="hover:text-red-100 text-black text-xl cursor-pointer"
-                  onClick={() => removeItem(product.id)} // Trigger removeItem function
+                  onClick={() => removeItem(product.id)}
                 />
               </div>
               <p>

@@ -69,6 +69,7 @@ export default function SignInForm() {
       try {
         const response = await signin(updatedUserData);
         console.log(response);
+        localStorage.setItem("loginData",JSON.stringify(response.data));
         Swal.fire({
           icon: "success",
           title: "Login Successful",
