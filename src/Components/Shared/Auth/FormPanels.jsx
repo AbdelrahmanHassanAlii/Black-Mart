@@ -2,9 +2,11 @@
 /* eslint-disable react/prop-types */
 import SignSVG from "../../../assets/SVGs/Mobile login-rafiki.svg";
 import LoginSVG from "../../../assets/SVGs/Forgot password-rafiki.svg";
+import Header from "../Header/Header";
 export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
   return (
-    <div className="panels-container">
+    <>
+    <div className="panels-container sm:mt-20">
       <div className="panel left-panel">
         <div className="content">
           <h3>Black Mart</h3>
@@ -50,5 +52,6 @@ export default function FormPanels({ handleSignUpClick, handleSignInClick }) {
         />
       </div>
     </div>
+    </>
   );
 }
