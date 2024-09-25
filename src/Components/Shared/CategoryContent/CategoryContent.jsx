@@ -1,12 +1,23 @@
 import Header from '../Header/Header'
 import Navbar from './Navbar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Signupoffer from '../Signupoffer/Signupoffer'
 import Footer from '../Footer/Footer'
+import {getAllProducts} from '../../../Helper/Apis/Shared/Product//getAllProducts'
 import ProductCard from '../Products/ProductCard'
 export default function CategoryContent() {
+  const[products,setProducts]=useState([])
   const [Active,setActive]=useState(false)
   const [Filters,setGetFilters]=useState({})
+  useEffect(() => {
+    const getProducts = async () => {
+      let ProductsData = await getAllProducts();
+      setProducts(ProductsData.data.products);
+    };
+  getProducts();
+      console.log(products)
+    }, []);
+  console.log(products)
   console.log(Filters)
   return (
     <> 
@@ -23,9 +34,12 @@ export default function CategoryContent() {
             <option value="price"> Price</option>
           </select>
         </div>
-       {/* products */}
-        <div>
-        {/* <ProductCard name={Filters.type} price={parseInt(Filters.price.split(" - ")[0], 10)} />  */}
+       
+        <div className='flex flex-wrap gap-x-10 gap-y-5'>
+        {products.map((item) => (
+    <ProductCard key={item._id} name={item.name} price={item.price} image={item.imgCover} id={item.id} />
+  ))}
+       
 
         </div>
       </div>

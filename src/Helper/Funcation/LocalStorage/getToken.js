@@ -1,11 +1,13 @@
-import { getItemFromLS } from "./GetItemFromLS"
+import { getItemFromLS } from "./GetItemFromLS";
 
 export const getToken = () => {
-    let logingData = getItemFromLS("logingData")
-    if (logingData) {
+    const logingData = getItemFromLS("logingData");
+
+    // Check if logingData is defined and is an array with at least one item
+    if (logingData && Array.isArray(logingData) && logingData.length > 0) {
         return logingData[0].token;
     } else {
-        return console.error("token not found");
-        
+        console.error("Token not found or logingData is empty");
+        return null; // Return null or handle the case as appropriate
     }
-}
+};

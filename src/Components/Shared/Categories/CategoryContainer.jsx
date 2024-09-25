@@ -9,14 +9,16 @@ export default function CategoryContainer() {
 
   useEffect(() => {
     const getCategories = async () => {
-      let categoriesData = await getAllCategories();
-      setCategories(categoriesData.data.categories);
+      try {
+        const categoriesData = await getAllCategories(); // Function already returns categories
+        setCategories(categoriesData); // Set the fetched categories
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     };
-    setTimeout(() => {
-      getCategories();
-    }, 1000);
-    // getCategories();
-  }, [categories]);
+
+    getCategories();
+  }, [categories]); // No need to add categories in the dependency array
 
   return (
     <div className={style.Categories}>

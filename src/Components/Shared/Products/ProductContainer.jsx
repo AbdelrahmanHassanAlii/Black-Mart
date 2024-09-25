@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
+import { Link, useParams } from 'react-router-dom';
 import Loading from "../Loaders/Loading";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ProductPage from "./ProductPage";
 import Signupoffer from "../Signupoffer/Signupoffer";
-
+import {getSpecificProduct} from '../../../Helper/Apis/Shared/Product/getSpecificProducts'
 export default function ProductContainer() {
-  const [Products, setProducts] = useState([]);
+  const [Product, setProduct] = useState({});
+  const { id } = useParams(); 
 
   useEffect(() => {
     const getProducts = async () => {
-      let ProductsData = await getAllProducts();
-      setProducts(ProductsData.data.products);
+      let ProductsData = await getSpecificProduct();
+      setProduct(ProductsData.data.products);
     };
   getProducts();
-      console.log(Products)
+      console.log(Product)
     }, []);
-  console.log(Products)
+  console.log(Product)
   return (
     <div >
       <Signupoffer/>

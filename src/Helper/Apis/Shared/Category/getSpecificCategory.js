@@ -1,13 +1,23 @@
 import axios from "axios";
+import { getToken } from "../../../Funcation/LocalStorage/getToken";
 
 export const getSpecificCategory = async (categoryID) => {
   const url = `http://localhost:3000/api/v1/categories/${categoryID}`;
 
-  const response = await axios.get(url,{
-    headers:{
-      token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzMjVhNGY3NTU2ZDFiMjhmYzE2ZGIiLCJlbWFpbCI6ImhhbXpha2hhbGVkQGJsYWNrbWFydC5jb20iLCJ1c2VybmFtZSI6ImhhbXphIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MjcyMTIwMjQsImV4cCI6MTcyNzIxOTIyNH0.i7wXfAgt4qrG3wQ17gmIUZpxfQiB33A55k2_l-_DZV8"
-    }
-  });
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        "token": `${getToken()}`, 
+      },
+    });
 
-  return response;
+    
+    return response.data; 
+  } catch (error) {
+    
+    console.error("Error fetching category:", error.message);
+    
+    
+    throw new Error("Failed to fetch category. Please try again later.");
+  }
 };
