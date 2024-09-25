@@ -156,7 +156,7 @@ export default function AddProductForm() {
         formData.append("quantity", product.quantity);
         formData.append("price", product.price);
         formData.append("category", product.category);
-        formData.append("subCategory", product.subcategory);
+        formData.append("subcategory", product.subcategory);
         formData.append("imgCover", product.imgCover);
 
         try {
