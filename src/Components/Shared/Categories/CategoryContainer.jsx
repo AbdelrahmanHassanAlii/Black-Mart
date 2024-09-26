@@ -3,6 +3,7 @@ import CategoryCard from "./CategoryCard";
 import { getAllCategories } from "../../../Helper/Apis/Shared/Category/getAllCategories";
 import style from "../../../assets/CSS/Shared/CategoriesContainer.module.css";
 import Loading from "../Loaders/Loading";
+import { Link } from "react-router-dom";
 
 export default function CategoryContainer() {
   const [categories, setCategories] = useState([]);
@@ -10,19 +11,22 @@ export default function CategoryContainer() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const categoriesData = await getAllCategories(); // Function already returns categories
-        setCategories(categoriesData); // Set the fetched categories
+        const categoriesData = await getAllCategories(); 
+        setCategories(categoriesData); 
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
     getCategories();
-  }, [categories]); // No need to add categories in the dependency array
+  }, [categories]);
 
   return (
     <div className={style.Categories}>
-      <p className="title">Categories</p>
+      <div className="heading">
+        <p className="title">Categories</p>
+      <Link className="add-btn" to={`/admin/categories/add`}> Add Category </Link>
+      </div>
       {categories.length > 0 ? (
         <div className={style.categoriesCardsContainer}>
           {categories.map((category, index) => (

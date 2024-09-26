@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // Pages and Components
 import Sign from "./Pages/Shared/Sign";
-import HomePage from "./Components/Shared/HomePage/HomePage";
+import HomePage from "./Pages/User/HomePage";
 import Cart from "./Components/Shared/Cart/Cart";
 import CategoryContainer from "./Components/Shared/Categories/CategoryContainer";
 import CategoryContent from "./Components/Shared/CategoryContent/CategoryContent";
@@ -17,6 +17,15 @@ import AddProductForm from "./Components/Admin/AddProductForm";
 import SideBar from "./Components/Admin/SideBar";
 import Profile from "./Components/Shared/Profile/Profile";
 import Categories from "./Components/User/Categories.jsx";
+
+import HomeCards from "./Components/Admin/HomeCards";
+import Dashbord from "./Pages/Admin/Dashboard";
+import Categories from "./Pages/Shared/Categories";
+import AddCategory from "./Pages/Admin/AddCategory";
+import UpdateCategory from "./Pages/Admin/UpdateCategory";
+import ProductsContainer from "./Components/Admin/ProductsContainer";
+
+
 // Admin Layout
 const AdminLayout = ({ children }) => {
   return (
@@ -33,7 +42,6 @@ const AdminLayout = ({ children }) => {
 };
 
 function App() {
-
   return (
     <>
       <Routes>
@@ -51,27 +59,27 @@ function App() {
 
 
         {/* Role-Based Redirect */}
-        <Route
-          path="/sign"
-          element={<Sign />}
-        />
+        <Route path="/sign" element={<Sign />} />
 
         {/* Admin Routes (with Sidebar and Header) */}
         <Route
-          path="/dashboard/*"
+          path="/admin/*"
           element={
-            
-              <AdminLayout>
-                <Routes>
-                  <Route
-                    path="update-category/:id"
-                    element={<UpdateCategoryForm />}
-                  />
-                  <Route path="add-category" element={<AddCategoryForm />} />
-                  <Route path="add-product" element={<AddProductForm />} />
-                </Routes>
-              </AdminLayout>
-            
+            <AdminLayout>
+              <Routes>
+                <Route path="/dashboard" element={<Dashbord />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="categories/add" element={<AddCategory />} />
+                <Route
+                  path="update-category/:id"
+                  element={<UpdateCategory />}
+                />
+                <Route path="/add-category" element={<AddCategoryForm />} />
+
+                <Route path="/products" element={<ProductsContainer />} />
+                <Route path="products/add" element={<AddProductForm />} />
+              </Routes>
+            </AdminLayout>
           }
         />
 

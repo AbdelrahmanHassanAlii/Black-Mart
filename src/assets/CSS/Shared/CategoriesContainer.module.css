@@ -1,18 +1,18 @@
 .Categories {
-  width: var(--container-width-sm);
+  /* width: var(--container-width-sm); */
   margin: 0 auto;
   padding: 1rem;
 }
 
 @media screen and (min-width: 768px) {
   .Categories {
-    width: var(--container-width-md);
+    /* width: var(--container-width-md); */
   }
 }
 
 @media screen and (min-width: 1024px) {
   .Categories {
-    width: var(--container-width-lg);
+    /* width: var(--container-width-lg); */
   }
 }
 

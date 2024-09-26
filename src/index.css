@@ -23,6 +23,10 @@
   --green-color-100: rgb(1, 171, 49);
   --blue-color: #299fff;
   --blue-color-2: #008dda;
+  --light-blue-color : #e6f0ff;
+
+
+
 
   /* Fonts */
   --font-satoshi: "Satoshi", sans-serif;
@@ -73,14 +77,15 @@ button {
   font-size: 1.5rem;
   font-weight: 600;
   position: relative;
+  /* margin-bottom: 20px; */
 }
 
-.title::before {
+/* .title::before {
   content: "";
   display: inline-block;
   width: 0.7rem;
   height: 100%;
-  background-color: var(--yellow-color);
+  background-color: var(--light-blue-color);
   position: absolute;
   top: 0;
   left: -1.5rem;
@@ -89,7 +94,7 @@ button {
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
-}
+} */
 /* end title */
 
 /* add-btn  */
@@ -115,3 +120,13 @@ button {
   background-color: var(--blue-color-2);
 }
 /* add-btn */
+
+
+.heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  margin-bottom: 20px;
+}

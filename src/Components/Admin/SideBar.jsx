@@ -42,23 +42,23 @@ export default function SideBar() {
         <ul>
           <li>
             <IoHomeOutline className={style.icon} />
-            <Link to={"/dashboard"}>Home</Link>
+            <Link to={"/admin/dashboard"}>Home</Link>
           </li>
           <li>
             <TbCategoryPlus className={style.icon} />
-            <Link to={"/dashboard/categories"}>Categories</Link>
+            <Link to={"/admin/categories"}>Categories</Link>
           </li>
           <li>
             <AiOutlineProduct className={style.icon} />
-            <Link to={"/dashboard/products"}>Products</Link>
+            <Link to={"/admin/products"}>Products</Link>
           </li>
           <li>
             <MdOutlineLocalShipping className={style.icon} />
-            <Link to={"/dashboard/orders"}>Orders</Link>
+            <Link to={"/admin/dashboard/orders"}>Orders</Link>
           </li>
           <li>
             <PiUsersThreeLight className={style.icon} />
-            <Link to={"/dashboard/users"}>Users</Link>
+            <Link to={"/admin/dashboard/users"}>Users</Link>
           </li>
         </ul>
       </div>
