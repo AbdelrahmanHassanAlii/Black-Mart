@@ -184,6 +184,7 @@ export default function AddProductForm() {
           });
           setPreviewImage(null);
         } catch (error) {
+          console.error("Error adding product:", error);
           setErrors((prevErrors) => ({
             ...prevErrors,
             backEndError: "An error occurred while adding the product.",

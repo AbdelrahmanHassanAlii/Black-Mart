@@ -9,7 +9,6 @@ export  const getAllProducts = async () => {
     "token": `${getToken()}`,
     }
   });
-console.log(response.data.products)
   return response;
 };
 

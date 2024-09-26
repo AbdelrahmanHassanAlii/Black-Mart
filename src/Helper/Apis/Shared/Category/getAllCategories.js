@@ -10,6 +10,5 @@ export const getAllCategories = async () => {
     },
   });
 
-  console.log(response.data.categories);
-  return response.data.categories; // Directly return categories
+  return response.data.categories; 
 };

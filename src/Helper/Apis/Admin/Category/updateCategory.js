@@ -8,7 +8,6 @@ export const updateCategory = async (categoryID, category) => {
         headers: {
             "Content-Type": "multipart/form-data",
             "token": `${getToken()}`,
-
         },
     });
     

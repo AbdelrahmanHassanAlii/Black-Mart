@@ -19,6 +19,7 @@ import HomeCards from "./Components/Admin/HomeCards";
 import Dashbord from "./Pages/Admin/Dashboard";
 import Categories from "./Pages/Shared/Categories";
 import AddCategory from "./Pages/Admin/AddCategory";
+import UpdateCategory from "./Pages/Admin/UpdateCategory";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -68,7 +69,7 @@ function App() {
                   <Route path="categories/add" element={<AddCategory />} />
                   <Route
                     path="update-category/:id"
-                    element={<UpdateCategoryForm />}
+                    element={<UpdateCategory />}
                   />
                   <Route path="add-category" element={<AddCategoryForm />} />
                   <Route path="add-product" element={<AddProductForm />} />

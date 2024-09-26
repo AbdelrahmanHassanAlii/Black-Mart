@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSpecificCategory } from "../../Helper/Apis/Shared/Category/getSpecificCategory";
@@ -26,13 +25,32 @@ export default function UpdateCategoryForm() {
 
   useEffect(() => {
     const getCategory = async () => {
-      const categoryData = await getSpecificCategory(id);
-      setCategory({
-        name: categoryData.data.category.name,
-        img: categoryData.data.category.img,
-      });
-      setPreviewImage(categoryData.data.category.img);
+      try {
+        const categoryData = await getSpecificCategory(id);
+
+        // console.log(categoryData.category.name);
+
+        if (categoryData) {
+          setCategory({
+            name: categoryData.category.name || "",
+            img: categoryData.category.img || null,
+          });
+          setPreviewImage(categoryData.category.img);
+        } else {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            backEndError: "Failed to load category data",
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching category:", error);
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          backEndError: "An error occurred while fetching category data.",
+        }));
+      }
     };
+
     getCategory();
   }, [id]);
 
@@ -57,7 +75,6 @@ export default function UpdateCategoryForm() {
     let formIsValid = true;
     let validationErrors = {};
 
-    // Name validation
     if (!category.name) {
       validationErrors.name = "Name is required";
       formIsValid = false;
@@ -66,7 +83,6 @@ export default function UpdateCategoryForm() {
       formIsValid = false;
     }
 
-    // Image validation (optional: only if user uploads a new image)
     if (category.img && typeof category.img === "object") {
       if (!category.img.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         validationErrors.img =
@@ -82,12 +98,10 @@ export default function UpdateCategoryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form before submission
     if (!validateForm()) {
       return;
     }
 
-    // SweetAlert confirmation before proceeding
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to update this category?",
@@ -101,14 +115,13 @@ export default function UpdateCategoryForm() {
         const formData = new FormData();
         formData.append("name", category.name);
         if (category.img && typeof category.img === "object") {
-          formData.append("img", category.img); // Append only if it's a file
+          formData.append("img", category.img);
         }
 
         try {
           const response = await updateCategory(id, formData);
           console.log(response);
 
-          // SweetAlert success message
           Swal.fire({
             title: "Updated!",
             text: "Category has been updated successfully.",
@@ -119,6 +132,7 @@ export default function UpdateCategoryForm() {
 
           setPreviewImage(null);
         } catch (error) {
+          console.error("Error updating category:", error);
           setErrors((prevErrors) => ({
             ...prevErrors,
             backEndError: "An error occurred while updating the category.",
@@ -130,7 +144,7 @@ export default function UpdateCategoryForm() {
 
   return (
     <div className={style.formContainer}>
-      <h2 className={`${style.formTitle}`}>Update Category</h2>
+      {/* <h2 className={`${style.formTitle}`}>Update Category</h2> */}
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor="name">Name</label>
