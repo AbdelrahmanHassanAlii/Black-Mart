@@ -9,7 +9,7 @@ export default function Cart() {
   const [data, setData] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
-  // Load cart data from localStorage
+  
   useEffect(() => {
     const cartData = localStorage.getItem("Cart");
     if (cartData) {
@@ -20,11 +20,11 @@ export default function Cart() {
 
   const removeItem = (productId) => {
     const updatedCartData = data.filter((product) => product.id !== productId);
-    setData(updatedCartData); // Update state
-    localStorage.setItem("Cart", JSON.stringify(updatedCartData)); // Update localStorage
+    setData(updatedCartData); 
+    localStorage.setItem("Cart", JSON.stringify(updatedCartData)); 
   };
 
-  // Update subtotal whenever the cart data changes
+  
   useEffect(() => {
     if (data.length > 0) {
       const subtotalValue = data.reduce(
@@ -37,9 +37,7 @@ export default function Cart() {
     }
   }, [data]);
 
-  // Function to remove item from cart
- 
-  // Conditionally apply discount and delivery fee only if there are items in the cart
+  
   const items = [
     { name: "Subtotal", value: subtotal },
     { name: "Discount", value: data.length > 0 ? 40 : 0 },
@@ -59,7 +57,7 @@ export default function Cart() {
         <p className="text-5xl font-extrabold">YOUR CART</p>
         <div className="flex flex-col sm:flex-row justify-evenly">
           <div className="flex flex-col items-center">
-            {/* Pass removeItem as a prop to ProductCartCard */}
+            
             <ProductCartCard cartData={data} removeItem={removeItem} />
           </div>
           <div className={` border sm:w-96 rounded-2xl p-10 h-[28rem] ${data[0]?"flex flex-col":"hidden"}`}>

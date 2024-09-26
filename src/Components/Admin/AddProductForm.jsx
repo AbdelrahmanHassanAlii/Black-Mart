@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { addProduct } from '../../Helper/Apis/Admin/Product/addProduct.js';
@@ -19,7 +20,7 @@ export default function AddProductForm() {
     subcategory: "",
     backEndError: "",
   });
-  
+
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -31,7 +32,7 @@ export default function AddProductForm() {
     };
     getCategories();
   }, []);
-  
+
   useEffect(() => {
     const getSubCategories = async () => {
       try {
@@ -58,7 +59,6 @@ export default function AddProductForm() {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleChange = (e) => {
-    console.log(product)
     const { name, value, files } = e.target;
     if (name === "imgCover") {
       setProduct({
@@ -73,7 +73,6 @@ export default function AddProductForm() {
       });
     }
   };
-
   const validateForm = () => {
     let formIsValid = true;
     let validationErrors = {};
@@ -86,13 +85,16 @@ export default function AddProductForm() {
       validationErrors.name = "Name cannot contain only numbers";
       formIsValid = false;
     }
-    
+
     // Description validation
     if (!product.description) {
       validationErrors.description = "Description is required";
       formIsValid = false;
     } else if (/^\d+$/.test(product.description)) {
       validationErrors.description = "Description cannot contain only numbers";
+      formIsValid = false;
+    } else if (product.description.length < 20) {
+      validationErrors.description = "Description must be at least 20 characters long";
       formIsValid = false;
     }
 
@@ -101,7 +103,7 @@ export default function AddProductForm() {
       validationErrors.brand = "Brand is required";
       formIsValid = false;
     }
-    
+
     // Price validation
     if (!product.price) {
       validationErrors.price = "Price is required";
@@ -110,7 +112,7 @@ export default function AddProductForm() {
       validationErrors.price = "Price must be a valid number";
       formIsValid = false;
     }
-    
+
     // Quantity validation
     if (!product.quantity) {
       validationErrors.quantity = "Quantity is required";
@@ -119,7 +121,7 @@ export default function AddProductForm() {
       validationErrors.quantity = "Quantity must be a number";
       formIsValid = false;
     }
-    
+
     // Image validation
     if (!product.imgCover) {
       validationErrors.imgCover = "Image is required";
@@ -128,6 +130,7 @@ export default function AddProductForm() {
       validationErrors.imgCover = "Please upload a valid image file (jpg, jpeg, png, gif)";
       formIsValid = false;
     }
+
     setErrors(validationErrors);
     return formIsValid;
   };
@@ -195,7 +198,7 @@ export default function AddProductForm() {
 
   return (
     <>
-      <Header />
+      
       <div className="p-12">
         <div className="h-full flex flex-col p-5 bg-gradient-to-tr from-slate-700 to-black text-white rounded-3xl">
           <h2 className="text-3xl font-bold mb-6">Add Product</h2>
@@ -314,7 +317,7 @@ export default function AddProductForm() {
             </div>
             {errors.imgCover && <span>{errors.imgCover}</span>}
            
-            {errors.images && <span>{errors.images}</span>}
+            
 
             <button 
               type="submit" 
@@ -326,6 +329,6 @@ export default function AddProductForm() {
           </form>
         </div>
       </div>
-    </>
-  );
+</>
+);
 }

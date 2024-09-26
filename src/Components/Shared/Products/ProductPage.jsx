@@ -7,6 +7,7 @@ import { FaMinus } from "react-icons/fa";
 import { GiSettingsKnobs } from "react-icons/gi";
 import ProductCard from "./ProductCard";
 import { FaCheck } from "react-icons/fa";
+import Swll from "sweetalert2";
 import {addToCart} from "../../../Helper/Funcation/Addtocart"
 export default function ProductPage({
   image,
@@ -37,7 +38,7 @@ export default function ProductPage({
     setIsActive(size);
   };
   const handleColorClick = (color) => {
-    setSelectedColor(color); // Set the selected color when clicked
+    setSelectedColor(color);
   };
   
   const datahandler = (key, item) => {
@@ -51,7 +52,8 @@ export default function ProductPage({
     console.log(data)
   },[data])
   const sendDataHandler=()=>{
-    addToCart(data)
+    Swll.fire("Good job!", "You clicked the button!", "success").then(addToCart(data))
+    
   }
 
   return (
@@ -107,9 +109,6 @@ export default function ProductPage({
             </div>
             <p className="opacity-70">{description}</p>
           </div>
-
-          {/* <p >{priceAfterDiscount}</p> */}
-          {/* <p >{${price} /${priceAfterDiscount}}</p> */}
           <div className="flex justify-center">
             <div className="w-96 h-0.5 sm:w-full bg-black opacity-20"></div>
           </div>

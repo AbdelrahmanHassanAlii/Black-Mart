@@ -15,7 +15,8 @@ import AddCategoryForm from "./Components/Admin/AddCategoryForm";
 import UpdateCategoryForm from "./Components/Admin/UpdateCategoryForm";
 import AddProductForm from "./Components/Admin/AddProductForm";
 import SideBar from "./Components/Admin/SideBar";
-
+import Profile from "./Components/Shared/Profile/Profile";
+import Categories from "./Components/User/Categories.jsx";
 // Admin Layout
 const AdminLayout = ({ children }) => {
   return (
@@ -38,11 +39,16 @@ function App() {
       <Routes>
         {/* Shared Routes */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/Categories" element={<CategoryContainer />} />
-        <Route path="/Products" element={<CategoryContent />} />
+        <Route path="/admin/Categories" element={<CategoryContainer />} />
+        <Route path="/category/:id" element={<CategoryContent />} />
         <Route path="/product/:id" element={<ProductContainer />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Sign" element={<Sign />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/categories" element={<Categories/>} />
+        <Route path="/category/:id" element={<Categories/>} />
+
+
 
         {/* Role-Based Redirect */}
         <Route

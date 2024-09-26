@@ -8,24 +8,24 @@ import Signupoffer from "../Signupoffer/Signupoffer";
 import { getSpecificProduct } from '../../../Helper/Apis/Shared/Product/getSpecificProducts';
 
 export default function ProductContainer() {
-  const [product, setProduct] = useState(null); // Set initial state to null to handle loading
+  const [product, setProduct] = useState(null); 
   const { id } = useParams(); 
-  
+  console.log(id)
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const productData = await getSpecificProduct(id); // Pass 'id' directly
-        setProduct(productData); // Update state with the fetched product data
+        const productData = await getSpecificProduct(id); 
+        console.log(productData.data.product);
+        setProduct(productData.data.product);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
     };
     
-    getProduct(); // Call the function when component mounts
-  }, [id]); // Include 'id' as a dependency to re-fetch if the id changes
+    getProduct(); 
+  }, [id]); 
   
   if (!product) {
-    // Show a loading spinner or message while the product data is being fetched
     return <Loading />;
   }
 
@@ -35,8 +35,8 @@ export default function ProductContainer() {
       <Header />
       <div>
         <ProductPage
-          image={product.imgCover} // Render the product's main image
-          sideimages={product.images} // Render the product's side images
+          image={product.imgCover}
+          sideimages={product.images}
           name={product.name}
           description={product.description}
           price={product.price}

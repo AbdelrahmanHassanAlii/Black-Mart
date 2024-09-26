@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
+
 import { Link, useParams } from 'react-router-dom';
 export default function ProductCard({ image, price, name ,id }) {
   console.log(id)
   return (<>
-  <Link to={`product/${id}`} >
+  <Link to={`/product/${id}`} >
   <div className='flex  items-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl '  >
     <div className="max-w-xs  overflow-hidden items rounded-2xl  bg-white">
       <img className="w-full h-48 object-cover" src={image} alt={name} />
