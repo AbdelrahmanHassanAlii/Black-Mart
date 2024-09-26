@@ -50,7 +50,7 @@ export default function SideBar() {
           </li>
           <li>
             <AiOutlineProduct className={style.icon} />
-            <Link to={"/admin/dashboard/products"}>Products</Link>
+            <Link to={"/admin/products"}>Products</Link>
           </li>
           <li>
             <MdOutlineLocalShipping className={style.icon} />

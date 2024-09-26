@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { addItemToLS } from "../../../Helper/Funcation/LocalStorage/AddItemToLS";
 import { getRole } from "../../../Helper/Funcation/LocalStorage/GetRole";
+import { getToken } from "../../../Helper/Funcation/LocalStorage/getToken";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -82,6 +83,9 @@ export default function SignInForm() {
           // Ensure getRole is called after loginData has been added
           const role = getRole(); // Get the user role from localStorage or API response
           console.log(role);
+
+          let token = getToken();
+          console.log(token);
 
           // Check user role and navigate accordingly
           if (role === "admin") {
