@@ -58,6 +58,7 @@ export default function AddProductForm() {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleChange = (e) => {
+    console.log(product)
     const { name, value, files } = e.target;
     if (name === "imgCover") {
       setProduct({
@@ -127,14 +128,13 @@ export default function AddProductForm() {
       validationErrors.imgCover = "Please upload a valid image file (jpg, jpeg, png, gif)";
       formIsValid = false;
     }
-
     setErrors(validationErrors);
     return formIsValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+   
     if (!validateForm()) {
       return;
     }
@@ -313,6 +313,8 @@ export default function AddProductForm() {
               {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-32 h-32" />}
             </div>
             {errors.imgCover && <span>{errors.imgCover}</span>}
+           
+            {errors.images && <span>{errors.images}</span>}
 
             <button 
               type="submit" 

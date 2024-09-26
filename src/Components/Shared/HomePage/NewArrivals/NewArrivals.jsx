@@ -6,7 +6,7 @@ export default function NewArrivals() {
   useEffect(() => {
     const getProducts = async () => {
       let ProductsData = await getAllProducts();
-      setProducts(ProductsData.data.products.slice(2));
+      setProducts(ProductsData.data.products.slice(0));
       
     };
   getProducts();
