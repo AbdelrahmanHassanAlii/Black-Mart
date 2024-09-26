@@ -3,12 +3,9 @@ import { signin } from "../../../Helper/Apis/Shared/Auth/Signin";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { addItemToLS } from "../../../Helper/Funcation/LocalStorage/AddItemToLS";
-import { getToken } from "../../../Helper/Funcation/LocalStorage/getToken";
-import { getItemFromLS } from "../../../Helper/Funcation/LocalStorage/GetItemFromLS";
+import { getRole } from "../../../Helper/Funcation/LocalStorage/GetRole";
 
-// Components/SignInForm.js
 export default function SignInForm() {
-
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
@@ -30,8 +27,8 @@ export default function SignInForm() {
     });
   };
 
-  const checkErroes = () => {
-    const{ email, password } = userData;
+  const checkErrors = () => {
+    const { email, password } = userData;
     const errors = {};
 
     if (!email) {
@@ -40,9 +37,11 @@ export default function SignInForm() {
 
     if (!password) {
       errors.password = "Password is required";
-    }else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$/.test(
-      password
-    )){
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$/.test(
+        password
+      )
+    ) {
       errors.password = "Password Not Following The Pattern";
     }
 
@@ -55,11 +54,11 @@ export default function SignInForm() {
     }
     return email;
   };
-  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const formErrors = checkErroes();
+    const formErrors = checkErrors();
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
@@ -67,17 +66,11 @@ export default function SignInForm() {
         ...userData,
         email: handleEmailRoute(userData.email),
       };
-      // console.log(updatedUserData);
 
       try {
         const response = await signin(updatedUserData);
-        console.log(response);
-        // localStorage.setItem("loginData",JSON.stringify(response.data));
-        // console.log(response);
-        addItemToLS("logingData", response.data);
-        // let token = getToken();
-        // console.log(token);
-        // console.log(getItemFromLS("logingData"));
+        addItemToLS("loginData", response.data); // Save login data to localStorage or state
+
         Swal.fire({
           icon: "success",
           title: "Login Successful",
@@ -86,7 +79,18 @@ export default function SignInForm() {
           confirmButtonColor: "#299fff",
           confirmButtonText: "Enter the App",
         }).then(() => {
-          navigate("/");
+          // Ensure getRole is called after loginData has been added
+          const role = getRole(); // Get the user role from localStorage or API response
+          console.log(role);
+
+          // Check user role and navigate accordingly
+          if (role === "admin") {
+            navigate("/dashboard"); // Admin redirect
+          } else {
+            navigate("/"); // User redirect
+          }
+
+          // Reset form state
           setUserData({
             email: "",
             password: "",
@@ -96,13 +100,13 @@ export default function SignInForm() {
             password: "",
             backEndErrors: "",
           });
-        })
+        });
       } catch (error) {
         console.error(error);
         setErrors({
+          ...errors,
           backEndErrors: "Invalid email or password",
         });
-        // console.log(error.response.data.message);
       }
     }
   };
@@ -113,14 +117,26 @@ export default function SignInForm() {
       <div className="input-field email">
         <div className="left">
           <i className="fas fa-envelope"></i>
-          <input type="text" name="email" placeholder="Email" onChange={handleChange} value={userData.email} />
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            value={userData.email}
+          />
         </div>
         <div className="right">@blackmart.com</div>
       </div>
       {errors.email && <p className="error">{errors.email}</p>}
       <div className="input-field">
         <i className="fas fa-lock"></i>
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} value={userData.password} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          value={userData.password}
+        />
       </div>
       {errors.password && <p className="error">{errors.password}</p>}
       {errors.backEndErrors && <p className="error">{errors.backEndErrors}</p>}
