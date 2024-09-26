@@ -9,18 +9,17 @@ export default function ProductsContainer() {
   useEffect(() => {
     const getProducts = async () => {
       let ProductsData = await getAllProducts();
-      console.log(ProductsData.data.products);
       setProducts(ProductsData.data.products);
     };
     getProducts();
-  }, []);
+  }, [products]);
   return (
-    <div className="">
+    <div className=" p-3 ">
       <div className="heading">
         <p className="title">Products</p>
         <Link className="add-btn" to={`/admin/products/add`}>
           {" "}
-          Add Category{" "}
+          Add Product{" "}
         </Link>
       </div>
       <div className="grid grid-cols-3 gap-4">
