@@ -22,7 +22,7 @@ export default function SideBar() {
       confirmButtonText: "Yes, Logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteItemFromLS("logingData");
+        deleteItemFromLS("loginData");
         navigate("/login");
       }
     });
