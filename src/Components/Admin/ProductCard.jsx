@@ -65,7 +65,7 @@ export default function ProductCard({ product }) {
         <Link
           className={style.delete}
           onClick={(e) => {
-            e.preventDefault(); // Prevent default link behavior
+            e.preventDefault();
             handleDelete(product._id);
           }}
         >

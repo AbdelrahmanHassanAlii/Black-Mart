@@ -18,7 +18,7 @@ export default function CategoryContainer() {
     };
 
     getCategories();
-  }, []); // No need to add categories in the dependency array
+  }, [categories]); // No need to add categories in the dependency array
 
   return (
     <div >
