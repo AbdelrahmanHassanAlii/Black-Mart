@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // Pages and Components
 import Sign from "./Pages/Shared/Sign";
-import HomePage from "./Components/Shared/HomePage/HomePage";
+import HomePage from "./Pages/User/HomePage";
 import Cart from "./Components/Shared/Cart/Cart";
 import CategoryContainer from "./Components/Shared/Categories/CategoryContainer";
 import CategoryContent from "./Components/Shared/CategoryContent/CategoryContent";
@@ -15,6 +15,10 @@ import AddCategoryForm from "./Components/Admin/AddCategoryForm";
 import UpdateCategoryForm from "./Components/Admin/UpdateCategoryForm";
 import AddProductForm from "./Components/Admin/AddProductForm";
 import SideBar from "./Components/Admin/SideBar";
+import HomeCards from "./Components/Admin/HomeCards";
+import Dashbord from "./Pages/Admin/Dashboard";
+import Categories from "./Pages/Shared/Categories";
+import AddCategory from "./Pages/Admin/AddCategory";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -44,6 +48,8 @@ function App() {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Sign" element={<Sign />} />
 
+
+
         {/* Role-Based Redirect */}
         <Route
           path="/sign"
@@ -52,11 +58,14 @@ function App() {
 
         {/* Admin Routes (with Sidebar and Header) */}
         <Route
-          path="/dashboard/*"
+          path="/admin/*"
           element={
             
               <AdminLayout>
                 <Routes>
+                  <Route path="/dashboard" element={<Dashbord /> } />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="categories/add" element={<AddCategory />} />
                   <Route
                     path="update-category/:id"
                     element={<UpdateCategoryForm />}

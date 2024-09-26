@@ -85,7 +85,7 @@ export default function SignInForm() {
 
           // Check user role and navigate accordingly
           if (role === "admin") {
-            navigate("/dashboard"); // Admin redirect
+            navigate("/admin/dashboard"); // Admin redirect
           } else {
             navigate("/"); // User redirect
           }

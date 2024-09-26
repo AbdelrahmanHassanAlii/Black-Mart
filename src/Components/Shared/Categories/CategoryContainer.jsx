@@ -3,6 +3,7 @@ import CategoryCard from "./CategoryCard";
 import { getAllCategories } from "../../../Helper/Apis/Shared/Category/getAllCategories";
 import style from "../../../assets/CSS/Shared/CategoriesContainer.module.css";
 import Loading from "../Loaders/Loading";
+import { Link } from "react-router-dom";
 
 export default function CategoryContainer() {
   const [categories, setCategories] = useState([]);
@@ -22,7 +23,10 @@ export default function CategoryContainer() {
 
   return (
     <div className={style.Categories}>
-      <p className="title">Categories</p>
+      <div className="heading">
+        <p className="title">Categories</p>
+      <Link className="add-btn" to={`/admin/categories/add`}> Add Category </Link>
+      </div>
       {categories.length > 0 ? (
         <div className={style.categoriesCardsContainer}>
           {categories.map((category, index) => (
