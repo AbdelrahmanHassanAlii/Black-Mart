@@ -9,6 +9,7 @@ export  const getAllProducts = async () => {
     "token": `${getToken()}`,
     }
   });
+  console.log(response)
   return response;
 };
 

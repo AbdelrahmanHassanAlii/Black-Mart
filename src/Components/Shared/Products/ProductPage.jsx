@@ -17,13 +17,19 @@ export default function ProductPage({
   price,
   quantity,
 }){
+
+  const loginData=localStorage.getItem("loginData")
+  const localdata=JSON.parse(loginData)
+  const id=localdata[0].Payload.userId
+  console.log(id)
   const [data,setData]=useState({
     name:name,
     color:"",
     size:"",
     quantity:0,
     image:image,
-    price:price
+    price:price,
+    userid:id
 
   })
   
@@ -101,7 +107,7 @@ export default function ProductPage({
             </p>
             <div className="flex gap-5">
               <p className=" text-3xl font-bold">{`$${price}`}</p>
-              <p className=" text-3xl font-bold opacity-40 line-through ">{`$240`}</p>
+              <p className=" text-3xl font-bold opacity-40 line-through ">{`$360`}</p>
               <div className="bg-rose-200 text-lg rounded-full  items-center flex  justify-center pr-2 pl-2 text-red-100">
                 {" "}
                 - 40%{" "}

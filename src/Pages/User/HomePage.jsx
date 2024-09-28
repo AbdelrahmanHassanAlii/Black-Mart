@@ -16,7 +16,6 @@ export default function HomePage() {
         <NewArrivals/>
         <TopSelling/>
         <Footer/>
-        <div className='h-5'    >{caregory.name}</div>
     </div>
   )
 }

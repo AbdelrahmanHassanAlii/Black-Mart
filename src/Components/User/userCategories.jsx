@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import CategoryCard from "../User/categoryCard";
+import CategoryCard from "./categoryCard";
 import { getAllCategories } from "../../Helper/Apis/Shared/Category/getAllCategories";
 import Loading from "../Shared/Loaders/Loading";
 import Header from "../Shared/Header/Header";
 import Footer from "../Shared/Footer/Footer";
-export default function CategoryContainer() {
+export default function UserCategoryContainer() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {

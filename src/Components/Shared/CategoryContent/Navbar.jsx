@@ -15,14 +15,17 @@ export default function Navbar({setGetFilters ,Active }) {
   const[priceopen,setPriceOpen] = useState(1000)
   const[priecactive,setpriceactive]=useState(false)
 
-  const[filters,setFilters]=useState({
-    type:"T-shirts",
-    price:"100 - 200",
-    color:"",
-    size:"Large",
-    style:"Casual"
-  })
-  const colors = ["brown", "darkorange", "red", "darkblue", "white", "black", "darkviolet", "gray"];
+  const [filters, setFilters] = useState(() => {
+    const storedFilters = localStorage.getItem('filters');
+    return storedFilters ? JSON.parse(storedFilters) : {
+      type: "",
+      price: "$100 - $200",
+      color: "",
+      size: "Large",
+      style: ""
+    };
+  });
+  const colors = ["brown", "orange", "red", "blue", "white", "black", "green", "gray"];
 
   const handleFilters = (key, item) => {
     setFilters((prevFilters) => ({
@@ -65,10 +68,10 @@ export default function Navbar({setGetFilters ,Active }) {
     setstyleOpen(!styleopen)
   }
   
-  useEffect(()=>{
-    console.log(filters)
-    setGetFilters(filters)
-  },[filters])
+  useEffect(() => {
+    localStorage.setItem('filters', JSON.stringify(filters));
+    setGetFilters(filters);
+  }, [filters, setGetFilters]);
   // w-full sm:w-96  flex-col border border-slate-300 p-6 rounded-2xl
   return (
     <div className={` w-full sm:w-96  sm:flex flex-col border border-slate-300 p-6 rounded-2xl ${Active?"flex":"hidden"} `}>

@@ -2,34 +2,32 @@ import { useEffect, useState } from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-export default function ProductCartCard({ removeItem }) {
+export default function ProductCartCard({ removeItem,setIsChange,isChange,data }) {
   const [cartData, setCartData] = useState([]);
-
-  // Load cart data from localStorage
   useEffect(() => {
+    console.log(data)
     const storedCartData = localStorage.getItem("Cart");
     if (storedCartData) {
       setCartData(JSON.parse(storedCartData));
     }
-  }, [cartData]);
+  }, []);
 
-  // Function to update quantity in localStorage and state
   const updateItemQuantity = (productId, newQuantity) => {
     let updatedCartData = cartData.map((product) => {
       if (product.id === productId) {
-        return { ...product, quantity: newQuantity }; // Update quantity
+        return { ...product, quantity: newQuantity };
       }
       return product;
     });
 
-    setCartData(updatedCartData); // Update state
+    setCartData(updatedCartData); 
 
-    // Save updated cart data back to localStorage
     localStorage.setItem("Cart", JSON.stringify(updatedCartData));
   };
 
   return (
-    <div >
+    <>
+    <div className={` ${data.length>0 ? "flex flex-col" : "hidden"}`} >
       {cartData.length > 0 ? (
         cartData.map((product, index) => (
           <div key={product.id} className="sm:w-[40rem] sm:h-48  border pt-5 p-2 gap-3 sm:p-5 sm:gap-5 rounded-3xl flex  sm:W-10 mb-10">
@@ -62,15 +60,17 @@ export default function ProductCartCard({ removeItem }) {
                   <FaMinus
                     onClick={() => {
                       if (product.quantity > 1) {
-                        updateItemQuantity(product.id, product.quantity - 1); // Decrease quantity
+                        updateItemQuantity(product.id, product.quantity - 1); 
                       }
+                      setIsChange(!isChange)
                     }}
                   />
                   <p className="text-xl font-bold">{product.quantity}</p>
                   <FaPlus
-                    onClick={() =>
-                      updateItemQuantity(product.id, product.quantity + 1) // Increase quantity
-                    }
+                    onClick={() =>{
+                      updateItemQuantity(product.id, product.quantity + 1) 
+                      setIsChange(!isChange)
+                    }}
                   />
                 </div>
               </div>
@@ -78,8 +78,10 @@ export default function ProductCartCard({ removeItem }) {
           </div>
         ))
       ) : (
-        <p className="text-3xl font-bold">No items in cart !</p>
+        <p className={`text-3xl font-bold `}>No items in cart !</p>
       )}
     </div>
+      <p className={`text-3xl font-bold ${data.length > 0 ?"hidden":"block"} `}>No items in cart !</p>
+    </>
   );
 }

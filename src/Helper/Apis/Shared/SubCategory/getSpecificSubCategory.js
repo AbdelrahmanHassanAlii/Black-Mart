@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getToken } from "../../../Funcation/LocalStorage/getToken";
 
-export const getSpecificCategory = async (categoryID) => {
-  const url = `http://localhost:3000/api/v1/categories/${categoryID}`;
+export const getSpecificSubCategory = async (subcategoryID) => {
+  const url = `http://localhost:3000/api/v1/subcategory/${subcategoryID}`;
 
   try {
     const response = await axios.get(url, {
@@ -18,6 +18,6 @@ export const getSpecificCategory = async (categoryID) => {
     console.error("Error fetching category:", error.message);
     
     
-    throw new Error("Failed to fetch category. Please try again later.");
+    throw new Error("Failed to fetch subCategory. Please try again later.");
   }
 };

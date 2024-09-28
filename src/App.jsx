@@ -9,14 +9,15 @@ import Cart from "./Components/Shared/Cart/Cart";
 import CategoryContainer from "./Components/Shared/Categories/CategoryContainer";
 import CategoryContent from "./Components/Shared/CategoryContent/CategoryContent";
 import ProductContainer from "./Components/Shared/Products/ProductContainer";
-
+import UserCategoryContainer from "./Components/User/userCategories";
+import OrderForm from "./Components/User/OrderForm";
 // Admin Components
 import AddCategoryForm from "./Components/Admin/AddCategoryForm";
 import UpdateCategoryForm from "./Components/Admin/UpdateCategoryForm";
 import AddProductForm from "./Components/Admin/AddProductForm";
 import SideBar from "./Components/Admin/SideBar";
 import Profile from "./Components/Shared/Profile/Profile";
-// import Categories from "./Components/User/Categories.jsx";
+
 
 import Categories from "./Pages/Shared/Categories";
 
@@ -25,6 +26,7 @@ import Dashbord from "./Pages/Admin/Dashboard";
 import AddCategory from "./Pages/Admin/AddCategory";
 import UpdateCategory from "./Pages/Admin/UpdateCategory";
 import ProductsContainer from "./Components/Admin/ProductsContainer";
+import SubCategoryContent from "./Components/Shared/subcategories/subCategoryContent";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -53,9 +55,10 @@ function App() {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/profile" element={<Profile />} />
-        {/* <Route path="/categories" element={<Categories />} /> */}
+        <Route path="/categories" element={<UserCategoryContainer />} />
         <Route path="/category/:id" element={<Categories />} />
-
+        <Route path="/subCategory/:id" element={<SubCategoryContent />} />
+        <Route path="/order/:id"  element={<OrderForm/>}/>
         {/* Role-Based Redirect */}
         <Route path="/sign" element={<Sign />} />
 
