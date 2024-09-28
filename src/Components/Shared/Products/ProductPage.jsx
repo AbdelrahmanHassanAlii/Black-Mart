@@ -18,10 +18,18 @@ export default function ProductPage({
   quantity,
 }){
 
-  const loginData=localStorage.getItem("loginData")
-  const localdata=JSON.parse(loginData)
-  const id=localdata[0].Payload.userId
-  console.log(id)
+  const loginData = localStorage.getItem("loginData");
+  let localdata = null;
+
+  if (loginData) {
+    try {
+      
+      localdata = JSON.parse(loginData);
+    } catch (error) {
+      console.error("Error parsing login data:", error);
+    }
+  }
+  const id = localdata ? localdata[0]?.Payload?.userId : null;
   const [data,setData]=useState({
     name:name,
     color:"",

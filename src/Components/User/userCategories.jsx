@@ -4,6 +4,7 @@ import { getAllCategories } from "../../Helper/Apis/Shared/Category/getAllCatego
 import Loading from "../Shared/Loaders/Loading";
 import Header from "../Shared/Header/Header";
 import Footer from "../Shared/Footer/Footer";
+import Signupoffer from "../Shared/Signupoffer/Signupoffer";
 export default function UserCategoryContainer() {
   const [categories, setCategories] = useState([]);
 
@@ -20,8 +21,10 @@ export default function UserCategoryContainer() {
     getCategories();
   }, [categories]); // No need to add categories in the dependency array
 
+  
   return (
     <div >
+        <Signupoffer/>
         <Header/>
         <div className="p-10">
       <p className="text-3xl font-bold mb-5 underline underline-offset-8">Categories</p>

@@ -27,6 +27,7 @@ import AddCategory from "./Pages/Admin/AddCategory";
 import UpdateCategory from "./Pages/Admin/UpdateCategory";
 import ProductsContainer from "./Components/Admin/ProductsContainer";
 import SubCategoryContent from "./Components/Shared/subcategories/subCategoryContent";
+import Wishlist from "./Components/User/wishlist/Wishlist";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -59,6 +60,7 @@ function App() {
         <Route path="/category/:id" element={<Categories />} />
         <Route path="/subCategory/:id" element={<SubCategoryContent />} />
         <Route path="/order/:id"  element={<OrderForm/>}/>
+        <Route path="/wishlist"  element={<Wishlist/>}/>
         {/* Role-Based Redirect */}
         <Route path="/sign" element={<Sign />} />
 

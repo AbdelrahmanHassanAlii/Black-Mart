@@ -21,15 +21,35 @@ export default function Cart() {
     if (cartData) {
       const parsedData = JSON.parse(cartData);
       console.log(parsedData);
-
-      // Filter data based on user ID
-      const filteredData = parsedData.filter((item) => item.userid === id);
+      if(id===null){
+      const filteredData = parsedData.filter((item) => item.userid === null);
       console.log(filteredData); 
-      setData(filteredData);
+      setData(filteredData);}
+      else {
+        const filteredData = parsedData.filter((item) => item.userid === id);
+        console.log(filteredData); 
+        setData(filteredData);
+      }
+
     } else {
       console.log("No cart data found in local storage.");
     }
   }, [isChange]);
+
+  useEffect(() => {
+    const clearGuestCart = () => {
+      const cartData = JSON.parse(localStorage.getItem("Cart"));
+      if (cartData) {
+        const updatedCartData = cartData.filter((item) => item.userid !== null);
+        localStorage.setItem("Cart", JSON.stringify(updatedCartData));
+      }
+    };
+  
+    if (id !== null) {
+      clearGuestCart();
+    }
+  }, [id]);
+  
 
   // Remove item from cart
   const removeItem = (productId) => {
@@ -44,6 +64,7 @@ export default function Cart() {
   useEffect(() => {
     if (data.length > 0) {
       const subtotalValue = data.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      console.log("subtotal",subtotalValue)
       setSubtotal(subtotalValue);
     } else {
       setSubtotal(0);
@@ -93,9 +114,9 @@ export default function Cart() {
                 <span>$ {total}</span>
               </div>
               {/* Correctly interpolating user ID for checkout route */}
-              <Link to={`/order/${id || "default-id"}`}>
+               <Link to={id ? `/order/${id}` : "/sign"}>
                 <div className="bg-black text-white p-4 justify-center items-center gap-6 rounded-full mt-6 flex cursor-pointer hover:opacity-75">
-                  <span>Go To Checkout</span>
+                  <span>{id ? "Go To Checkout" : "Sign In to Checkout"}</span>
                   <FaArrowRightLong className="text-2xl" />
                 </div>
               </Link>

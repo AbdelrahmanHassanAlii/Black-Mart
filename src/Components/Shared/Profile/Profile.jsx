@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../Header/Header';
-
+import { FaHeart } from "react-icons/fa6";
 export default function Profile() {
   const [loginData, setLoginData] = useState(null);
   const [orders, setOrders] = useState([]);
@@ -77,12 +77,20 @@ console.log(orders)
               <p className="mt-1 text-lg font-semibold text-gray-900">{loginData[0].Payload.role}</p>
             </div>
           </div>
+          <div className='w-full flex gap-4 justify-between'>
+            <Link to={`/wishlist`} className='w-full'>
+          <button className='mt-6 w-2/3 bg-blue-500 flex items-center  justify-between text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200'>
+            Wishlist
+            <FaHeart  className='text-lg'/>
+          </button>
+          </Link>
           <button
             onClick={handleLogout}
-            className="mt-6 w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200"
+            className="mt-6 w-2/3 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200"
           >
             Log Out
           </button>
+          </div>
         </div>
 
         {/* Orders Section */}
@@ -99,8 +107,6 @@ console.log(orders)
                   <p><strong>Email:</strong> {order.userEmail}</p>
                   <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
                   <p><strong>Address:</strong> {order.address}</p>
-                  <p><strong>Card Number:</strong> {order.cardNumber}</p>
-                  <p><strong>CVV:</strong> {order.cvv}</p>
                   <p><strong>Date:</strong> {new Date(order.date).toLocaleString()}</p>
                 </div>
               ))}
@@ -111,3 +117,4 @@ console.log(orders)
     </>
   );
 }
+// <FaHeart />
