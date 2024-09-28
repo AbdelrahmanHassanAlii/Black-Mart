@@ -80,7 +80,7 @@ export default function ProductPage({
             alt={name}
             className=" rounded-3xl w-3/4 sm:w-[27 rem] sm:h-[33rem] "
           />
-          <div className="flex sm:flex-col  gap-10">
+          {/* <div className="flex sm:flex-col  gap-10">
             <img
               src={image}
               alt="name"
@@ -105,7 +105,7 @@ export default function ProductPage({
                 handelimg(e);
               }}
             />
-          </div>
+          </div> */}
         </div>
         {/*title&desc part */}
         <div className="">

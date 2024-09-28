@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default function WishlistCard({ name, price, image, id }) {
-  const [added, setAdded] = useState(true); // Assume the item is already added to the wishlist
+  const [added, setAdded] = useState(true); 
 
   const handleRemoveFromWishlist = () => {
     Swal.fire({

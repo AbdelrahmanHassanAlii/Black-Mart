@@ -5,17 +5,17 @@ import Signupoffer from "../Signupoffer/Signupoffer.jsx";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ProductCartCard from "./ProductCartCard.jsx";
 import { Link } from "react-router-dom";
-
+import GetSpecificUsersOrder from '../../../Helper/Funcation/Order/GetSpecificUserOrder.js'
 export default function Cart() {
   const [data, setData] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [isChange, setIsChange] = useState(false);
-
-  // Fetch user ID from local storage
   const userData = JSON.parse(localStorage.getItem("loginData"));
   const id = userData?.[0]?.Payload?.userId || null; 
   console.log("userid:", id);
 
+  const order=GetSpecificUsersOrder(id,1)
+  console.log(order)
   useEffect(() => {
     const cartData = localStorage.getItem("Cart");
     if (cartData) {
