@@ -22,7 +22,7 @@ export default function AddProductForm() {
     imgCover: null,
     // images: [],
     category: "",
-    subcategory: "",
+    subCategory: "",
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -34,7 +34,7 @@ export default function AddProductForm() {
     imgCover: null,
     // images: [],
     category: "",
-    subcategory: "",
+    subCategory: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
   // const [previewImages, setPreviewImages] = useState([]);
@@ -153,7 +153,7 @@ export default function AddProductForm() {
         formData.append("quantity", product.quantity);
         formData.append("price", product.price);
         formData.append("category", product.category);
-        formData.append("subcategory", product.subcategory);
+        formData.append("subCategory", product.subCategory);
         formData.append("imgCover", product.imgCover);
 
         try {
@@ -179,7 +179,7 @@ export default function AddProductForm() {
             imgCover: null,
             images: [],
             category: "",
-            subcategory: "",
+            subCategory: "",
           });
           setPreviewImage(null);
         } catch (error) {
@@ -321,30 +321,30 @@ export default function AddProductForm() {
             )}
           </div>
           <div className={style.inputContainer}>
-            <label htmlFor="subcategory">Subcategory</label>
+            <label htmlFor="subCategory">SubCategory</label>
             <div className={style.inputField}>
               <div className={style.icon}>
                 <SiNamecheap className={style.icon} />
               </div>
               <select
-                name="subcategory"
-                id="subcategory"
+                name="subCategory"
+                id="subCategory"
                 onChange={handleChange}
-                value={product.subcategory}
+                value={product.subCategory}
                 className={style.selectInput}
                 required
               >
                 <option value="">Select subcategory</option>
-                {subCategories.map((subcategory) => (
-                  <option key={subcategory._id} value={subcategory._id}>
-                    {subcategory.name}
+                {subCategories.map((subCategory) => (
+                  <option key={subCategory._id} value={subCategory._id}>
+                    {subCategory.name}
                   </option>
                 ))}
               </select>
             </div>
 
-            {errors.subcategory && (
-              <span className={style.error}>{errors.subcategory}</span>
+            {errors.subCategory && (
+              <span className={style.error}>{errors.subCategory}</span>
             )}
           </div>
           <div className={style.inputContainer}>
