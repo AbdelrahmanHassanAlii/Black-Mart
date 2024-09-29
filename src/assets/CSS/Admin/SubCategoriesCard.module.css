@@ -1,0 +1,24 @@
+.subCategoryCard {
+  width: 100%;
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .subCategoryCard {
+    width: 30%;
+  }
+}
+
+.subCategoryName {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: var(--gray-color-2);
+}

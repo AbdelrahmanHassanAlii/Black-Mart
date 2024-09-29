@@ -3,6 +3,8 @@ import { getAllSubCategories } from "../../Helper/Apis/Shared/subCategory/getAll
 import SubCategoriesCard from "./SubCategoriesCard";
 import { Link } from "react-router-dom";
 
+import style from "../../assets/CSS/Admin/SubCategoriesContainer.module.css";
+
 export default function SubCategoriesContainer() {
   const [subCategories, setSubCategories] = useState([]);
 
@@ -25,7 +27,7 @@ export default function SubCategoriesContainer() {
       </div>
 
       {subCategories.length > 0 ? (
-        <div key={subCategories.id}>
+        <div className={style.subCategoriesCardsContainer}>
           {subCategories.map((subCategory) => (
             <SubCategoriesCard key={subCategory.id} subCategory={subCategory} />
           ))}
