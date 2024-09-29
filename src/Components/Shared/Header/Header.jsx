@@ -27,7 +27,6 @@ export default function Header({ setActive }) {
     getAllProducts()
       .then((response) => {
         setProducts(response.data.products || []);
-        console.log(response.data.products);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);

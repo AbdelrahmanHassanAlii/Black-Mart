@@ -29,7 +29,6 @@ export default function ProductPage({
   const [reviews,setReviews]=useState([])
   const loginData = localStorage.getItem("loginData");
   let localdata = null;
-  console.log(JSON.parse(loginData))
   if (loginData) {
     try {
       localdata = JSON.parse(loginData);
@@ -43,7 +42,6 @@ export default function ProductPage({
     const fetchProducts = async () => {
       try {
         const products = await getAllProducts();
-        console.log(products.data.products);
         setProducts(products.data.products);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -51,11 +49,8 @@ export default function ProductPage({
     }
     fetchProducts()
   },[])
-  console.log(products)
-  //______________________________________________________________
   const id = localdata ? localdata[0]?.Payload?.userId : null;
   const userName =localdata[0]?.Payload?.username
-  //_____________________________________________________________
   const [data,setData]=useState({
     name:name,
     color:"",
@@ -67,7 +62,6 @@ export default function ProductPage({
     
   })
   const deletehandler = async (id) => {
-    console.log("Deleting review with ID:", id); 
     try {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -106,7 +100,6 @@ export default function ProductPage({
     product:id
   })
 const reviewchangeHandler=(e)=>{
-  console.log(e.target.value)
   setReviewToSent((prevData)=>{
     return {
       ...prevData,
@@ -116,7 +109,6 @@ const reviewchangeHandler=(e)=>{
 
 }
 const ratechangeHandler=(e)=>{
-  console.log(e.target.value)
   setReviewToSent((prevData)=>{
     return {
       ...prevData,
@@ -130,10 +122,8 @@ const ratechangeHandler=(e)=>{
   };
   const sentReviewHandler = async () => {
     try {
-      console.log(reviewToSent);
       const response = await AddReview(reviewToSent);
       await Swal.fire("Review Posted!", "You submitted your review!", "success")
-      console.log(response.data);
       setChange(!change)
     } catch (error) {
       console.error("Error posting review:", error);
@@ -163,9 +153,7 @@ const ratechangeHandler=(e)=>{
     }));
     
   };
-  useEffect(()=>{
-    console.log(data)
-  },[data])
+
   const sendDataHandler=()=>{
     Swll.fire("Good job!", "You clicked the button!", "success").then(addToCart(data))
     
@@ -174,7 +162,6 @@ const ratechangeHandler=(e)=>{
 
     const fetchReviews = async () => {
       const fetchedReviews = await GetAllReviews();
-      console.log(fetchedReviews); 
       if (fetchedReviews) {
         setReviews(fetchedReviews);
         

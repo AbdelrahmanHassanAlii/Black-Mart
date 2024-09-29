@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
 import { SiNamecheap } from "react-icons/si";
-import Swal from "sweetalert2"; // Import sweetalert2
+import Swal from "sweetalert2"; 
 import { RiFileCloudLine } from "react-icons/ri";
 
 export default function AddCategoryForm() {
@@ -41,7 +41,6 @@ export default function AddCategoryForm() {
     let formIsValid = true;
     let validationErrors = {};
 
-    // Name validation
     if (!category.name) {
       validationErrors.name = "Name is required";
       formIsValid = false;
@@ -50,7 +49,6 @@ export default function AddCategoryForm() {
       formIsValid = false;
     }
 
-    // Image validation
     if (!category.img) {
       validationErrors.img = "Image is required";
       formIsValid = false;
@@ -67,12 +65,10 @@ export default function AddCategoryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form before submission
     if (!validateForm()) {
       return;
     }
 
-    // SweetAlert confirmation before proceeding
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to add this category?",
@@ -89,9 +85,7 @@ export default function AddCategoryForm() {
 
         try {
           const response = await addCategory(formData);
-          console.log(response);
 
-          // SweetAlert success message
           Swal.fire({
             title: "Added!",
             text: "Category has been added successfully.",

@@ -11,7 +11,6 @@ export default function NewArrivals() {
       
     };
   getProducts();
-      console.log(products)
     }, [])
   return (<>
     <div className='flex flex-col justify-center text-center overflow-y-auto  items-start items-center gap-4 ' id="NewArrivals">

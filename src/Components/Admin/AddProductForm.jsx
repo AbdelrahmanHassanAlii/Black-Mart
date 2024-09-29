@@ -23,6 +23,9 @@ export default function AddProductForm() {
     // images: [],
     category: "",
     subCategory: "",
+    typeof:"",
+    color:"",
+    style:"",
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -35,6 +38,9 @@ export default function AddProductForm() {
     // images: [],
     category: "",
     subCategory: "",
+    typeof:"",
+    color:"",
+    style:""
   });
   const [previewImage, setPreviewImage] = useState(null);
   // const [previewImages, setPreviewImages] = useState([]);
@@ -80,7 +86,6 @@ export default function AddProductForm() {
   const validateForm = () => {
     let formIsValid = true;
     let validationErrors = {};
-    // Name validation
     if (!product.name) {
       validationErrors.name = "Name is required";
       formIsValid = false;
@@ -88,7 +93,6 @@ export default function AddProductForm() {
       validationErrors.name = "Name cannot contain only numbers";
       formIsValid = false;
     }
-    // Description validation
     if (!product.description) {
       validationErrors.description = "Description is required";
       formIsValid = false;
@@ -96,13 +100,10 @@ export default function AddProductForm() {
       validationErrors.description = "Description cannot contain only numbers";
       formIsValid = false;
     }
-
-    // Brand validation
     if (!product.brand) {
       validationErrors.brand = "Brand is required";
       formIsValid = false;
     }
-    // Price validation
     if (!product.price) {
       validationErrors.price = "Price is required";
       formIsValid = false;
@@ -110,7 +111,6 @@ export default function AddProductForm() {
       validationErrors.price = "Price must be a valid number";
       formIsValid = false;
     }
-    // Quantity validation
     if (!product.quantity) {
       validationErrors.quantity = "Quantity is required";
       formIsValid = false;
@@ -118,7 +118,6 @@ export default function AddProductForm() {
       validationErrors.quantity = "Quantity must be a number";
       formIsValid = false;
     }
-    // Image validation
     if (!product.imgCover) {
       validationErrors.imgCover = "Image is required";
       formIsValid = false;
@@ -155,7 +154,9 @@ export default function AddProductForm() {
         formData.append("category", product.category);
         formData.append("subCategory", product.subCategory);
         formData.append("imgCover", product.imgCover);
-
+        formData.append("typeof", product.typeof);
+        formData.append("color", product.color);
+        formData.append("style", product.style);
         try {
           const response = await addProduct(formData);
           console.log(formData);
@@ -168,8 +169,6 @@ export default function AddProductForm() {
             confirmButtonText: "OK",
             confirmButtonColor: "rgb(255, 198, 51)",
           });
-
-          // Reset the form and preview
           setProduct({
             name: "",
             description: "",
@@ -180,6 +179,9 @@ export default function AddProductForm() {
             images: [],
             category: "",
             subCategory: "",
+            typeof:"",
+            color:"",
+            style:""
           });
           setPreviewImage(null);
         } catch (error) {
@@ -286,6 +288,48 @@ export default function AddProductForm() {
                 placeholder="Enter Product Brand"
                 onChange={handleChange}
                 value={product.brand}
+              />
+            </div>
+            <label htmlFor="type">Type</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="typeof"
+                id="typeof"
+                placeholder="Enter type of product"
+                onChange={handleChange}
+                value={product.typeof}
+              />
+            </div>
+            <label htmlFor="color">Color</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="color"
+                id="color"
+                placeholder="Enter  color of product"
+                onChange={handleChange}
+                value={product.color}
+              />
+            </div>
+            <label htmlFor="style">Style</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="style"
+                id="style"
+                placeholder="Enter style of product"
+                onChange={handleChange}
+                value={product.style}
               />
             </div>
 

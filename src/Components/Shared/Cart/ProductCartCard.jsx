@@ -5,7 +5,6 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 export default function ProductCartCard({ removeItem,setIsChange,isChange,data }) {
   const [cartData, setCartData] = useState([]);
   useEffect(() => {
-    console.log(data)
     const storedCartData = localStorage.getItem("Cart");
     if (storedCartData) {
       setCartData(JSON.parse(storedCartData));

@@ -22,7 +22,6 @@ export default function AddSubCategoryForm() {
   const [categories, setCategories] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
 
-  // Fetch categories to populate the select dropdown
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -63,7 +62,6 @@ export default function AddSubCategoryForm() {
     let formIsValid = true;
     let validationErrors = {};
 
-    // Name validation
     if (!subCategory.name) {
       validationErrors.name = "Name is required";
       formIsValid = false;
@@ -72,7 +70,6 @@ export default function AddSubCategoryForm() {
       formIsValid = false;
     }
 
-    // Image validation
     if (!subCategory.img) {
       validationErrors.img = "Image is required";
       formIsValid = false;
@@ -82,7 +79,6 @@ export default function AddSubCategoryForm() {
       formIsValid = false;
     }
 
-    // Category validation
     if (!subCategory.category) {
       validationErrors.category = "Please select a category";
       formIsValid = false;
@@ -95,12 +91,10 @@ export default function AddSubCategoryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form before submission
     if (!validateForm()) {
       return;
     }
 
-    // SweetAlert confirmation before proceeding
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to add this subcategory?",
@@ -120,7 +114,6 @@ export default function AddSubCategoryForm() {
           const response = await addSubCategory(formData);
           console.log(response);
 
-          // SweetAlert success message
           Swal.fire({
             title: "Added!",
             text: "Subcategory has been added successfully.",

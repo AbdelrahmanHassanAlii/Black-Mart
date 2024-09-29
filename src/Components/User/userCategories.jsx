@@ -11,15 +11,15 @@ export default function UserCategoryContainer() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const categoriesData = await getAllCategories(); // Function already returns categories
-        setCategories(categoriesData); // Set the fetched categories
+        const categoriesData = await getAllCategories(); 
+        setCategories(categoriesData); 
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
     getCategories();
-  }, [categories]); // No need to add categories in the dependency array
+  }, [categories]); 
 
   
   return (

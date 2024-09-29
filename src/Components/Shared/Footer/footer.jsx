@@ -23,7 +23,6 @@ export default function Footer() {
     setUserEmail(email);
     localStorage.setItem("useremail", email);
     
-    // Display SweetAlert for feedback
     Swal.fire({
       title: 'Success!',
       text: 'You have been subscribed to our newsletter.',

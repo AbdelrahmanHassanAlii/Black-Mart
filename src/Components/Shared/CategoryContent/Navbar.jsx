@@ -30,7 +30,7 @@ export default function Navbar({setGetFilters ,active }) {
   const handleFilters = (key, item) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [key]: item, // Corrected this line
+      [key]: item, 
     }));
   };
 
@@ -72,10 +72,7 @@ export default function Navbar({setGetFilters ,active }) {
     localStorage.setItem('filters', JSON.stringify(filters));
     setGetFilters(filters);
   }, [filters, setGetFilters]);
-  // w-full sm:w-96  flex-col border border-slate-300 p-6 rounded-2xl
-  useEffect(() => {
-    console.log(active)
-  },[active])
+
   return (
     <div className={` w-full sm:w-96  sm:flex flex-col border border-slate-300 p-6 rounded-2xl ${active?"flex":"hidden"} `}>
       <div className="flex justify-between">

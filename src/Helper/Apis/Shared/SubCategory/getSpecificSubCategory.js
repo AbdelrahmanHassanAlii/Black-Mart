@@ -11,7 +11,6 @@ export const getSpecificSubCategory = async (subcategoryID) => {
       },
     });
 
-    console.log(response.data);
     return response.data; 
   } catch (error) {
     

@@ -11,7 +11,6 @@ export default function Topselling() {
       
     };
   getProducts();
-      console.log(products)
     }, [])
     return (
       <div className='flex flex-col justify-center text-center items-center overflow-y-auto gap-4 mt-6'>

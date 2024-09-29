@@ -96,13 +96,9 @@ export default function OrderForm() {
             date: new Date().toISOString(),
           };
 
-          // Retrieve existing orders from localStorage
           const existingOrders = JSON.parse(localStorage.getItem("Orders")) || [];
-          // Add the new order to the existing orders
           existingOrders.push(newOrder);
-          // Save the updated orders array back to localStorage
           localStorage.setItem("Orders", JSON.stringify(existingOrders));
-          // Remove the cart after placing the order
           localStorage.removeItem("Cart");
 
           Swal.fire({
@@ -114,12 +110,11 @@ export default function OrderForm() {
             navigate("/");
           });
 
-          // Reset the input fields
           setPhoneNumber("");
           setAddress("");
           setCardNumber("");
           setCvv("");
-        }, 2000); // Simulate a delay for checking the CVV
+        }, 2000);
       }
     });
   };
@@ -146,15 +141,15 @@ export default function OrderForm() {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
           <input
-            type="text" // Change type to text to hide up/down buttons
+            type="text" 
             placeholder="Card Number"
             value={cardNumber}
             onChange={(e) => setCardNumber(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             style={{ 
-              '-moz-appearance': 'textfield', // For Firefox
-              '-webkit-appearance': 'none', // For Chrome, Safari, and Edge
+              '-moz-appearance': 'textfield',
+              '-webkit-appearance': 'none',
             }}
           />
           <input
@@ -164,7 +159,7 @@ export default function OrderForm() {
             onChange={(e) => setCvv(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-            maxLength="4" // Limit input length to 4
+            maxLength="4" 
           />
           <button
             type="submit"

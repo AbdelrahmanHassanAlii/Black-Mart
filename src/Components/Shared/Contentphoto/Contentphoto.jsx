@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 export default function Contentphoto() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check for loginData in localStorage
   useEffect(() => {
     const loginData = localStorage.getItem("loginData");
-    setIsLoggedIn(!!loginData); // Set true if loginData exists
+    setIsLoggedIn(!!loginData); 
   }, []);
 
   return (

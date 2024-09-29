@@ -5,37 +5,25 @@ import { useEffect, useState } from 'react';
 import Signupoffer from '../Signupoffer/Signupoffer';
 import Footer from '../Footer/Footer';
 import { getAllSubCategories } from '../../../Helper/Apis/Shared/subCategory/getAllSub.js';
-import SubCategoryCard from '../subcategories/SubCategoriesCard.jsx'; // Correct import for the card component
+import SubCategoryCard from '../subcategories/SubCategoriesCard.jsx'; 
 import Loading from '../Loaders/Loading'; 
 
 export default function CategoryContent() {
   const { id } = useParams(); 
-  
   const [category, setCategory] = useState(null);
-  const [subcategories, setSubcategories] = useState([]); // Using subcategories instead of products
+  const [subcategories, setSubcategories] = useState([]);
   const [active, setActive] = useState(false);
   const [filters, setGetFilters] = useState({});
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    console.log("useEffect is running"); 
     const fetchData = async () => {
       try {
         setLoading(true);
-        
-        // Fetch the subcategories data
         const subcategoryData = await getAllSubCategories();
-        console.log("API Response:", subcategoryData); // Corrected API response
-  
-        // Filter subcategories by category ID
         const filteredSubcategories = subcategoryData.filter(
           (subcategory) => subcategory.category === id
         );
-        
-        // Log the filtered subcategories
-        console.log("Filtered Subcategories:", filteredSubcategories);
-  
-        // Set state with the filtered subcategories
         setSubcategories(filteredSubcategories);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,17 +33,14 @@ export default function CategoryContent() {
     };
   
     fetchData();
-  }, [id]); // Make sure useEffect runs when `id` changes
+  }, [id]); 
   
-  useEffect(() => {
-    console.log(active)
-  },[active])
+
 
 
   if (loading) {
     return <Loading />;
   }
-  console.log(subcategories);
 
   
   return (
@@ -68,7 +53,7 @@ export default function CategoryContent() {
         <div className={`flex flex-col w-full ${active ? "hidden" : "flex"}`}>
           <div className='flex gap-4 justify-between p-3 w-full'>
             <p className='text-xl font-bold'>
-              {filters.style || "Subcategories"} {/* Fallback if no filter is applied */}
+              {filters.style || "Subcategories"} 
             </p>
             <select name="filter" className='font-bold text-sm cursor-pointer'>
               <option value="most">Most Popular</option>
@@ -77,7 +62,7 @@ export default function CategoryContent() {
             </select>
           </div>
 
-          <div className='flex gap-5 flex-wrap'>
+          <div className='flex gap-5 justify-center flex-wrap'>
             {subcategories.length > 0 ? (
               subcategories.map((item) => (
                 <SubCategoryCard

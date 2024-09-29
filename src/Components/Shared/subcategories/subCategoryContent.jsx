@@ -25,11 +25,9 @@ export default function SubCategoryContent() {
         setLoading(true); 
         setError(null);
         const productsData = await getAllProducts();
-        console.log(productsData.data.products);
         const filteredProducts = productsData.data.products.filter(
           (product) => product.subCategory._id === id
         );
-        console.log(filteredProducts);
         setProducts(filteredProducts);  
       } catch (error) {
         setError(error.message); 
@@ -42,7 +40,6 @@ export default function SubCategoryContent() {
 
   useEffect(() => {
     localStorage.removeItem("filters")
-    console.log("refresh")
   },[])
   useEffect(() => {
     if (products.length > 0) {

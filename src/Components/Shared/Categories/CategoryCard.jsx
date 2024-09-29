@@ -2,15 +2,13 @@
 import { Link } from "react-router-dom";
 import style from "../../../assets/CSS/Shared/CategoryCard.module.css";
 import { deleteCategory } from "../../../Helper/Apis/Admin/Category/deleteCategory";
-import Swal from "sweetalert2"; // Import SweetAlert
+import Swal from "sweetalert2"; 
 
 export default function CategoryCard({ image, name, id }) {
   const handleUpdate = () => {
-    // handle update logic
   };
 
   const handleDelete = () => {
-    // SweetAlert confirmation dialog
     Swal.fire({
       title: "Are you sure?",
       text: `Do you really want to delete the category "${name}"? This action cannot be undone!`,

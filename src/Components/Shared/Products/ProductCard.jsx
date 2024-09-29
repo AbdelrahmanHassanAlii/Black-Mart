@@ -4,8 +4,8 @@ import { FaHeartCirclePlus, FaHeartCircleCheck } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css'; 
 import { getSpecificProduct } from '../../../Helper/Apis/Shared/Product/getSpecificProducts';
-import { FaStarHalfAlt } from "react-icons/fa";  //<FaStarHalfAlt />
-import { FaStar } from "react-icons/fa"; //<FaStar />
+import { FaStarHalfAlt } from "react-icons/fa"; 
+import { FaStar } from "react-icons/fa"; 
 export default function ProductCard({ id, image, price, name, description }) {
   const [added, setAdded] = useState(false);  
   const [product, setProduct] = useState(null); 
@@ -18,10 +18,8 @@ export default function ProductCard({ id, image, price, name, description }) {
     const fetchProduct = async () => {
       try {
         const productData = await getSpecificProduct(id);
-        console.log(productData.data.product); 
         setProduct(productData.data.product);
         setLoading(false);
-        console.log(product);
         const wishlist = localStorage.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : [];
         const isProductInWishlist = wishlist.some(item => item.id === id); 
         setAdded(isProductInWishlist);  

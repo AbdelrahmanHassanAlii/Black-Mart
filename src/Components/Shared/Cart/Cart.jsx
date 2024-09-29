@@ -11,20 +11,16 @@ export default function Cart() {
   const [isChange, setIsChange] = useState(false);
   const userData = JSON.parse(localStorage.getItem("loginData"));
   const id = userData?.[0]?.Payload?.userId || null;
-  console.log("userid:", id);
 
   useEffect(() => {
     const cartData = localStorage.getItem("Cart");
     if (cartData) {
       const parsedData = JSON.parse(cartData);
-      console.log(parsedData);
       if (id === null) {
         const filteredData = parsedData.filter((item) => item.userid === null);
-        console.log(filteredData);
         setData(filteredData);
       } else {
         const filteredData = parsedData.filter((item) => item.userid === id);
-        console.log(filteredData);
         setData(filteredData);
       }
     } else {
@@ -46,7 +42,6 @@ export default function Cart() {
     }
   }, [id]);
 
-  // Remove item from cart
   const removeItem = (productId) => {
     if (localStorage.getItem("Cart")) {
       const updatedCartData = data.filter(
@@ -57,21 +52,18 @@ export default function Cart() {
     }
   };
 
-  // Calculate subtotal
   useEffect(() => {
     if (data.length > 0) {
       const subtotalValue = data.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       );
-      console.log("subtotal", subtotalValue);
       setSubtotal(subtotalValue);
     } else {
       setSubtotal(0);
     }
   }, [data]);
 
-  // Calculate order summary items
   const items = [
     { name: "Subtotal", value: subtotal },
     { name: "Discount", value: data.length > 0 ? 40 : 0 },
@@ -90,7 +82,6 @@ export default function Cart() {
       <div className="flex flex-col gap-8 p-5">
         <p className="text-5xl font-extrabold">YOUR CART</p>
 
-        {/* Conditional rendering based on cart data */}
         {data.length > 0 ? (
           <div className="flex flex-col sm:flex-row justify-evenly">
             <div className="flex flex-col items-center">
@@ -124,7 +115,6 @@ export default function Cart() {
                 <span className="text-lg font-bold">Total</span>
                 <span>$ {total}</span>
               </div>
-              {/* Correctly interpolating user ID for checkout route */}
               <Link to={id ? `/order/${id}` : "/sign"}>
                 <div className="bg-black text-white p-4 justify-center items-center gap-6 rounded-full mt-6 flex cursor-pointer hover:opacity-75">
                   <span>{id ? "Go To Checkout" : "Sign In to Checkout"}</span>
@@ -134,7 +124,7 @@ export default function Cart() {
             </div>
           </div>
         ) : (
-          <p className="text-3xl font-bold">No items in cart!</p> // Message when cart is empty
+          <p className="text-3xl font-bold">No items in cart!</p> 
         )}
       </div>
       <Footer />

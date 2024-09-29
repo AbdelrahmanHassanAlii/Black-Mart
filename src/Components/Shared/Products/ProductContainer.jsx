@@ -10,13 +10,11 @@ import { getSpecificProduct } from '../../../Helper/Apis/Shared/Product/getSpeci
 export default function ProductContainer() {
   const [product, setProduct] = useState(null); 
   const { id } = useParams(); 
-  console.log(id); 
  
   useEffect(() => {
     const getProduct = async () => {
       try {
         const productData = await getSpecificProduct(id); 
-        console.log(productData.data.product);
         setProduct(productData.data.product);
       } catch (error) {
         console.error("Error fetching product:", error);

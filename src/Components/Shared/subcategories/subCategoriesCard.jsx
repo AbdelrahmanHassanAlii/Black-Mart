@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link, useParams } from 'react-router-dom';
 export default function subCategoryCard({ image, name ,id }) {
-  console.log(id)
   return (<>
   <Link to={`/subCategory/${id}`} >
   <div className='flex  items-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl '  >
