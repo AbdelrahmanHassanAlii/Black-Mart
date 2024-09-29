@@ -10,7 +10,8 @@ import { getSpecificProduct } from '../../../Helper/Apis/Shared/Product/getSpeci
 export default function ProductContainer() {
   const [product, setProduct] = useState(null); 
   const { id } = useParams(); 
-  console.log(id)
+  console.log(id); 
+ 
   useEffect(() => {
     const getProduct = async () => {
       try {
