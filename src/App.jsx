@@ -32,6 +32,7 @@ import UnAuthorized from "./Components/Admin/UnAuthorized";
 import UpdateProductForm from "./Components/Admin/UpdateProductForm";
 import OrdersTables from "./Components/Admin/OrdersTables";
 import OrderDetails from "./Components/Admin/OrderDetails";
+import SubCategoriesContainer from "./Components/Admin/SubCategoriesContainer";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -91,6 +92,8 @@ function App() {
                 />
                 <Route path="/add-category" element={<AddCategoryForm />} />
 
+                <Route path="/subCategories" element={<SubCategoriesContainer />} />
+
                 <Route path="/products" element={<ProductsContainer />} />
                 <Route path="products/add" element={<AddProductForm />} />
                 <Route
@@ -100,6 +103,8 @@ function App() {
 
                 <Route path="/orders" element={<OrdersTables />} />
                 <Route path="/orders/:id" element={<OrderDetails />} />
+
+
               </Routes>
             </AdminLayout>
           }

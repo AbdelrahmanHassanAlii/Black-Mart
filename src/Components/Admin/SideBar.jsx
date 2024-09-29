@@ -5,6 +5,8 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { PiUsersThreeLight } from "react-icons/pi";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
+import { TbCategory2 } from "react-icons/tb";
+
 
 import style from "../../assets/CSS/Admin/SideBar.module.css";
 import { deleteItemFromLS } from "../../Helper/Funcation/LocalStorage/DeleteItemFromLS";
@@ -49,6 +51,10 @@ export default function SideBar() {
             <Link to={"/admin/categories"}>Categories</Link>
           </li>
           <li>
+            <TbCategory2 className={style.icon} />
+            <Link to={"/admin/subCategories"}>SubCategories</Link>
+          </li>
+          <li>
             <AiOutlineProduct className={style.icon} />
             <Link to={"/admin/products"}>Products</Link>
           </li>
@@ -58,7 +64,7 @@ export default function SideBar() {
           </li>
           <li>
             <PiUsersThreeLight className={style.icon} />
-            <Link to={"/admin/dashboard/users"}>Users</Link>
+            <Link to={"/admin/users"}>Users</Link>
           </li>
         </ul>
       </div>
