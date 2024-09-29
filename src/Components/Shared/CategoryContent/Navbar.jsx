@@ -6,7 +6,7 @@ import { FaCheck } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
 
-export default function Navbar({setGetFilters ,Active }) {
+export default function Navbar({setGetFilters ,active }) {
   const [isActive, setIsActive] = useState(false);
   const [selectedColor, setSelectedColor] = useState(null);
   const[open , setOpen] = useState(false)
@@ -73,8 +73,11 @@ export default function Navbar({setGetFilters ,Active }) {
     setGetFilters(filters);
   }, [filters, setGetFilters]);
   // w-full sm:w-96  flex-col border border-slate-300 p-6 rounded-2xl
+  useEffect(() => {
+    console.log(active)
+  },[active])
   return (
-    <div className={` w-full sm:w-96  sm:flex flex-col border border-slate-300 p-6 rounded-2xl ${Active?"flex":"hidden"} `}>
+    <div className={` w-full sm:w-96  sm:flex flex-col border border-slate-300 p-6 rounded-2xl ${active?"flex":"hidden"} `}>
       <div className="flex justify-between">
         <p className="font-extrabold">Filters</p>
         <GiSettingsKnobs className="text-xl cursor-pointer" />

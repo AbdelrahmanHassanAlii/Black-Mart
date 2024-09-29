@@ -9,6 +9,9 @@ export const getAllProducts = async () => {
       token: `${getToken()}`,
     },
   });
+  console.log({
+    response: response.data.products,
+  });
   return response;
 };
 

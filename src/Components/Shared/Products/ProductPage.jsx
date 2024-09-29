@@ -14,6 +14,7 @@ import {addToCart} from "../../../Helper/Funcation/Addtocart"
 import GetAllReviews from "../../../Helper/Apis/Shared/Reviews/GetAllReviews";
 import AddReview from "../../../Helper/Apis/Shared/Reviews/AddReview";
 import Swal from "sweetalert2";
+import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
 export default function ProductPage({
   image,
   name,
@@ -22,6 +23,7 @@ export default function ProductPage({
   price,
   quantity,
 }){
+  const [products, setProducts] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const[change,setChange]=useState(false)
   const [reviews,setReviews]=useState([])
@@ -36,6 +38,20 @@ export default function ProductPage({
       console.error("Error parsing login data:", error);
     }
   }
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getAllProducts();
+        console.log(products.data.products);
+        setProducts(products.data.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+    fetchProducts()
+  },[])
+  console.log(products)
   //______________________________________________________________
   const id = localdata ? localdata[0]?.Payload?.userId : null;
   const userName =localdata[0]?.Payload?.username
@@ -175,7 +191,7 @@ const ratechangeHandler=(e)=>{
           <img
             src={img}
             alt={name}
-            className=" rounded-3xl min-w-96 w-[30rem] sm:w-[27 rem] sm:h-[33rem] "
+            className=" rounded-3xl min-w-80  w-[12rem] sm:w-[30rem] sm:h-[30rem] "
           />
           {/* <div className="flex sm:flex-col  gap-10">
             <img
@@ -369,36 +385,19 @@ const ratechangeHandler=(e)=>{
         YOU MIGHT ALSO LIKE
       </p>
       <div className=" flex  overflow-y-auto sm:overflow-y-hidden sm:justify-center ">
-        <div className="flex gap-2 ">
-          {[
-            {
-              image: "/Products/Product1/Mightlike/1.jpg",
-              name: "Polo with Contrast Trims",
-              price: "$212",
-            },
-            {
-              image: "/Products/Product1/Mightlike/2.jpg",
-              name: "Polo with Contrast Trims",
-              price: "$212",
-            },
-            {
-              image: "/Products/Product1/Mightlike/3.jpg",
-              name: "Polo with Contrast Trims",
-              price: "$212",
-            },
-            {
-              image: "/Products/Product1/Mightlike/4.jpg",
-              name: "Polo with Contrast Trims",
-              price: "$212",
-            },
-          ].map((product, index) => (
-            <ProductCard
-              key={index}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-            />
-          ))}
+        <div className="flex gap-2  ">
+          {products.map((item) => {
+            return (
+              <ProductCard
+                key={item._id}
+                name={item.name}
+                price={item.price}
+                image={item.imgCover}
+                id={item._id}
+                quantity={1}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

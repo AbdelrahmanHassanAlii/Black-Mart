@@ -51,7 +51,7 @@ export default function Header({ setActive }) {
   };
 
   return (
-    <div className={`flex flex-wrap sm:items-center sm:justify-around justify-between gap-1 mb-3 items-start p-3 ${isLoggedIn ? "sm:mt-0 mt-0" : "sm:mt-9 mt-3"}`}>
+    <div className={`flex flex-wrap sm:items-center sm:justify-around justify-between gap-1 mb-3 items-start p-3 `}>
       <div className="flex gap-2 items-center p-2">
         <AiOutlineMenu className="text-2xl block sm:hidden font-extrabold" onClick={handleactive} />
         <Link to={`/`}>

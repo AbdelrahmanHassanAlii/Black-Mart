@@ -47,13 +47,17 @@ export default function CategoryContent() {
     fetchData();
   }, [id]); // Make sure useEffect runs when `id` changes
   
+  useEffect(() => {
+    console.log(active)
+  },[active])
 
-  // Render a loading state until the data is fetched
+
   if (loading) {
     return <Loading />;
   }
   console.log(subcategories);
 
+  
   return (
     <> 
       <Signupoffer />

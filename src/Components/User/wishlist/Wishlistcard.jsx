@@ -38,7 +38,7 @@ export default function WishlistCard({ name, price, image, id }) {
         <div className="py-4">
           <div className="flex justify-between items-center">
             <Link to={`/product/${id}`}>
-              <p className="font-bold text-lg mb-2">{name}</p>
+              <p className="font-bold text-md mb-2">{name}</p>
             </Link>
             {added && (
               <FaHeartCircleCheck

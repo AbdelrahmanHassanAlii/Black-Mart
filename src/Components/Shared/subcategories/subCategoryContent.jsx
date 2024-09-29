@@ -25,9 +25,11 @@ export default function SubCategoryContent() {
         setLoading(true); 
         setError(null);
         const productsData = await getAllProducts();
+        console.log(productsData.data.products);
         const filteredProducts = productsData.data.products.filter(
           (product) => product.subCategory._id === id
         );
+        console.log(filteredProducts);
         setProducts(filteredProducts);  
       } catch (error) {
         setError(error.message); 
@@ -82,8 +84,7 @@ export default function SubCategoryContent() {
               <option value="price">Price</option>
             </select>
           </div>
-
-          <div className='flex gap-5 flex-wrap'>
+          <div className='flex w-[27rem] sm:w-auto flex-wrap '>
             {filteredProducts.length > 0 ? (
               filteredProducts.map((item) => (
                 <ProductCard

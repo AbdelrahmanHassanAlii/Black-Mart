@@ -7,7 +7,7 @@ export const getToken = () => {
     if (logingData && Array.isArray(logingData) && logingData.length > 0) {
         return logingData[0].token;
     } else {
-        console.error("Token not found or logingData is empty");
+        // console.error("Token not found or logingData is empty");
         return null; // Return null or handle the case as appropriate
     }
 };
