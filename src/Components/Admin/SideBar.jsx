@@ -54,7 +54,7 @@ export default function SideBar() {
           </li>
           <li>
             <MdOutlineLocalShipping className={style.icon} />
-            <Link to={"/admin/dashboard/orders"}>Orders</Link>
+            <Link to={"/admin/orders"}>Orders</Link>
           </li>
           <li>
             <PiUsersThreeLight className={style.icon} />

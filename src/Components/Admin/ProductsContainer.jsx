@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../Helper/Apis/Shared/Product/getAllProducts";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
+import style from "../../assets/CSS/Admin/ProductsContainer.module.css";
 
 export default function ProductsContainer() {
   const [products, setProducts] = useState([]);
@@ -22,7 +23,7 @@ export default function ProductsContainer() {
           Add Product{" "}
         </Link>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className={style.ProductsContainer}>
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}

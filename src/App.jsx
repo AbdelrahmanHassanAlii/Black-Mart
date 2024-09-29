@@ -18,7 +18,6 @@ import AddProductForm from "./Components/Admin/AddProductForm";
 import SideBar from "./Components/Admin/SideBar";
 import Profile from "./Components/Shared/Profile/Profile";
 
-
 import Categories from "./Pages/Shared/Categories";
 
 import HomeCards from "./Components/Admin/HomeCards";
@@ -28,10 +27,22 @@ import UpdateCategory from "./Pages/Admin/UpdateCategory";
 import ProductsContainer from "./Components/Admin/ProductsContainer";
 import SubCategoryContent from "./Components/Shared/subcategories/subCategoryContent";
 import Wishlist from "./Components/User/wishlist/Wishlist";
+import { getRole } from "./Helper/Funcation/LocalStorage/GetRole";
+import UnAuthorized from "./Components/Admin/UnAuthorized";
+import UpdateProductForm from "./Components/Admin/UpdateProductForm";
+import OrdersTables from "./Components/Admin/OrdersTables";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
-  return (
+  let role = getRole(); // Get role from local storage
+
+  // Log role for debugging purposes
+  console.log("Role:", role);
+
+  // Show UnAuthorized component if the role is "user" or invalid
+  return role === "user" ? (
+    <UnAuthorized />
+  ) : (
     <>
       <div
         className="admin-container"
@@ -59,8 +70,8 @@ function App() {
         <Route path="/categories" element={<UserCategoryContainer />} />
         <Route path="/category/:id" element={<Categories />} />
         <Route path="/subCategory/:id" element={<SubCategoryContent />} />
-        <Route path="/order/:id"  element={<OrderForm/>}/>
-        <Route path="/wishlist"  element={<Wishlist/>}/>
+        <Route path="/order/:id" element={<OrderForm />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         {/* Role-Based Redirect */}
         <Route path="/sign" element={<Sign />} />
 
@@ -81,6 +92,12 @@ function App() {
 
                 <Route path="/products" element={<ProductsContainer />} />
                 <Route path="products/add" element={<AddProductForm />} />
+                <Route
+                  path="/products/edit/:id"
+                  element={<UpdateProductForm />}
+                />
+
+                <Route path="/orders" element={<OrdersTables />} />
               </Routes>
             </AdminLayout>
           }

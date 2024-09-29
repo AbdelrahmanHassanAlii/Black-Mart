@@ -1,6 +1,5 @@
 .ProductCard {
-  /*background-color: antiquewhite;
-  */
+  width: 100%;
   box-shadow: var(--box-shadow);
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -8,6 +7,25 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   overflow: hidden;
+  transition: var(--transition);
+  -webkit-transition: var();
+  -moz-transition: var();
+  -ms-transition: var();
+  -o-transition: var();
+}
+
+.ProductCard:hover {
+  transform: scale(1.01);
+  -webkit-transform: scale(1.01);
+  -moz-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  -o-transform: scale(1.01);
+}
+
+@media screen and (min-width: 768px) {
+  .ProductCard {
+    width: 30%;
+  }
 }
 
 .ProductCard img {
@@ -45,7 +63,7 @@
   border: none;
   outline: none;
   padding: 10px 20px;
-  width: 25%;
+  width: 30%;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
