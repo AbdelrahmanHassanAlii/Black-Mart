@@ -5,32 +5,28 @@ import Signupoffer from "../Signupoffer/Signupoffer.jsx";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ProductCartCard from "./ProductCartCard.jsx";
 import { Link } from "react-router-dom";
-import GetSpecificUsersOrder from '../../../Helper/Funcation/Order/GetSpecificUserOrder.js'
 export default function Cart() {
   const [data, setData] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [isChange, setIsChange] = useState(false);
   const userData = JSON.parse(localStorage.getItem("loginData"));
-  const id = userData?.[0]?.Payload?.userId || null; 
+  const id = userData?.[0]?.Payload?.userId || null;
   console.log("userid:", id);
 
-  const order=GetSpecificUsersOrder(id,1)
-  console.log(order)
   useEffect(() => {
     const cartData = localStorage.getItem("Cart");
     if (cartData) {
       const parsedData = JSON.parse(cartData);
       console.log(parsedData);
-      if(id===null){
-      const filteredData = parsedData.filter((item) => item.userid === null);
-      console.log(filteredData); 
-      setData(filteredData);}
-      else {
+      if (id === null) {
+        const filteredData = parsedData.filter((item) => item.userid === null);
+        console.log(filteredData);
+        setData(filteredData);
+      } else {
         const filteredData = parsedData.filter((item) => item.userid === id);
-        console.log(filteredData); 
+        console.log(filteredData);
         setData(filteredData);
       }
-
     } else {
       console.log("No cart data found in local storage.");
     }
@@ -44,17 +40,18 @@ export default function Cart() {
         localStorage.setItem("Cart", JSON.stringify(updatedCartData));
       }
     };
-  
+
     if (id !== null) {
       clearGuestCart();
     }
   }, [id]);
-  
 
   // Remove item from cart
   const removeItem = (productId) => {
     if (localStorage.getItem("Cart")) {
-      const updatedCartData = data.filter((product) => product.id !== productId);
+      const updatedCartData = data.filter(
+        (product) => product.id !== productId
+      );
       setData(updatedCartData);
       localStorage.setItem("Cart", JSON.stringify(updatedCartData));
     }
@@ -63,8 +60,11 @@ export default function Cart() {
   // Calculate subtotal
   useEffect(() => {
     if (data.length > 0) {
-      const subtotalValue = data.reduce((acc, item) => acc + item.price * item.quantity, 0);
-      console.log("subtotal",subtotalValue)
+      const subtotalValue = data.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      console.log("subtotal", subtotalValue);
       setSubtotal(subtotalValue);
     } else {
       setSubtotal(0);
@@ -94,15 +94,26 @@ export default function Cart() {
         {data.length > 0 ? (
           <div className="flex flex-col sm:flex-row justify-evenly">
             <div className="flex flex-col items-center">
-              <ProductCartCard data={data} removeItem={removeItem} setIsChange={setIsChange} isChange={isChange} />
+              <ProductCartCard
+                data={data}
+                removeItem={removeItem}
+                setIsChange={setIsChange}
+                isChange={isChange}
+              />
             </div>
-            <div className={`border sm:w-96 rounded-2xl p-10 h-[28rem] flex flex-col`}>
+            <div
+              className={`border sm:w-96 rounded-2xl p-10 h-[28rem] flex flex-col`}
+            >
               <p className="text-xl font-bold mb-10">Order Summary</p>
               <ul className="flex flex-col gap-6">
                 {items.map((item, index) => (
                   <li key={index} className="flex justify-between text-md">
                     <span className="opacity-70">{item.name}</span>
-                    <span className={`font-bold text-xl ${item.name === "Discount" ? "text-red-100" : "text-black"}`}>
+                    <span
+                      className={`font-bold text-xl ${
+                        item.name === "Discount" ? "text-red-100" : "text-black"
+                      }`}
+                    >
                       $ {item.value}
                     </span>
                   </li>
@@ -114,7 +125,7 @@ export default function Cart() {
                 <span>$ {total}</span>
               </div>
               {/* Correctly interpolating user ID for checkout route */}
-               <Link to={id ? `/order/${id}` : "/sign"}>
+              <Link to={id ? `/order/${id}` : "/sign"}>
                 <div className="bg-black text-white p-4 justify-center items-center gap-6 rounded-full mt-6 flex cursor-pointer hover:opacity-75">
                   <span>{id ? "Go To Checkout" : "Sign In to Checkout"}</span>
                   <FaArrowRightLong className="text-2xl" />

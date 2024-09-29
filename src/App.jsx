@@ -31,6 +31,7 @@ import { getRole } from "./Helper/Funcation/LocalStorage/GetRole";
 import UnAuthorized from "./Components/Admin/UnAuthorized";
 import UpdateProductForm from "./Components/Admin/UpdateProductForm";
 import OrdersTables from "./Components/Admin/OrdersTables";
+import OrderDetails from "./Components/Admin/OrderDetails";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -98,6 +99,7 @@ function App() {
                 />
 
                 <Route path="/orders" element={<OrdersTables />} />
+                <Route path="/orders/:id" element={<OrderDetails />} />
               </Routes>
             </AdminLayout>
           }

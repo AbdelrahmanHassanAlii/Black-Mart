@@ -61,7 +61,7 @@ export default function OrdersTables() {
                 <td>
                   <Link
                     className={style.ShowButton}
-                    to={`/admin/orders/${order.cardNumber}`}
+                    to={`/admin/orders/${order.id}`}
                   >
                     Show
                   </Link>

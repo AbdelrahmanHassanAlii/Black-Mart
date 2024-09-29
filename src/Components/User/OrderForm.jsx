@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { generateUniqueId } from "../../Helper/Funcation/GenerateID";
 
 export default function OrderForm() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -83,6 +84,7 @@ export default function OrderForm() {
 
         setTimeout(() => {
           const newOrder = {
+            id: generateUniqueId(),
             userName,
             userEmail,
             phoneNumber,
