@@ -30,7 +30,7 @@ export default function Cart() {
     } else {
       console.log("No cart data found in local storage.");
     }
-  }, [isChange]);
+  }, [isChange, id]);
 
   useEffect(() => {
     const clearGuestCart = () => {
