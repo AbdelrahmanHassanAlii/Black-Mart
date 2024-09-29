@@ -8,13 +8,25 @@ export default function SubCategoriesCard({ subCategory }) {
 
   return (
     <div className={style.subCategoryCard}>
-      <Link to={`/subCategory/${subCategory._id}`}>
+      <Link to={`/subCategory/${subCategory.id}`}>
         <img src={subCategory.img} alt={subCategory.name} />
 
         <p className={style.subCategoryName}>{subCategory.name}</p>
-        <div className="controller">
-          <Link to={`/admin/subCategories/edit/${subCategory.id}`}> Edit </Link>
-          <Link> Delete </Link>
+        <div className={style.subCategoryBtns}>
+          <Link
+            className={style.editBtn}
+            to={`/admin/subCategories/edit/${subCategory._id}`}
+          >
+            {" "}
+            Edit{" "}
+          </Link>
+          <Link
+            className={style.deleteBtn}
+            to={`/admin/subCategories/delete/${subCategory.id}`}
+          >
+            {" "}
+            Delete{" "}
+          </Link>
         </div>
       </Link>
     </div>

@@ -34,6 +34,7 @@ import OrdersTables from "./Components/Admin/OrdersTables";
 import OrderDetails from "./Components/Admin/OrderDetails";
 import SubCategoriesContainer from "./Components/Admin/SubCategoriesContainer";
 import AddSubCategoryForm from "./Components/Admin/AddSubCategoryForm";
+import UpdateSubCategoryForm from "./Components/Admin/UpdateSubCategorie";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -100,6 +101,11 @@ function App() {
                 <Route
                   path="/subCategories/add"
                   element={<AddSubCategoryForm />}
+                />
+
+                <Route
+                  path="/subCategories/edit/:id"
+                  element={<UpdateSubCategoryForm />}
                 />
 
                 <Route path="/products" element={<ProductsContainer />} />
