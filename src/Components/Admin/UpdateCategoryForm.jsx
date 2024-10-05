@@ -6,6 +6,8 @@ import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
 import { SiNamecheap } from "react-icons/si";
 import Swal from "sweetalert2";
 import { RiFileCloudLine } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 export default function UpdateCategoryForm() {
   const { id } = useParams();
@@ -27,8 +29,6 @@ export default function UpdateCategoryForm() {
     const getCategory = async () => {
       try {
         const categoryData = await getSpecificCategory(id);
-
-        // console.log(categoryData.category.name);
 
         if (categoryData) {
           setCategory({
@@ -122,17 +122,34 @@ export default function UpdateCategoryForm() {
           const response = await updateCategory(id, formData);
           console.log(response);
 
-          Swal.fire({
-            title: "Updated!",
-            text: "Category has been updated successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
+          // Use Toastify for success notification
+          toast.success("Category has been updated successfully!", {
+            position: "top-right",
+            autoClose: 3000, // Auto close after 3 seconds
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
 
           setPreviewImage(null);
         } catch (error) {
           console.error("Error updating category:", error);
+
+          // Use Toastify for error notification
+          toast.error("An error occurred while updating the category.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
           setErrors((prevErrors) => ({
             ...prevErrors,
             backEndError: "An error occurred while updating the category.",
@@ -144,7 +161,7 @@ export default function UpdateCategoryForm() {
 
   return (
     <div className={style.formContainer}>
-      {/* <h2 className={`${style.formTitle}`}>Update Category</h2> */}
+      <h2 className={`${style.formTitle}`}>Update Category Form</h2>
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor="name">Name</label>
@@ -196,6 +213,9 @@ export default function UpdateCategoryForm() {
           <span className={style.error}>{errors.backEndError}</span>
         )}
       </form>
+
+      {/* Toastify Container */}
+      <ToastContainer />
     </div>
   );
 }
