@@ -10,19 +10,22 @@ import ProductCard from "./ProductCard";
 import { FaCheck } from "react-icons/fa";
 import DeleteReview from "../../../Helper/Apis/Shared/Reviews/DeleteReview";
 import Swll from "sweetalert2";
-import {addToCart} from "../../../Helper/Funcation/Addtocart"
 import GetAllReviews from "../../../Helper/Apis/Shared/Reviews/GetAllReviews";
 import AddReview from "../../../Helper/Apis/Shared/Reviews/AddReview";
 import Swal from "sweetalert2";
 import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
+import AddtoCart from "../../../Helper/Apis/User/CartAPis/AddtoCart";
 export default function ProductPage({
+  productId,
   image,
   name,
   sideimages,
   description,
   price,
   quantity,
+  setdata,
 }){
+  const [Cart,setCart]=useState({})
   const [products, setProducts] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const[change,setChange]=useState(false)
@@ -37,7 +40,7 @@ export default function ProductPage({
       console.error("Error parsing login data:", error);
     }
   }
-
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -56,10 +59,6 @@ export default function ProductPage({
     color:"",
     size:"",
     quantity:0,
-    image:image,
-    price:price,
-    userid:id
-    
   })
   const deletehandler = async (id) => {
     try {
@@ -117,6 +116,11 @@ const ratechangeHandler=(e)=>{
   })
 }
 
+
+  const handlePopupOpen = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   const handlePopupClose = () => {
     setIsPopupOpen(!isPopupOpen);
   };
@@ -153,11 +157,28 @@ const ratechangeHandler=(e)=>{
     }));
     
   };
-
-  const sendDataHandler=()=>{
-    Swll.fire("Good job!", "You clicked the button!", "success").then(addToCart(data))
-    
-  }
+  setdata(data)
+  
+  useEffect(()=>{
+    setCart({
+      product:productId,
+      data:data
+    })
+  },[data])
+  console.log(Cart)   
+  const sendDataHandler = async () => {
+    try {
+      if (id) {
+        await AddtoCart(Cart); 
+        Swll.fire("Good job!", "Product added to cart!", "success");
+      } else {
+        Swll.fire("Error", "Product ID is missing or invalid!", "error");
+      }
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      Swll.fire("Error", "Failed to add product to cart.", "error");
+    }
+  };
   useEffect(() => {
 
     const fetchReviews = async () => {
@@ -230,44 +251,49 @@ const ratechangeHandler=(e)=>{
           <div className="flex flex-col gap-4 p-3">
             <p className="opacity-75">Select Colors</p>
             <div className="flex gap-3">
-                {[
-                  { name: "lime", bgColor: "bg-lime-800" },
-                  { name: "orange", bgColor: "bg-orange-700" },
-                  { name: "sky", bgColor: "bg-sky-950" },
-                ].map((color, index) => (
-                  <div
-                    key={index}
-                    className={`relative rounded-full h-10 w-10 cursor-pointer ${color.bgColor}`}
-                    onClick={() =>{ handleColorClick(color.name)
-                                    datahandler("color",color.name)}
-                    }
-                  >
-                    {selectedColor === color.name && (
-                      <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
-                    )}
-                  </div>
-                ))}
+            {Array.isArray(products.find((product) => product._id === productId)?.color) 
+                  ? products.find((product) => product._id === productId).color.map((color, index) => (
+                    <div
+                        key={index}
+                        className="relative rounded-full h-10 border border-stone-700 shadow-lg w-10 cursor-pointer"
+                        style={{ backgroundColor: color }}
+                        onClick={() => {
+                          handleColorClick(color);
+                          datahandler("color", color);
+                        }}
+                      >
+                        {selectedColor === color && (
+                          <FaCheck className="text-white absolute inset-0 m-auto flex justify-center items-center" />
+                        )}
+                    </div>
+                  ))
+                  : null
+            }
           </div>
             {/*Choose Size part */}
             <div className="flex flex-col gap-4 p-3">
               <p className="opacity-75">Choose Size</p>
               <div className="flex gap-3">
-                {["Small", "Medium", "Large", "XLarge"].map((size) => (
-                  <div
-                    key={size}
-                    className={`rounded-full text-md w-20 h-10 flex items-center justify-center cursor-pointer hover:scale-105 ${
-                      isActive === size
-                        ? "bg-black text-white"
-                        : "bg-slate-300 text-black"
-                    }`}
-                    onClick={() => {handleClick(size)
-                      datahandler("size",size)}
-                      
-                  }
-                  >
-                    <span>{size}</span>
-                  </div>
-                ))}
+              {(Array.isArray(products.find((product) => product._id === productId)?.size)
+  ? products.find((product) => product._id === productId)?.size
+  : [products.find((product) => product._id === productId)?.size]
+)?.map((size) => (
+  <div
+    key={size}
+    className={`rounded-full text-md w-20 h-10 flex items-center justify-center cursor-pointer hover:scale-105 ${
+      isActive === size
+        ? "bg-black text-white"
+        : "bg-slate-300 text-black"
+    }`}
+    onClick={() => {
+      handleClick(size);
+      datahandler("size", size);
+    }}
+  >
+    <span>{size}</span>
+  </div>
+))}
+
               </div>
             </div>
             <div className="flex justify-center">

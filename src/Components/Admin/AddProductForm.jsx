@@ -24,8 +24,9 @@ export default function AddProductForm() {
     category: "",
     subCategory: "",
     typeof:"",
-    color:"",
+    color:[],
     style:"",
+    size:[],
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -39,7 +40,8 @@ export default function AddProductForm() {
     category: "",
     subCategory: "",
     typeof:"",
-    color:"",
+    color:[],
+    size:[],
     style:""
   });
   const [previewImage, setPreviewImage] = useState(null);
@@ -68,20 +70,37 @@ export default function AddProductForm() {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value, files, options } = e.target;
+  
     if (name === "imgCover") {
       setProduct({
         ...product,
         imgCover: files[0],
       });
       setPreviewImage(URL.createObjectURL(files[0]));
-    } else {
+    } 
+    else if (name === "color" || name === "size") {
+      const selectedValues = Array.from(options) 
+                                .filter(option => option.selected) 
+                                .map(option => option.value);
+  
+      setProduct({
+        ...product,
+        [name]: selectedValues, 
+      });
+    } 
+    else {
       setProduct({
         ...product,
         [name]: value,
       });
     }
   };
+  
+  useEffect(() => {
+      console.log(product)
+  },[product])
+
 
   const validateForm = () => {
     let formIsValid = true;
@@ -155,8 +174,9 @@ export default function AddProductForm() {
         formData.append("subCategory", product.subCategory);
         formData.append("imgCover", product.imgCover);
         formData.append("typeof", product.typeof);
-        formData.append("color", product.color);
         formData.append("style", product.style);
+        product.color.forEach((color) => formData.append("color[]", color));
+        product.size.forEach((size) => formData.append("size[]", size));
         try {
           const response = await addProduct(formData);
           console.log(formData);
@@ -180,8 +200,9 @@ export default function AddProductForm() {
             category: "",
             subCategory: "",
             typeof:"",
-            color:"",
-            style:""
+            color:[],
+            style:"",
+            size:[],
           });
           setPreviewImage(null);
         } catch (error) {
@@ -305,19 +326,33 @@ export default function AddProductForm() {
               />
             </div>
             <label htmlFor="color">Color</label>
-            <div className={style.inputField}>
-              <div className={style.icon}>
-                <SiNamecheap className={style.icon} />
-              </div>
-              <input
-                type="text"
-                name="color"
-                id="color"
-                placeholder="Enter  color of product"
-                onChange={handleChange}
-                value={product.color}
-              />
-            </div>
+            <select
+                  name="color"
+                  id="color"
+                  onChange={handleChange}
+                  value={product.color}  
+                  className={style.selectInput}
+                  multiple
+                >
+                  <option value="lime">lime</option>
+                  <option value="orange">orange</option>
+                  <option value="sky">sky</option>
+            </select>
+            <label htmlFor="size">Size</label>
+            <select
+                  name="size"
+                  id="size"
+                  onChange={handleChange}
+                  value={product.size}
+                  className={style.selectInput}
+                  multiple
+                >
+                  <option value="Small">Small</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Large">Large</option>
+                  <option value="XLarge">XLarge</option>
+
+            </select>
             <label htmlFor="style">Style</label>
             <div className={style.inputField}>
               <div className={style.icon}>

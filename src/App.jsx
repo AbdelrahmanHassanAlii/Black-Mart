@@ -34,6 +34,7 @@ import OrderDetails from "./Components/Admin/OrderDetails";
 import SubCategoriesContainer from "./Components/Admin/SubCategoriesContainer";
 import AddSubCategoryForm from "./Components/Admin/AddSubCategoryForm";
 import UpdateSubCategoryForm from "./Components/Admin/UpdateSubCategorie";
+import { useState } from "react";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -59,6 +60,7 @@ const AdminLayout = ({ children }) => {
 };
 
 function App() {
+  const [data,setdata]=useState({})
   return (
     <>
       <Routes>
@@ -66,8 +68,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/admin/Categories" element={<CategoryContainer />} /> */}
         <Route path="/category/:id" element={<CategoryContent />} />
-        <Route path="/product/:id" element={<ProductContainer />} />
-        <Route path="/Cart" element={<Cart />} />
+        <Route path="/product/:id" element={<ProductContainer setdata={setdata} />} />
+        <Route path="/Cart" element={<Cart data1={data} />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<UserCategoryContainer />} />

@@ -7,10 +7,10 @@ import ProductPage from "./ProductPage";
 import Signupoffer from "../Signupoffer/Signupoffer";
 import { getSpecificProduct } from '../../../Helper/Apis/Shared/Product/getSpecificProducts';
 
-export default function ProductContainer() {
+export default function ProductContainer({setdata}) {
   const [product, setProduct] = useState(null); 
   const { id } = useParams(); 
- 
+  console.log(id)
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -34,12 +34,14 @@ export default function ProductContainer() {
       <Header />
       <div>
         <ProductPage
+          productId={id}
           image={product.imgCover}
           sideimages={product.images}
           name={product.name}
           description={product.description}
           price={product.price}
           quantity={product.quantity}
+          setdata={setdata}
         />
       </div>
       <Footer />
