@@ -4,6 +4,7 @@ import { getAllCategories } from "../../../Helper/Apis/Shared/Category/getAllCat
 import style from "../../../assets/CSS/Shared/CategoriesContainer.module.css";
 import Loading from "../Loaders/Loading";
 import { Link } from "react-router-dom";
+import { RiAddLargeLine } from "react-icons/ri";
 
 export default function CategoryContainer() {
   const [categories, setCategories] = useState([]);
@@ -11,8 +12,8 @@ export default function CategoryContainer() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const categoriesData = await getAllCategories(); 
-        setCategories(categoriesData); 
+        const categoriesData = await getAllCategories();
+        setCategories(categoriesData);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -25,7 +26,11 @@ export default function CategoryContainer() {
     <div className={style.Categories}>
       <div className="heading">
         <p className="title">Categories</p>
-      <Link className="add-btn" to={`/admin/categories/add`}> Add Category </Link>
+        <Link className="add-btn" to={`/admin/categories/add`}>
+          {" "}
+          Add Category
+          <RiAddLargeLine />
+        </Link>
       </div>
       {categories.length > 0 ? (
         <div className={style.categoriesCardsContainer}>

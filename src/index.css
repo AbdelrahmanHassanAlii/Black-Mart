@@ -23,10 +23,7 @@
   --green-color-100: rgb(1, 171, 49);
   --blue-color: #299fff;
   --blue-color-2: #008dda;
-  --light-blue-color : #e6f0ff;
-
-
-
+  --light-blue-color: #e6f0ff;
 
   /* Fonts */
   --font-satoshi: "Satoshi", sans-serif;
@@ -114,6 +111,12 @@ button {
   -ms-transition: var(--transition);
   -o-transition: var(--transition);
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  /* font-size: 1.5rem; */
 }
 
 .add-btn:hover {
@@ -121,8 +124,7 @@ button {
 }
 /* add-btn */
 
-
-.heading{
+.heading {
   display: flex;
   justify-content: space-between;
   align-items: center;

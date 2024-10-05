@@ -2,11 +2,14 @@
 import { Link } from "react-router-dom";
 import style from "../../../assets/CSS/Shared/CategoryCard.module.css";
 import { deleteCategory } from "../../../Helper/Apis/Admin/Category/deleteCategory";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
+import { GrUpdate } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 export default function CategoryCard({ image, name, id }) {
-  const handleUpdate = () => {
-  };
+  const handleUpdate = () => {};
 
   const handleDelete = () => {
     Swal.fire({
@@ -20,13 +23,37 @@ export default function CategoryCard({ image, name, id }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          console.log("Initiating delete for category ID:", id); 
+
           const deleteCategoryResponse = await deleteCategory(id);
+          console.log("API response:", deleteCategoryResponse);
+
           if (deleteCategoryResponse) {
-            Swal.fire("Deleted!", "Category has been deleted.", "success");
+            toast.success("Category has been added successfully!", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          } else {
+            throw new Error("Deletion failed: No response from API.");
           }
         } catch (error) {
-          console.error(error);
-          Swal.fire("Error", "Failed to delete category.", "error");
+          console.error("Error during category deletion:", error);
+          toast.error("Failed to delete category.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
       }
     });
@@ -41,15 +68,21 @@ export default function CategoryCard({ image, name, id }) {
           className={`${style.button} ${style.updateButton}`}
           onClick={handleUpdate}
         >
-          <Link to={`/admin/update-category/${id}`}>Update</Link>
+          <Link to={`/admin/update-category/${id}`}>
+            Update
+            <GrUpdate />
+          </Link>
         </button>
         <button
           className={`${style.button} ${style.deleteButton}`}
           onClick={handleDelete}
         >
           Delete
+          <MdDelete />
         </button>
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

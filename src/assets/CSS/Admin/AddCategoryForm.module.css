@@ -4,8 +4,24 @@
 }
 
 .formTitle {
+  width: fit-content;
   margin-bottom: 1rem;
   text-align: center;
+  color: var(--gray-color-3);
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+}
+
+.formTitle::before {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 2px;
+  background-color: var(--gray-color-3);
+  position: absolute;
+  bottom: -5px;
+  left: 0;
 }
 
 .inputContainer {
@@ -87,7 +103,6 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  /* background-color: white; */
   background-color: transparent;
   width: 100%;
 }

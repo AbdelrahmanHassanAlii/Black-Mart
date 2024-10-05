@@ -82,6 +82,10 @@
 a {
   text-decoration: none;
   color: var(--white-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .updateButton {
@@ -94,6 +98,10 @@ a {
 
 .deleteButton {
   background-color: var(--red-color-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .deleteButton:hover {

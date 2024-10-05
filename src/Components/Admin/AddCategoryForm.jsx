@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import { useState } from "react";
 import { addCategory } from "../../Helper/Apis/Admin/Category/addCategory";
 import style from "../../assets/CSS/Admin/AddCategoryForm.module.css";
 import { SiNamecheap } from "react-icons/si";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import { RiFileCloudLine } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RiAddLine } from "react-icons/ri";
 
 export default function AddCategoryForm() {
   const [errors, setErrors] = useState({
@@ -74,7 +77,7 @@ export default function AddCategoryForm() {
       text: "Do you want to add this category?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "rgb(255, 198, 51)",
+      confirmButtonColor: "#299fff",
       cancelButtonColor: "rgb(255, 51, 51)",
       confirmButtonText: "Yes, add it!",
     }).then(async (result) => {
@@ -86,12 +89,15 @@ export default function AddCategoryForm() {
         try {
           const response = await addCategory(formData);
 
-          Swal.fire({
-            title: "Added!",
-            text: "Category has been added successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
+          toast.success("Category has been added successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
 
           setCategory({
@@ -111,7 +117,7 @@ export default function AddCategoryForm() {
 
   return (
     <div className={style.formContainer}>
-      <h2 className={`${style.formTitle}`}>Add Category</h2>
+      <h2 className={`${style.formTitle}`}>Add Category Form</h2>
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor="name">Name</label>
@@ -158,11 +164,14 @@ export default function AddCategoryForm() {
 
         <button className="add-btn" type="submit">
           Add Category
+          <RiAddLine />
         </button>
         {errors.backEndError && (
           <span className={style.error}>{errors.backEndError}</span>
         )}
       </form>
+
+      <ToastContainer />
     </div>
   );
 }
