@@ -7,7 +7,6 @@ import { MdOutlineLocalShipping } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
 import { TbCategory2 } from "react-icons/tb";
 
-
 import style from "../../assets/CSS/Admin/SideBar.module.css";
 import { deleteItemFromLS } from "../../Helper/Funcation/LocalStorage/DeleteItemFromLS";
 import Swal from "sweetalert2";
@@ -38,7 +37,7 @@ export default function SideBar() {
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
           alt="admin photo"
         />
-        <p className={style.name}>Abdelrahman</p>
+        {/* <p className={style.name}>Abdelrahman</p> */}
       </div>
       <div className={style.middle}>
         <ul>
@@ -62,10 +61,10 @@ export default function SideBar() {
             <MdOutlineLocalShipping className={style.icon} />
             <Link to={"/admin/orders"}>Orders</Link>
           </li>
-          <li>
+          {/* <li>
             <PiUsersThreeLight className={style.icon} />
             <Link to={"/admin/users"}>Users</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className={style.bottom}>

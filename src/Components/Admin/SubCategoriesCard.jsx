@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import style from "../../assets/CSS/Admin/SubCategoriesCard.module.css";
+import { deleteSubCategory } from "./../../Helper/Apis/Admin/SubCategory/deleteSub";
+import Swal from "sweetalert2";
 
 export default function SubCategoriesCard({ subCategory }) {
   console.log(subCategory);
@@ -8,7 +10,7 @@ export default function SubCategoriesCard({ subCategory }) {
 
   return (
     <div className={style.subCategoryCard}>
-      <Link to={`/subCategory/${subCategory.id}`}>
+      <Link to={`/admin/subCategories`}>
         <img src={subCategory.img} alt={subCategory.name} />
 
         <p className={style.subCategoryName}>{subCategory.name}</p>
@@ -20,13 +22,27 @@ export default function SubCategoriesCard({ subCategory }) {
             {" "}
             Edit{" "}
           </Link>
-          <Link
+          {/* <Link
             className={style.deleteBtn}
-            to={`/admin/subCategories/delete/${subCategory.id}`}
+            onClick={() => {
+              Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  deleteSubCategory(subCategory.id);
+                }
+              });
+            }}
           >
             {" "}
             Delete{" "}
-          </Link>
+          </Link> */}
         </div>
       </Link>
     </div>
