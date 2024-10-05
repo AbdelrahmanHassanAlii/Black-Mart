@@ -1,5 +1,4 @@
-import Footer from "../../Shared/Footer/Footer";
-import Header from "../../Shared/Header/Header";
+
 import Wishlistcard from "./wishlistcard";
 
 export default function Wishlist() {
@@ -23,7 +22,6 @@ export default function Wishlist() {
   const userwishlist = wishlist.filter((item) => item.userId === id);
   return (
     <div>
-      <Header />
       <div className="flex flex-col p-16">
         <p className="text-3xl font-extrabold mb-10">Wishlist</p>
         {userwishlist.length > 0 ? (
@@ -42,7 +40,6 @@ export default function Wishlist() {
           <p className="text-lg">Your wishlist is empty.</p>
         )}
       </div>
-      <Footer />
     </div>
   );
 }
