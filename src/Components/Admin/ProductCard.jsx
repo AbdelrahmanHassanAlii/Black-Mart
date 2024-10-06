@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import style from "../../assets/CSS/Admin/ProductCard.module.css";
 import { deleteProduct } from "../../Helper/Apis/Admin/Product/deleteProduct";
 import Swal from "sweetalert2";
+import { MdDelete } from "react-icons/md";
+import { RxUpdate } from "react-icons/rx";
 
 export default function ProductCard({ product }) {
   const handleDelete = async (productId) => {
@@ -28,7 +30,6 @@ export default function ProductCard({ product }) {
             showConfirmButton: false,
             timer: 1500,
           });
-          // Optionally, you might want to refresh the list of products or redirect the user.
         } else {
           Swal.fire({
             icon: "error",
@@ -59,10 +60,11 @@ export default function ProductCard({ product }) {
       </div>
 
       <div className={style.actions}>
-        <Link className={style.view} to={`/product/${product._id}`}>
-          View
+        <Link className={style.edit} to={`/admin/products/edit/${product._id}`}>
+          Update
+          <RxUpdate />
         </Link>
-        <Link
+        <button
           className={style.delete}
           onClick={(e) => {
             e.preventDefault();
@@ -70,10 +72,8 @@ export default function ProductCard({ product }) {
           }}
         >
           Delete
-        </Link>
-        <Link className={style.edit} to={`/admin/products/edit/${product._id}`}>
-          Edit
-        </Link>
+          <MdDelete />
+        </button>
       </div>
     </div>
   );
