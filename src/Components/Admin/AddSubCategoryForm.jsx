@@ -5,6 +5,9 @@ import Swal from "sweetalert2";
 import { RiFileCloudLine } from "react-icons/ri";
 import { addSubCategory } from "../../Helper/Apis/Admin/SubCategory/addSub";
 import { getAllCategories } from "../../Helper/Apis/Shared/Category/getAllCategories";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TbCategoryFilled } from "react-icons/tb";
 
 export default function AddSubCategoryForm() {
   const [errors, setErrors] = useState({
@@ -88,6 +91,22 @@ export default function AddSubCategoryForm() {
     return formIsValid;
   };
 
+  // Function to reset form states
+  const resetForm = () => {
+    setSubCategory({
+      name: "",
+      img: null,
+      category: "",
+    });
+    setPreviewImage(null);
+    setErrors({
+      name: "",
+      img: "",
+      category: "",
+      backEndError: "",
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -100,7 +119,7 @@ export default function AddSubCategoryForm() {
       text: "Do you want to add this subcategory?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "rgb(255, 198, 51)",
+      confirmButtonColor: "#299fff",
       cancelButtonColor: "rgb(255, 51, 51)",
       confirmButtonText: "Yes, add it!",
     }).then(async (result) => {
@@ -114,22 +133,32 @@ export default function AddSubCategoryForm() {
           const response = await addSubCategory(formData);
           console.log(response);
 
-          Swal.fire({
-            title: "Added!",
-            text: "Subcategory has been added successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
+          toast.success("Subcategory has been added successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
 
-          setSubCategory({
-            name: "",
-            img: null,
-            category: "",
-          });
-          setPreviewImage(null);
+          resetForm(); // Reset form after successful submission
         } catch (error) {
           console.error("Error adding subcategory:", error);
+          Swal.fire({
+            title: "Error",
+            text: "An error occurred while adding the subcategory.",
+            icon: "error",
+            confirmButtonText: "Try again",
+            confirmButtonColor: "#299fff",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              resetForm(); // Reset form in case of an error
+            }
+          });
+
           setErrors((prevErrors) => ({
             ...prevErrors,
             backEndError: "An error occurred while adding the subcategory.",
@@ -141,7 +170,7 @@ export default function AddSubCategoryForm() {
 
   return (
     <div className={style.formContainer}>
-      <h2 className={style.formTitle}>Add Subcategory</h2>
+      <h2 className={style.formTitle}>Add Subcategory Form</h2>
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor="name">Subcategory Name</label>
@@ -162,24 +191,30 @@ export default function AddSubCategoryForm() {
         </div>
 
         <div className={style.inputContainer}>
-          <label htmlFor="category">Select Category</label>
-          <select
-            name="category"
-            id="category"
-            onChange={handleChange}
-            value={subCategory.category}
-          >
-            <option value="">Select Category</option>
-            {/* Add a check to ensure categories is an array before mapping */}
-            {categories
-              ? categories.map((category) => (
-                  <option key={category._id} value={category._id}>
-                    {category.name}
-                  </option>
-                ))
-              : (console.log("categories:", categories),
-                (<option disabled>Loading categories...</option>))}
-          </select>
+          <label htmlFor="category">Category</label>
+          <div className={style.inputField}>
+            <div className={style.icon}>
+              <TbCategoryFilled className={style.icon} />
+            </div>
+            <select
+              name="category"
+              id="category"
+              onChange={handleChange}
+              value={subCategory.category}
+              className={style.selectInput}
+            >
+              <option value="">Select Category</option>
+              {categories
+                ? categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))
+                : (console.log("categories:", categories),
+                  (<option disabled>Loading categories...</option>))}
+            </select>
+          </div>
+
           {errors.category && (
             <span className={style.error}>{errors.category}</span>
           )}
@@ -217,6 +252,8 @@ export default function AddSubCategoryForm() {
           <span className={style.error}>{errors.backEndError}</span>
         )}
       </form>
+
+      <ToastContainer />
     </div>
   );
 }

@@ -6,7 +6,12 @@ import { SiNamecheap } from "react-icons/si";
 import Swal from "sweetalert2";
 import { RiFileCloudLine } from "react-icons/ri";
 import { updateSubCategory } from "../../Helper/Apis/Admin/SubCategory/updateSub";
-import { getSpecificSubCategory } from "./../../Helper/Apis/Shared/SubCategory/getSpecificSubCategory";
+import { getSpecificSubCategory } from "../../Helper/Apis/Shared/SubCategory/getSpecificSubCategory";
+import { RxUpdate } from "react-icons/rx";
+import { TbCategoryFilled } from "react-icons/tb";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UpdateSubCategoryForm() {
   const { id } = useParams();
@@ -27,21 +32,28 @@ export default function UpdateSubCategoryForm() {
 
   const [previewImage, setPreviewImage] = useState(null);
 
+  // Fetch categories and subcategory data on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         const categoriesData = await getAllCategories();
-        setCategories(categoriesData.categories || []);
+        // if (categoriesData) {
+        //   console.log("Fetching categories data:", categoriesData);
+        // }
+        setCategories(categoriesData);
+
         const subCategoryData = await getSpecificSubCategory(id);
-        console.log(subCategoryData.subcategory);
         if (subCategoryData) {
+          // console.log(
+          //   "Fetching subcategory data:",
+          //   subCategoryData.subcategory.img
+          // );
           setSubCategory({
             name: subCategoryData.subcategory.name || "",
             img: subCategoryData.subcategory.img || null,
             parentCategory: subCategoryData.subcategory.category || "",
           });
           setPreviewImage(subCategoryData.subcategory.img);
-          console.log(subCategoryData);
         } else {
           setErrors((prevErrors) => ({
             ...prevErrors,
@@ -125,7 +137,7 @@ export default function UpdateSubCategoryForm() {
       if (result.isConfirmed) {
         const formData = new FormData();
         formData.append("name", subCategory.name);
-        formData.append("parentCategory", subCategory.parentCategory);
+        formData.append("category", subCategory.parentCategory);
         if (subCategory.img && typeof subCategory.img === "object") {
           formData.append("img", subCategory.img);
         }
@@ -134,15 +146,26 @@ export default function UpdateSubCategoryForm() {
           const response = await updateSubCategory(id, formData);
           console.log(response);
 
-          Swal.fire({
-            title: "Updated!",
-            text: "Subcategory has been updated successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
+          // Swal.fire({
+          //   title: "Updated!",
+          //   text: "Subcategory has been updated successfully.",
+          //   icon: "success",
+          //   confirmButtonText: "OK",
+          //   confirmButtonColor: "rgb(255, 198, 51)",
+          // });
+
+          toast.success("Subcategory has been updated successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
 
-          setPreviewImage(null);
+          setPreviewImage(null); 
         } catch (error) {
           console.error("Error updating subcategory:", error);
           setErrors((prevErrors) => ({
@@ -156,12 +179,13 @@ export default function UpdateSubCategoryForm() {
 
   return (
     <div className={style.formContainer}>
+      <h2 className={style.formTitle}>Update SubCategory Form</h2>
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor="name">Subcategory Name</label>
           <div className={style.inputField}>
             <div className={style.icon}>
-              <SiNamecheap className={style.icon} />
+              <SiNamecheap />
             </div>
             <input
               type="text"
@@ -175,27 +199,34 @@ export default function UpdateSubCategoryForm() {
           {errors.name && <span className={style.error}>{errors.name}</span>}
         </div>
 
-        {/* <div className={style.inputContainer}>
-          <label htmlFor="parentCategory">Parent Category</label>
+        <div className={style.inputContainer}>
+          <label htmlFor="parentCategory">Category</label>
           <div className={style.inputField}>
+            <div className={style.icon}>
+              <TbCategoryFilled className={style.icon} />
+            </div>
             <select
               name="parentCategory"
               id="parentCategory"
               onChange={handleChange}
               value={subCategory.parentCategory}
+              className={style.selectInput}
             >
-              <option value="">Select a Parent Category</option>
-              {categories.map((category) => (
+              <option value="">Select Category</option>
+              {categories?
+                categories.map((category) => (
                 <option key={category._id} value={category._id}>
                   {category.name}
                 </option>
-              ))}
+              )):
+                <option value="" disabled>Loading...</option>
+              }
             </select>
           </div>
           {errors.category && (
             <span className={style.error}>{errors.category}</span>
           )}
-        </div> */}
+        </div>
 
         <div className={style.inputContainer}>
           <label className={style.customUpload} htmlFor="img">
@@ -222,13 +253,16 @@ export default function UpdateSubCategoryForm() {
           </div>
         )}
 
-        <button className="add-btn" type="submit">
+        <button className="add-btn mt-2" type="submit">
           Update Subcategory
+          <RxUpdate />
         </button>
         {errors.backEndError && (
           <span className={style.error}>{errors.backEndError}</span>
         )}
       </form>
+
+      <ToastContainer />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllSubCategories } from "../../Helper/Apis/Shared/subCategory/getAllSub";
 import SubCategoriesCard from "./SubCategoriesCard";
 import { Link } from "react-router-dom";
+import { RiAddLine } from "react-icons/ri";
 
 import style from "../../assets/CSS/Admin/SubCategoriesContainer.module.css";
 
@@ -11,18 +12,17 @@ export default function SubCategoriesContainer() {
   useEffect(() => {
     const getSubCategories = async () => {
       let subCategoriesData = await getAllSubCategories();
-      console.log(subCategoriesData);
       setSubCategories(subCategoriesData);
     };
     getSubCategories();
-  }, []);
+  }, [subCategories]);
   return (
     <div className="p-3">
       <div className="heading">
         <p className="title">Sub Categories</p>
         <Link className="add-btn" to={`/admin/subCategories/add`}>
-          {" "}
-          Add Sub Category{" "}
+          Add Sub Category
+          <RiAddLine />
         </Link>
       </div>
 

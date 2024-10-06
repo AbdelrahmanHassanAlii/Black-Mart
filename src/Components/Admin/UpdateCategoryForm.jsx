@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import { RiFileCloudLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { RxUpdate } from "react-icons/rx";
+
 
 export default function UpdateCategoryForm() {
   const { id } = useParams();
@@ -208,6 +210,7 @@ export default function UpdateCategoryForm() {
 
         <button className="add-btn" type="submit">
           Update Category
+          <RxUpdate />
         </button>
         {errors.backEndError && (
           <span className={style.error}>{errors.backEndError}</span>
