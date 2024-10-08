@@ -11,6 +11,8 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { RiFileCloudLine } from "react-icons/ri";
 import { IoColorPalette } from "react-icons/io5";
 import { SiZenn } from "react-icons/si";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddProductForm() {
   const [categories, setCategories] = useState([]);
@@ -26,9 +28,9 @@ export default function AddProductForm() {
     category: "",
     subCategory: "",
     typeof: "",
-    color: [],
+    color: "",
     style: "",
-    size: [],
+    size: "",
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -312,6 +314,37 @@ export default function AddProductForm() {
       formIsValid = false;
     }
 
+    // if (product.color.length === 0) {
+    //   validationErrors.color = "Color is required";
+    //   formIsValid = false;
+    // }
+
+    // if (product.size.length === 0) {
+    //   validationErrors.size = "Size is required";
+    //   formIsValid = false;
+    // }
+
+    // if (!product.typeof) {
+    //   validationErrors.typeof = "Type is required";
+    //   formIsValid = false;
+    // }
+
+    // if (!product.style) {
+    //   validationErrors.style = "Style is required";
+    //   formIsValid = false;
+    // }
+
+    if (!product.category) {
+      validationErrors.category = "Category is required";
+      formIsValid = false;
+    }
+
+    if (!product.subCategory) {
+      validationErrors.subCategory = "Subcategory is required";
+      formIsValid = false;
+    }
+
+
     // if (!product.images.length) {
     //   validationErrors.images = "Images are required";
     //   formIsValid = false;
@@ -325,77 +358,117 @@ export default function AddProductForm() {
     e.preventDefault();
 
     if (!validateForm()) {
-      return;
+        return;
     }
 
     Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to add this product?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(255, 198, 51)",
-      cancelButtonColor: "rgb(255, 51, 51)",
-      confirmButtonText: "Yes, add it!",
+        title: "Are you sure?",
+        text: "Do you want to add this product?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(255, 198, 51)",
+        cancelButtonColor: "rgb(255, 51, 51)",
+        confirmButtonText: "Yes, add it!",
     }).then(async (result) => {
-      if (result.isConfirmed) {
-        const formData = new FormData();
-        formData.append("name", product.name);
-        formData.append("description", product.description);
-        formData.append("brand", product.brand);
-        formData.append("quantity", product.quantity);
-        formData.append("price", product.price);
-        formData.append("category", product.category);
-        formData.append("subCategory", product.subCategory);
-        formData.append("imgCover", product.imgCover);
-        formData.append("typeof", product.typeof);
-        formData.append("style", product.style);
-        product.color.forEach((color) => formData.append("color[]", color));
-        product.size.forEach((size) => formData.append("size[]", size));
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append("name", product.name);
+            formData.append("description", product.description);
+            formData.append("brand", product.brand);
+            formData.append("quantity", product.quantity);
+            formData.append("price", product.price);
+            formData.append("category", product.category);
+            formData.append("subCategory", product.subCategory);
+            formData.append("imgCover", product.imgCover); 
+            formData.append("typeof", product.typeof);
+            formData.append("style", product.style);
 
-        try {
-          const response = await addProduct(formData);
-          console.log(formData);
-          console.log(response);
+            // Append multiple images
+            // product.images.forEach((image) => formData.append("images", image));
 
-          Swal.fire({
-            title: "Added!",
-            text: "Product has been added successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
-          });
+            // Append colors and sizes
+            product.color.forEach((color) => formData.append("color[]", color));
+            product.size.forEach((size) => formData.append("size[]", size));
 
-          // Reset form and states
-          setProduct({
-            name: "",
-            description: "",
-            price: "",
-            quantity: "",
-            brand: "",
-            imgCover: null,
-            // images: [],
-            category: "",
-            subCategory: "",
-            typeof: "",
-            color: [],
-            style: "",
-            size: [],
-          });
-          setPreviewImage(null);
-        } catch (error) {
-          console.error("Error adding product:", error);
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            backEndError: "An error occurred while adding the product.",
-          }));
+            try {
+                const response = await addProduct(formData); // Assuming addProduct is the API call
+                console.log(response);
+
+                // If response is successful, use toast for success message
+                if (response.status === 201 || response.status === 200) {
+                    toast.success("Product has been added successfully!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+
+                    // Reset form after successful submission
+                    setProduct({
+                        name: "",
+                        description: "",
+                        price: "",
+                        quantity: "",
+                        brand: "",
+                        imgCover: null,
+                        // images: [],
+                        category: "",
+                        subCategory: "",
+                        typeof: "",
+                        color: [],
+                        style: "",
+                        size: [],
+                    });
+                    setPreviewImage(null);
+                }
+            } catch (error) {
+                // If an error occurs, use Swal to alert the user
+                Swal.fire({
+                    title: "Error!",
+                    text: error.response?.data?.message || "An error occurred while adding the product.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "rgb(255, 198, 51)",
+                }).then(() => {
+                    // Optionally reset the form in case of an error
+                    setProduct({
+                        name: "",
+                        description: "",
+                        price: "",
+                        quantity: "",
+                        brand: "",
+                        imgCover: null,
+                        // images: [],
+                        category: "",
+                        subCategory: "",
+                        typeof: "",
+                        color: [],
+                        style: "",
+                        size: [],
+                    });
+                    setPreviewImage(null);
+                });
+
+                console.error("Error adding product:", error);
+
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    backEndError: error.response?.data?.message || "An error occurred while adding the product.",
+                }));
+            }
         }
-      }
     });
-  };
+};
+
+
   return (
     <>
       <div className={style.formContainer}>
-        <h2 className={`${style.formTitle}`}>Add Product</h2>
+        <h2 className={`${style.formTitle}`}>Add Product Form</h2>
         <form onSubmit={handleSubmit}>
           <div className={style.inputContainer}>
             <label htmlFor="name">Name</label>
@@ -507,11 +580,14 @@ export default function AddProductForm() {
                 value={product.typeof}
               />
             </div>
+            {errors.typeof && (
+              <span className={style.error}>{errors.typeof}</span>
+            )}
           </div>
 
           <div className={style.inputContainer}>
             <label htmlFor="color">Color</label>
-            <div className={style.inputField}>
+            <div className={style.inputField} style={{ height: "55px", overflow: "auto" }}>
               <div className={style.icon}>
                 <IoColorPalette className={style.icon} />
               </div>
@@ -536,7 +612,7 @@ export default function AddProductForm() {
 
           <div className={style.inputContainer}>
             <label htmlFor="size">Size</label>
-            <div className={style.inputField}>
+            <div className={style.inputField} style={{ height: "55px", overflow: "auto" }}>
               <div className={style.icon}>
                 <SiZenn className={style.icon} />
               </div>
@@ -557,6 +633,7 @@ export default function AddProductForm() {
             {errors.size && <span className={style.error}>{errors.size}</span>}
           </div>
 
+          <div className={style.inputContainer}>
           <label htmlFor="style">Style</label>
           <div className={style.inputField}>
             <div className={style.icon}>
@@ -571,6 +648,9 @@ export default function AddProductForm() {
               value={product.style}
             />
           </div>
+
+          {errors.style && <span className={style.error}>{errors.style}</span>}
+        </div>
 
           <div className={style.inputContainer}>
             <label htmlFor="category">Category</label>
@@ -599,6 +679,8 @@ export default function AddProductForm() {
               <span className={style.error}>{errors.category}</span>
             )}
           </div>
+
+
           <div className={style.inputContainer}>
             <label htmlFor="subCategory">SubCategory</label>
             <div className={style.inputField}>
@@ -691,6 +773,9 @@ export default function AddProductForm() {
             <span className={style.error}>{errors.backEndError}</span>
           )}
         </form>
+
+        <ToastContainer />
+
       </div>
     </>
   );
