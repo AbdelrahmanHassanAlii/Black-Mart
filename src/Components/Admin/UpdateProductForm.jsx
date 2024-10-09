@@ -11,7 +11,9 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { RiFileCloudLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { getSpecificProduct } from "../../Helper/Apis/Shared/Product/getSpecificProducts.js";
-import { getAllSubCategories } from "../../Helper/Apis/Shared/subCategory/getAllSub.js";
+import { getAllSubCategories } from "../../Helper/Apis/Shared/SubCategory/getAllSub.js";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UpdateProductForm() {
   const [categories, setCategories] = useState([]);
@@ -24,8 +26,13 @@ export default function UpdateProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
+    // images: [],
     category: "",
-    subcategory: "",
+    subCategory: "",
+    typeof: "",
+    color: "",
+    style: "",
+    size: "",
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -35,8 +42,13 @@ export default function UpdateProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
+    // images: [],
     category: "",
-    subcategory: "",
+    subCategory: "",
+    typeof: "",
+    color: [],
+    size: [],
+    style: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -76,6 +88,11 @@ export default function UpdateProductForm() {
           brand: productData.brand,
           imgCover: productData.imgCover,
           category: productData.category,
+          subCategory: productData.subCategory,
+          typeof: productData.typeof,
+          color: productData.color,
+          size: productData.size,
+          style: productData.style,
         });
         setPreviewImage(productData.imgCover);
         console.log(productData);
@@ -180,22 +197,40 @@ export default function UpdateProductForm() {
         formData.append("brand", product.brand);
         formData.append("quantity", product.quantity);
         formData.append("price", product.price);
+        formData.append("typeof", product.typeof);
+        // formData.append("color", product.color);
+        // formData.append("size", product.size);
+        formData.append("style", product.style);
         formData.append("category", product.category);
         formData.append("subcategory", product.subcategory);
         if (product.imgCover instanceof File) {
           formData.append("imgCover", product.imgCover);
         }
 
+        product.color.forEach((color) => formData.append("color[]", color));
+        product.size.forEach((size) => formData.append("size[]", size));
+
         try {
           const response = await updateProduct(id, formData); // Update the product with the API
           console.log(response);
 
-          Swal.fire({
-            title: "Updated!",
-            text: "Product has been updated successfully.",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "rgb(255, 198, 51)",
+          // Swal.fire({
+          //   title: "Updated!",
+          //   text: "Product has been updated successfully.",
+          //   icon: "success",
+          //   confirmButtonText: "OK",
+          //   confirmButtonColor: "rgb(255, 198, 51)",
+          // });
+
+          toast.success("Product has been updated successfully.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
 
           // Reset the form and preview
@@ -208,6 +243,10 @@ export default function UpdateProductForm() {
             imgCover: null,
             category: "",
             subcategory: "",
+            typeof: "",
+            color: "",
+            size: "",
+            style: "",
           });
           setPreviewImage(null);
         } catch (error) {
@@ -224,7 +263,7 @@ export default function UpdateProductForm() {
   return (
     <>
       <div className={style.formContainer}>
-        <h2 className={`${style.formTitle}`}>Update Product</h2>
+        <h2 className={`${style.formTitle}`}>Update Product Form</h2>
         <form onSubmit={handleSubmit}>
           <div className={style.inputContainer}>
             <label htmlFor="name">Name</label>
@@ -262,6 +301,7 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.description}</span>
             )}
           </div>
+
           <div className={style.inputContainer}>
             <label htmlFor="price">Price</label>
             <div className={style.inputField}>
@@ -281,6 +321,7 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.price}</span>
             )}
           </div>
+
           <div className={style.inputContainer}>
             <label htmlFor="quantity">Quantity</label>
             <div className={style.inputField}>
@@ -300,6 +341,7 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.quantity}</span>
             )}
           </div>
+
           <div className={style.inputContainer}>
             <label htmlFor="brand">Brand</label>
             <div className={style.inputField}>
@@ -319,6 +361,85 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.brand}</span>
             )}
           </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Type</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="typeof"
+                id="type"
+                placeholder="Enter Product Type"
+                onChange={handleChange}
+                value={product.typeof}
+              />
+            </div>
+            {errors.brand && (
+              <span className={style.error}>{errors.typeof}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Color</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="color"
+                id="color"
+                placeholder="Enter Product Color"
+                onChange={handleChange}
+                value={product.color}
+              />
+            </div>
+            {errors.brand && (
+              <span className={style.error}>{errors.color}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Size</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="size"
+                id="size"
+                placeholder="Enter Product Size"
+                onChange={handleChange}
+                value={product.size}
+              />
+            </div>
+            {errors.brand && <span className={style.error}>{errors.size}</span>}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Style</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="style"
+                id="style"
+                placeholder="Enter Product Style"
+                onChange={handleChange}
+                value={product.style}
+              />
+            </div>
+            {errors.brand && (
+              <span className={style.error}>{errors.style}</span>
+            )}
+          </div>
+
           <div className={style.inputContainer}>
             <label htmlFor="imgCover">Image</label>
             <div className={style.inputField}>
@@ -336,15 +457,17 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.imgCover}</span>
             )}
           </div>
+
           {previewImage && (
-            <div className={style.previewImageContainer}>
+            <div className={style.previewImage}>
               <img
                 src={previewImage}
                 alt="Preview"
-                className={style.previewImage}
+                className={style.imagePreview}
               />
             </div>
           )}
+
           <div className={style.inputContainer}>
             <label htmlFor="category">Category</label>
             <div className={style.inputField}>
@@ -356,6 +479,7 @@ export default function UpdateProductForm() {
                 id="category"
                 onChange={handleChange}
                 value={product.category}
+                className={style.selectInput}
               >
                 <option value="">Select Category</option>
                 {categories.map((category) => (
@@ -380,6 +504,7 @@ export default function UpdateProductForm() {
                 id="subcategory"
                 onChange={handleChange}
                 value={product.subcategory}
+                className={style.selectInput}
               >
                 <option value="">Select Subcategory</option>
                 {subCategories.map((sub) => (
@@ -396,10 +521,12 @@ export default function UpdateProductForm() {
           {errors.backEndError && (
             <span className={style.error}>{errors.backEndError}</span>
           )}
-          <button type="submit" className={style.submitButton}>
+          <button type="submit" className="add-btn">
             Update Product
           </button>
         </form>
+
+        <ToastContainer />
       </div>
     </>
   );
