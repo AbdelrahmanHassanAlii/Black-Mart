@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import style from "../../assets/CSS/Admin/CouponeCard.module.css";
-import { RiDiscountPercentFill } from "react-icons/ri";
 import { FaPercent } from "react-icons/fa";
 
 export default function CouponeCard({ coupon }) {
