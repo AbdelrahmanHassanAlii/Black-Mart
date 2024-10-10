@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import style from "../../assets/CSS/Admin/SubCategoriesCard.module.css";
@@ -28,16 +29,24 @@ export default function SubCategoriesCard({ subCategory }) {
           console.log(response);
 
           // Show success alert
-          toast.success("Subcategory has been added successfully!", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
+          // toast.success("Subcategory has been added successfully!", {
+          //   position: "top-right",
+          //   autoClose: 2000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "colored",
+          // });
+
+          Swal.fire({
+            title: "Subcategory deleted successfully!",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 2000,
           });
+
         } catch (error) {
           console.error("Error deleting subcategory:", error);
 
