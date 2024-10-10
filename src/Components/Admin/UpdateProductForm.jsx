@@ -14,6 +14,7 @@ import { getSpecificProduct } from "../../Helper/Apis/Shared/Product/getSpecific
 import { getAllSubCategories } from "../../Helper/Apis/Shared/SubCategory/getAllSub.js";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RxUpdate } from "react-icons/rx";
 
 export default function UpdateProductForm() {
   const [categories, setCategories] = useState([]);
@@ -223,7 +224,7 @@ export default function UpdateProductForm() {
           // });
 
           toast.success("Product has been updated successfully.", {
-            position: "top-center",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -523,6 +524,7 @@ export default function UpdateProductForm() {
           )}
           <button type="submit" className="add-btn">
             Update Product
+            <RxUpdate />
           </button>
         </form>
 
