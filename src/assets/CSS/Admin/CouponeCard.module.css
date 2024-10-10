@@ -1,0 +1,22 @@
+.CouponeCard {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.couponeDiscountContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--gray-color-3);
+  justify-content: center;
+}
+
+.CouponeCard .couponeInfo .couponeDiscount {
+  font-size: 5rem;
+  font-weight: bold;
+}
