@@ -6,6 +6,7 @@ import { PiUsersThreeLight } from "react-icons/pi";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
 import { TbCategory2 } from "react-icons/tb";
+import { RiCoupon3Fill } from "react-icons/ri";
 
 import style from "../../assets/CSS/Admin/SideBar.module.css";
 import { deleteItemFromLS } from "../../Helper/Funcation/LocalStorage/DeleteItemFromLS";
@@ -58,13 +59,17 @@ export default function SideBar() {
             <Link to={"/admin/products"}>Products</Link>
           </li>
           <li>
+            <RiCoupon3Fill className={style.icon} />
+            <Link to={"/admin/coupons"}>Coupons</Link>
+          </li>
+          <li>
             <MdOutlineLocalShipping className={style.icon} />
             <Link to={"/admin/orders"}>Orders</Link>
           </li>
-          {/* <li>
+          <li>
             <PiUsersThreeLight className={style.icon} />
             <Link to={"/admin/users"}>Users</Link>
-          </li> */}
+          </li>
         </ul>
       </div>
       <div className={style.bottom}>

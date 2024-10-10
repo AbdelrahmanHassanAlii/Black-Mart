@@ -1,12 +1,18 @@
 .SideBar {
   background-color: var(--gray-color);
   height: 100vh;
-  /* width: 250px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 25px 0;
+  position: sticky;
+  top: 0;
+  transition: var(--transition);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
 }
 
 .top {
