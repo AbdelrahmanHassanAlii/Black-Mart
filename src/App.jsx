@@ -37,6 +37,7 @@ import UpdateSubCategoryForm from "./Components/Admin/UpdateSubCategorie";
 import { useState } from "react";
 import CouponsContainer from "./Components/Admin/CouponsContainer";
 import AddCouponForm from "./Components/Admin/AddCouponForm";
+import UpdateCouponeForm from "./Components/Admin/UpdateCouponeForm";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -125,6 +126,7 @@ function App() {
 
                 <Route path="/coupons" element={<CouponsContainer />} />
                 <Route path="/coupons/add" element={<AddCouponForm />} />
+                <Route path="/coupons/edit/:id" element={<UpdateCouponeForm />} />
               </Routes>
             </AdminLayout>
           }

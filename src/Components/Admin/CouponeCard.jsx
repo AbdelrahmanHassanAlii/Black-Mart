@@ -45,7 +45,7 @@ export default function CouponeCard({ coupon }) {
       <div className={style.couponeActions}>
         <Link
           className={style.couponeUpdate}
-          to={`/admin/coupons/edit/${coupon.id}`}
+          to={`/admin/coupons/edit/${coupon._id}`}
         >
           Update
           <RxUpdate />
