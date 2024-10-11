@@ -48,18 +48,11 @@ export default function CategoryContent() {
       <Signupoffer />
       <Header setActive={setActive} />
       <div className='flex gap-10 p-6'>
-        <Navbar setGetFilters={setGetFilters} active={active} />
+        
 
         <div className={`flex flex-col w-full ${active ? "hidden" : "flex"}`}>
           <div className='flex gap-4 justify-between p-3 w-full'>
-            <p className='text-xl font-bold'>
-              {filters.style || "Subcategories"} 
-            </p>
-            <select name="filter" className='font-bold text-sm cursor-pointer'>
-              <option value="most">Most Popular</option>
-              <option value="latest">Latest</option>
-              <option value="name">Name</option>
-            </select>
+            <p className='text-3xl font-extrabold'> Subcategories</p>
           </div>
 
           <div className='flex gap-5 justify-center flex-wrap'>

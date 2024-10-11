@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { MdDelete } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { GiSettingsKnobs } from "react-icons/gi";
@@ -15,6 +15,8 @@ import AddReview from "../../../Helper/Apis/Shared/Reviews/AddReview";
 import Swal from "sweetalert2";
 import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
 import AddtoCart from "../../../Helper/Apis/User/CartAPis/AddtoCart";
+import { Link } from "react-router-dom";
+
 export default function ProductPage({
   productId,
   image,
@@ -31,6 +33,21 @@ export default function ProductPage({
   const[change,setChange]=useState(false)
   const [reviews,setReviews]=useState([])
   const loginData = localStorage.getItem("loginData");
+  const containerRef = useRef(null);
+    const scrollLeft = () => {
+      console.log(containerRef.current)
+      if (containerRef.current) {
+        containerRef.current.scrollBy({
+          left: -300, // Adjust this value as needed
+          behavior: 'smooth',
+        });
+      }
+      console.log("left")
+    };
+  
+    const scrollRight = () => {
+      containerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    };
   let localdata = null;
   if (loginData) {
     try {
@@ -53,7 +70,6 @@ export default function ProductPage({
     fetchProducts()
   },[])
   const id = localdata ? localdata[0]?.Payload?.userId : null;
-  const userName =localdata[0]?.Payload?.username
   const [data,setData]=useState({
     name:name,
     color:"",
@@ -96,7 +112,7 @@ export default function ProductPage({
   const [reviewToSent,setReviewToSent]=useState({
     review:"",
     rating:"",
-    product:id
+    product:productId
   })
 const reviewchangeHandler=(e)=>{
   setReviewToSent((prevData)=>{
@@ -131,7 +147,7 @@ const ratechangeHandler=(e)=>{
       setChange(!change)
     } catch (error) {
       console.error("Error posting review:", error);
-      await Swal.fire("Error!", "you already submitted your review  ", "error");
+      await Swal.fire("Error!", "you already submitted your review", "error");
     }
   };
   
@@ -168,7 +184,7 @@ const ratechangeHandler=(e)=>{
   console.log(Cart)   
   const sendDataHandler = async () => {
     try {
-      if (id) {
+      if (productId) {
         await AddtoCart(Cart); 
         Swll.fire("Good job!", "Product added to cart!", "success");
       } else {
@@ -183,14 +199,14 @@ const ratechangeHandler=(e)=>{
 
     const fetchReviews = async () => {
       const fetchedReviews = await GetAllReviews();
-      if (fetchedReviews) {
-        setReviews(fetchedReviews);
+      const filteredReviews = fetchedReviews.filter((review) => review.product === productId);
+      if (filteredReviews) {
+        setReviews(filteredReviews);
         
       }
     };
     fetchReviews(); 
   }, [change]);
-
   return (
     <div className="flex flex-col sm:gap-5 justify-center ">
       <div className="sm:flex sm:p-6 sm:gap-7 justify-around  ">
@@ -231,7 +247,7 @@ const ratechangeHandler=(e)=>{
         {/*title&desc part */}
         <div className="">
           <div className="flex flex-col gap-5 p-3 ">
-            <p className="text-3xl font-extrabold h-14 w-72 text-start ">
+            <p className="text-3xl font-extrabold h-14 w-96 text-start ">
               {name}
             </p>
             <div className="flex gap-5">
@@ -325,13 +341,15 @@ const ratechangeHandler=(e)=>{
         <p className="text-3xl font-bold sm:ml-7">All Reviews</p>
         <div className="flex gap-3 items-center">
           <GiSettingsKnobs className="h-10 text-3xl pt-0.5 pb-0.5 pl-2 pr-2 cursor-pointer hover:scale-105 duration-150  bg-slate-200 rounded-full w-10  " />
+         <Link to={`${id?"":"/sign"}`}>
           <div className="bg-black p-3 text-white rounded-full cursor-pointer hover:scale-105 duration-150 min-w-[140px] " onClick={handlePopupClose} >
-            Write a Review
+            {id ? "Write a Review" : "signup to Write a Review"}
           </div>
+          </Link>
         </div>
       </div>
       {isPopupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4">Write a Review</h2>
             <textarea
@@ -375,7 +393,7 @@ const ratechangeHandler=(e)=>{
           <div key={index} className="p-3 flex flex-col gap-3  border border-slate-300 rounded-2xl  w-96">
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
-            <p className="text-2xl font-bold">{userName}</p>
+            <p className="text-2xl font-bold">{review.user.username}</p>
             <p>Review Id : {review._id}</p>
             </div>
             <MdDelete  className="text-2xl hover:text-red-500 cursor-pointer" onClick={()=>{deletehandler(review._id)}}/>
@@ -397,22 +415,36 @@ const ratechangeHandler=(e)=>{
       <p className="text-3xl font-extrabold text-center w-full sm:mb-10">
         YOU MIGHT ALSO LIKE
       </p>
-      <div className=" flex  overflow-y-auto sm:overflow-y-hidden sm:justify-center ">
-        <div className="flex gap-2  ">
-          {products.map((item) => {
-            return (
-              <ProductCard
-                key={item._id}
-                name={item.name}
-                price={item.price}
-                image={item.imgCover}
-                id={item._id}
-                quantity={1}
-              />
-            );
-          })}
+      <div className="relative ">
+      <button
+        onClick={scrollLeft}
+        className="absolute left-0 top-1/2  transform -translate-y-1/2 bg-gray-300 p-2 rounded-full"
+      >
+        ◀
+      </button>
+      
+      <div ref={containerRef} className="flex overflow-x-auto no-scrollbar" >
+        <div className="flex gap-2">
+          {products.map((item) => (
+            <ProductCard
+              key={item._id}
+              name={item.name}
+              price={item.price}
+              image={item.imgCover}
+              id={item._id}
+              quantity={1}
+            />
+          ))}
         </div>
       </div>
+      
+      <button
+        onClick={scrollRight}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full"
+      >
+        ▶
+      </button>
+    </div>
     </div>
   );
 

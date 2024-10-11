@@ -2,9 +2,7 @@ import axios from "axios";
 import { getToken } from "../../../Funcation/LocalStorage/getToken";
 
 const AddtoCart = async (Cart) => {
-
-
-  try {
+try {
     const response = await axios.post(
       "http://localhost:3000/api/v1/cart",
       {

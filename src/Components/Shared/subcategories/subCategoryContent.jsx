@@ -46,10 +46,13 @@ export default function SubCategoryContent() {
       let filtered = [...products];
       const localStorageFilters = JSON.parse(localStorage.getItem('filters')) || {};
       if (localStorageFilters.color) {
-        filtered = filtered.filter(product => product.color === localStorageFilters.color);
+        filtered = filtered.filter(product => product.color.includes(localStorageFilters.color));
       }
       if (localStorageFilters.type) {
         filtered = filtered.filter(product => product.typeof === localStorageFilters.type);
+      }
+      if(localStorageFilters.size){
+        filtered = filtered.filter(product => product.size.includes(localStorageFilters.size))
       }
       if(localStorageFilters.style) {
         filtered = filtered.filter(product => product.style === localStorageFilters.style);

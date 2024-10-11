@@ -10,7 +10,8 @@ import CategoryContainer from "./Components/Shared/Categories/CategoryContainer"
 import CategoryContent from "./Components/Shared/CategoryContent/CategoryContent";
 import ProductContainer from "./Components/Shared/Products/ProductContainer";
 import UserCategoryContainer from "./Components/User/userCategories";
-import OrderForm from "./Components/User/OrderForm";
+import CashOrderForm from "./Components/User/CashOrderForm";
+import CheckOutOrderForm from "./Components/User/CheckOutOrderForm";
 // Admin Components
 import AddCategoryForm from "./Components/Admin/AddCategoryForm";
 import UpdateCategoryForm from "./Components/Admin/UpdateCategoryForm";
@@ -81,7 +82,8 @@ function App() {
         <Route path="/categories" element={<UserCategoryContainer />} />
         <Route path="/category/:id" element={<Categories />} />
         <Route path="/subCategory/:id" element={<SubCategoryContent />} />
-        <Route path="/order/:id" element={<OrderForm />} />
+        <Route path="/order/:id" element={<CashOrderForm />} />
+        <Route path="/order/checkout/:id" element={<CheckOutOrderForm/>}/>
         {/* Role-Based Redirect */}
         <Route path="/sign" element={<Sign />} />
 

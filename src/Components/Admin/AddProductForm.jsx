@@ -605,9 +605,13 @@ export default function AddProductForm() {
                 className={style.selectInput}
                 multiple
               >
-                <option value="lime">Lime</option>
+                <option value="red">red</option>
                 <option value="orange">Orange</option>
-                <option value="sky">Sky</option>
+                <option value="brown">brown</option>
+                <option value="blue">blue</option>
+                <option value="green">green</option>
+                <option value="black">black</option>
+                <option value="white">white</option>
               </select>
             </div>
 

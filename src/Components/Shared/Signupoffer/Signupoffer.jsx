@@ -8,13 +8,15 @@ export default function Signupoffer() {
     setIsLoggedIn(!!loginData); 
   }, []);
     return (
-        <div className={`bg-black text-white  w-full p-2 sm:p-3 ${isLoggedIn ? 'hidden' : 'block'}`}>
-        <p className="text-xs sm:text-sm text-center font-thin opacity-90">
+        <div className={`bg-black text-white   w-full p-2 sm:p-3 ${isLoggedIn ? 'hidden' : 'block'}`}>
+          <div className='flex justify-center'>
+        <p className="text-xs sm:text-sm text-center font-thin flex opacity-90">
           Sign up and get 20% off your first order. 
           <Link to={`/Sign`}>
           <span className="underline font-bold cursor-pointer">Sign Up Now</span>
           </Link>
         </p>
+      </div>
       </div>
       
         )
