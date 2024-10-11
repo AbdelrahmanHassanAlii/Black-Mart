@@ -1,7 +1,7 @@
 import axios from "axios"
 import { getToken } from "../../../Funcation/LocalStorage/getToken"
-const GetAllOrders =async () => {
-    const response=await axios.get("http://localhost:3000/api/v1/order/allorder",{
+const GetUserOrders =async () => {
+    const response=await axios.get("http://localhost:3000/api/v1/order",{
       headers:{
         "token": `${getToken()}`, 
       }
@@ -10,4 +10,4 @@ const GetAllOrders =async () => {
   return response
 }
 
-export default GetAllOrders
+export default GetUserOrders

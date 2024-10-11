@@ -84,7 +84,7 @@ export default function ProductCard({ id, image, price, name, description }) {
   }
 
   return (
-    <div className="flex items-center p-3 justify-center rounded-3xl  cursor-pointer duration-150 hover:scale-105 hover:shadow-xl min-w-60">
+    <div className="flex items-center p-3 justify-center rounded-3xl  cursor-pointer duration-150  min-w-60">
       <div className="max-w-xs w overflow-hidden rounded-2xl bg-white">
         <Link to={`/product/${id}`}>
           <img className="w-full h-48 object-cover rounded-3xl " src={image} alt={name} />

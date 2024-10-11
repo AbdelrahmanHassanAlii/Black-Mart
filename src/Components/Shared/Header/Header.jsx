@@ -77,10 +77,10 @@ export default function Header({ setActive }) {
     className={`bg-transparent focus:outline-none w-full sm:block ${open ? "block " : "hidden"}`}
   />
   {filteredProducts.length > 0 && (
-    <div className="absolute top-full left-0 w-full mt-2 z-50">
-      <ul className="bg-white border border-gray-200 rounded-md max-h-60 overflow-auto">
+    <div className="absolute top-full left-0 w-full mt-1 z-50 ">
+      <ul className="bg-white flex flex-col items-start  border border-gray-200 rounded-md max-h-60 overflow-auto">
         {filteredProducts.map((product) => (
-          <li key={product.id} className="p-2 hover:bg-gray-100 cursor-pointer">
+          <li key={product.id} className="p-2 hover:bg-gray-100  cursor-pointer ">
             <Link to={`/product/${product.id}`} className="flex items-center gap-3">
               <img 
                 src={product.imgCover} 

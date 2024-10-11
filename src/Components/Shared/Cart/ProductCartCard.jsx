@@ -17,6 +17,7 @@ export default function ProductCartCard({ removeItem, setIsChange, isChange, dat
     };
 
     fetchCartData();
+ 
   }, [isChange]);
 
   // Recalculate the total price when `cartData` changes
@@ -30,7 +31,7 @@ export default function ProductCartCard({ removeItem, setIsChange, isChange, dat
 
     calculateTotal();
   }, [cartData]); // Recalculate the total price whenever cartData changes
-
+  console.log(cartData)
   // Update the item quantity in the cart
   const updateItemQuantity = async (productId, newQuantity) => {
     const productToUpdate = cartData.find((product) => product.product.id === productId);
@@ -59,7 +60,7 @@ export default function ProductCartCard({ removeItem, setIsChange, isChange, dat
       <div className={`${cartData.length > 0 ? "flex flex-col" : "hidden"}`}>
         {cartData.length > 0 ? (
           cartData.map((product) => (
-            <div key={product.product.id} className="sm:w-[30rem] sm:h-48 border pt-5 p-2 gap-3 sm:p-5 sm:gap-5 rounded-3xl flex mb-10">
+            <div key={product.product.id} className="sm:w-[30rem] sm:h-56 border pt-5 p-2 gap-3 sm:p-5 sm:gap-5 rounded-3xl flex mb-4">
               <img
                 src={product.product.imgCover}
                 alt={product.product.name}
@@ -71,7 +72,7 @@ export default function ProductCartCard({ removeItem, setIsChange, isChange, dat
                   <p className="sm:text-2xl font-bold">{product.product.name}</p>
                   <RiDeleteBin6Fill
                     className="hover:text-red-100 text-black text-xl cursor-pointer"
-                    onClick={() => removeItem(product.product.id)}
+                    onClick={() => removeItem(product._id)}
                   />
                 </div>
                 <p>

@@ -13,7 +13,7 @@ export default function NewArrivals() {
   getProducts();
     }, [])
   return (<>
-    <div className='flex flex-col justify-center text-center overflow-y-auto  items-start items-center gap-4 ' id="NewArrivals">
+    <div className='flex flex-col justify-center text-center overflow-y-auto   items-center gap-4 ' id="NewArrivals">
         <h1 className='text-4xl font-extrabold '> NEW ARRIVALS</h1>
         <div className='flex gap-5 '>
           {products.map((item)=>{
