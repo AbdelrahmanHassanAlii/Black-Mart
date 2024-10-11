@@ -29,16 +29,24 @@ export default function CategoryCard({ image, name, id }) {
           console.log("API response:", deleteCategoryResponse);
 
           if (deleteCategoryResponse) {
-            toast.success("Category has been added successfully!", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
+            // toast.success("Category has been added successfully!", {
+            //   position: "top-right",
+            //   autoClose: 2000,
+            //   hideProgressBar: false,
+            //   closeOnClick: true,
+            //   pauseOnHover: true,
+            //   draggable: true,
+            //   progress: undefined,
+            //   theme: "colored",
+            // });
+
+            Swal.fire({
+              title: "Category deleted successfully!",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 2000,
             });
+
           } else {
             throw new Error("Deletion failed: No response from API.");
           }

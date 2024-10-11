@@ -1,8 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import style from "../../assets/CSS/Admin/CouponeCard.module.css";
-import { RiDiscountPercentFill } from "react-icons/ri";
 import { FaPercent } from "react-icons/fa";
+import { extractDate } from "../../Helper/Funcation/extractDate";
+import { getNowDate } from "../../Helper/Funcation/getNowDate";
+import { GrValidate } from "react-icons/gr";
+import { FaCalendarXmark } from "react-icons/fa6";
+import { RxUpdate } from "react-icons/rx";
+import { MdDelete } from "react-icons/md";
 
 export default function CouponeCard({ coupon }) {
   return (
@@ -13,18 +18,41 @@ export default function CouponeCard({ coupon }) {
           <FaPercent />
         </div>
 
-        <p className={style.couponeCode}>{coupon.code}</p>
-        <p className={style.couponeExpiry}>{coupon.expiry}</p>
+        <p className={style.couponeCode}>
+          {" "}
+          <span>Code: </span>
+          {coupon.code}
+        </p>
+        <p className={style.couponeExpiry}>
+          {getNowDate() > coupon.expiry ? (
+            <span className={style.couponeDate}>
+              <span>Ending: {extractDate(coupon.expiry)}</span>
+              <span className={style.couponeExpired}>
+                Expired <FaCalendarXmark />{" "}
+              </span>
+            </span>
+          ) : (
+            <span className={style.couponeDate}>
+              <span>Ending: {extractDate(coupon.expiry)}</span>
+              <span className={style.couponeValid}>
+                Valid <GrValidate />
+              </span>
+            </span>
+          )}
+        </p>
       </div>
 
       <div className={style.couponeActions}>
         <Link
-          className={style.couponeEdit}
-          to={`/admin/coupons/${coupon.id}/edit`}
+          className={style.couponeUpdate}
+          to={`/admin/coupons/edit/${coupon._id}`}
         >
-          Edit
+          Update
+          <RxUpdate />
         </Link>
-        <button className={style.couponeDelete}>Delete</button>
+        <button className={style.couponeDelete}>
+          Delete <MdDelete />{" "}
+        </button>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { getAllCoupons } from "../../Helper/Apis/Admin/Coupons/getAllCoupons";
 import { Link } from "react-router-dom";
 import { RiAddLine } from "react-icons/ri";
 import CouponeCard from "./CouponeCard";
-import style from "../../assets/CSS/Admin/ProductsContainer.module.css";
+import style from "../../assets/CSS/Admin/CouponsContainer.module.css";
 
 export default function CouponsContainer() {
   const [coupons, setCoupons] = useState([]);
@@ -28,7 +28,7 @@ export default function CouponsContainer() {
           <RiAddLine />
         </Link>
       </div>
-      <div className="cardsContainer">
+      <div className={style.CouponsContainer}>
         {coupons.map((coupon, index) => (
           <CouponeCard key={index} coupon={coupon} />
         ))}

@@ -37,6 +37,8 @@ import AddSubCategoryForm from "./Components/Admin/AddSubCategoryForm";
 import UpdateSubCategoryForm from "./Components/Admin/UpdateSubCategorie";
 import { useState } from "react";
 import CouponsContainer from "./Components/Admin/CouponsContainer";
+import AddCouponForm from "./Components/Admin/AddCouponForm";
+import UpdateCouponeForm from "./Components/Admin/UpdateCouponeForm";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -62,7 +64,7 @@ const AdminLayout = ({ children }) => {
 };
 
 function App() {
-  const [data,setdata]=useState({})
+  const [data, setdata] = useState({});
   return (
     <>
       <Routes>
@@ -70,7 +72,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/admin/Categories" element={<CategoryContainer />} /> */}
         <Route path="/category/:id" element={<CategoryContent />} />
-        <Route path="/product/:id" element={<ProductContainer setdata={setdata} />} />
+        <Route
+          path="/product/:id"
+          element={<ProductContainer setdata={setdata} />}
+        />
         <Route path="/Cart" element={<Cart data1={data} />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/profile" element={<Profile />} />
@@ -122,6 +127,8 @@ function App() {
                 <Route path="/orders/:id" element={<OrderDetails />} />
 
                 <Route path="/coupons" element={<CouponsContainer />} />
+                <Route path="/coupons/add" element={<AddCouponForm />} />
+                <Route path="/coupons/edit/:id" element={<UpdateCouponeForm />} />
               </Routes>
             </AdminLayout>
           }
