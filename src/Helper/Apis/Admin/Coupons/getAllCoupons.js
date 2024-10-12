@@ -9,6 +9,6 @@ export const getAllCoupons = async () => {
             token: `${getToken()}`
         }
     })
-    
+
     return response;
 }

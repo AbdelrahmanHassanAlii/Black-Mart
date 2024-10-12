@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Signupoffer from "../Signupoffer/Signupoffer.jsx";
-import { FaArrowRightLong } from "react-icons/fa6";
 import ProductCartCard from "./ProductCartCard.jsx";
 import { Link, useNavigate } from "react-router-dom"; // Replaced useHistory with useNavigate
 import GetCart from "../../../Helper/Apis/User/CartAPis/GetCart.js";
@@ -14,19 +13,18 @@ import ClearCart from "../../../Helper/Apis/User/CartAPis/ClearCart.js";
 import Swal from "sweetalert2";
 import { TbCash } from "react-icons/tb";
 import { LiaCcVisa } from "react-icons/lia";
+import CheckCoupoun from "../../../Helper/Funcation/CheckCoupoun.js";
 
 export default function Cart() {
   const [data, setData] = useState([]);
   const [cartId,setCartId]=useState()
   const [subtotal, setSubtotal] = useState(0);
   const [isChange, setIsChange] = useState(false);
-  const userData = JSON.parse(localStorage.getItem("loginData"));
-  const id = userData?.[0]?.Payload?.userId || null;
   const [total, setTotal] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const navigate = useNavigate(); // Replaced useHistory with useNavigate
+  const [Coupon, setCoupon] = useState([]);
+  const [coupounvalidate, setCoupounvalidate] = useState(false);
+  const [coupounDiscount, setCoupounDiscount] = useState(0);
 
-  // Fetch cart data on component load and when cart changes
   useEffect(() => {
     const fetchCartData = async () => {
       try {
@@ -40,10 +38,29 @@ export default function Cart() {
         console.error("Failed to fetch cart data", error);
       }
     };
-
     fetchCartData();
   }, [isChange]);
+  const coupounInputHandler = (e) => {
+    setCoupon(e.target.value);
+  }
 
+  const CheckCoupounHandler =async (e) => {
+    e.preventDefault();
+    if (Coupon) {
+      const response =await CheckCoupoun(Coupon);
+      if (response) {
+        console.log(response);
+        console.log("coupon valied");
+        setCoupounvalidate(true);
+        setCoupounDiscount(response.discount);
+      }
+      else {
+        console.log("coupon not valied");
+        setCoupounvalidate(false);
+      }
+    }
+  }
+  console.log(coupounDiscount)
   // Handle clearing the cart
   const ClearCartHandler = async () => {
     Swal.fire({
@@ -104,7 +121,7 @@ export default function Cart() {
 
   const items = [
     { name: "Subtotal", value: total },
-    { name: "Discount", value: data.length ? total * 0.1 : 0 }, // 10% discount
+    { name: "Discount", value: data.length ? total * coupounDiscount/100 : 0 }, 
     { name: "Delivery Fee", value: data.length ? 15 : 0 },
   ];
 
@@ -119,10 +136,10 @@ export default function Cart() {
       <div className="h-0.5 w-full bg-black opacity-20 mt-4 mb-4"></div>
       <div className="flex flex-col gap-8 p-5">
         <div className="w-full flex justify-between">
-          <p className="text-5xl font-extrabold">YOUR CART</p>
+          <p className="sm:text-5xl text-3xl font-extrabold">YOUR CART</p>
           {data.length > 0 && (
-            <div className="bg-red-100 p-2 rounded-2xl cursor-pointer flex items-center hover:bg-red-500" onClick={ClearCartHandler}>
-              <span className="text-white font-semibold">Clear Cart</span>
+            <div className="bg-red-100 p-2 rounded-2xl  cursor-pointer flex items-center hover:bg-red-500" onClick={ClearCartHandler}>
+              <span className="text-white  font-semibold">Clear Cart</span>
             </div>
           )}
         </div>
@@ -136,7 +153,7 @@ export default function Cart() {
                 isChange={isChange}
               />
             </div>
-            <div className="border sm:w-96 rounded-2xl p-10 h-[28rem] flex flex-col">
+            <div className="border sm:w-96 rounded-2xl p-10  flex flex-col">
               <p className="text-xl font-bold mb-10">Order Summary</p>
               <ul className="flex flex-col gap-6">
                 {items.map((item, index) => (
@@ -155,8 +172,19 @@ export default function Cart() {
                 <span className="text-lg font-bold">Total</span>
                 <span>$ {totalAmount}</span>
               </div>
-              <div className="h-0.5 w-auto bg-black opacity-20 mt-4 mb-4"></div>
+              <div className="h-0.5 w-auto bg-black opacity-20 mt-4 mb-4 "></div>
+              <form className="flex justify-between" onSubmit={CheckCoupounHandler}>
+                 <input 
+                  type="text" 
+                  placeholder="Enter coupoun code" 
+                  className={`outline-none border p-1 rounded-xl border-gray-300 ${coupounvalidate?"border-lime-500":""}`} 
+                  onChange={coupounInputHandler}
 
+                />
+                <button className="bg-black text-white p-2 rounded-xl hover:bg-slate-800">Apply</button>
+              </form>
+             
+              <div className="h-0.5 w-auto bg-black opacity-20  mt-4 mb-4"></div>
               <div className="flex flex-col gap-3">
                 <p className="text-lg font-semibold">Choose the Payment Method</p>
                 <div className="flex justify-between">

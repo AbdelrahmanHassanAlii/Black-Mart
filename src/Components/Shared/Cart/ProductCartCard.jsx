@@ -31,7 +31,6 @@ export default function ProductCartCard({ removeItem, setIsChange, isChange, dat
 
     calculateTotal();
   }, [cartData]); // Recalculate the total price whenever cartData changes
-  console.log(cartData)
   // Update the item quantity in the cart
   const updateItemQuantity = async (productId, newQuantity) => {
     const productToUpdate = cartData.find((product) => product.product.id === productId);
