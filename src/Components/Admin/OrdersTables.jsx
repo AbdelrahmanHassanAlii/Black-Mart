@@ -1,29 +1,89 @@
 import { useEffect, useState } from "react";
-import GetAllOrders from "../../Helper/Funcation/Order/GetAllOrders";
-import style from "../../assets/CSS/Admin/OrderTables.module.css";
 import { Link } from "react-router-dom";
+import { getAllOrders } from "../../Helper/Apis/Admin/Orders/getAllOrders";
+import style from "../../assets/CSS/Admin/OrderTables.module.css";
+import { getSpecificUser } from "../../Helper/Apis/Admin/Users/getSpecificUser";
 
 export default function OrdersTables() {
   const [orders, setOrders] = useState([]);
+  const [error, setError] = useState(null);
+  const [userDetails, setUserDetails] = useState({}); // Store user details
+  const [loadingUser, setLoadingUser] = useState(true); // Loading state for user details
 
   // Fetch orders when component mounts
   useEffect(() => {
-    const fetchedOrders = GetAllOrders();
-    if (fetchedOrders) {
-      setOrders(fetchedOrders);
-    }
+    const getOrders = async () => {
+      try {
+        const ordersData = await getAllOrders();
+        // Ensure that ordersData has the expected structure
+        if (ordersData?.data?.orders) {
+          setOrders(ordersData.data.orders);
+          console.log(ordersData.data.orders);
+        } else {
+          throw new Error("No orders found");
+        }
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setError(error.message);
+      }
+    };
+
+    getOrders();
   }, []);
+
+  // Fetch user details for each order
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      setLoadingUser(true);
+      const details = {};
+      for (const order of orders) {
+        if (order.user) {
+          // Check if user ID exists
+          try {
+            const userData = await getSpecificUser(order.user); // Get user details
+            console.log(userData.data.user.username);
+            if (userData?.data?.user?.username) {
+              details[order.user] = userData.data.user.username; // Store username by user ID
+              // details[order.email] = userData.data.user.email;
+            } else {
+              console.warn(
+                `User data returned empty for user ID: ${order.user}`
+              );
+              details[order.user] = "Unknown User"; // Fallback for empty username
+            }
+          } catch (error) {
+            console.error(`Error fetching user for order ${order._id}:`, error);
+            details[order.user] = "Unknown User"; // Fallback for errors
+          }
+          console.log("User details:", details);
+        } else {
+          console.warn(`Order ${order._id} does not have a valid user ID.`);
+          details[order.user] = "Unknown User"; // Fallback if no user ID
+        }
+      }
+      setUserDetails(details);
+      setLoadingUser(false);
+    };
+
+    if (orders.length > 0) {
+      fetchUserDetails();
+    }
+  }, [orders]);
 
   // Return JSX to render the table
   return (
     <div className={style.ordertables}>
       <h2>Order List</h2>
-      {orders.length > 0 ? (
+      {error ? (
+        <p className="text-red-500">{error}</p>
+      ) : loadingUser ? (
+        <p>Loading users...</p> // Loading state for user details
+      ) : orders.length > 0 ? (
         <table>
           <thead>
             <tr>
               <th>User Name</th>
-              <th>Email</th>
+              <th>Payment Method</th>
               <th>Phone Number</th>
               <th>Address</th>
               <th>Order Date</th>
@@ -32,40 +92,24 @@ export default function OrdersTables() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <td>{order.userName}</td>
-                <td>{order.userEmail}</td>
-                <td>{order.phoneNumber}</td>
-                <td>{order.address}</td>
-                <td>{new Date(order.date).toLocaleDateString()}</td>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{userDetails[order.user] || "Loading..."}</td>{" "}
+                {/* Use stored username */}
+                <td>{order.paymentMethod}</td>
+                <td>{order.shippingAddress.phone}</td>
                 <td>
-                  {order.cart.map((item, idx) => (
-                    <div key={idx}>
-                      {/* <strong>{item.name}</strong> - {item.color} {item.size} -
-                      Quantity: {item.quantity}, Price: ${item.price} */}
-                      {parseInt(item.quantity) === 0
-                        ? item.price
-                        : (
-                            parseInt(item.quantity) * parseInt(item.price)
-                          ).toFixed(2)}
-                      <br />
-                      {/* <img
-                        src={item.image}
-                        alt={item.name}
-                        style={{ width: "50px", height: "50px" }}
-                      /> */}
-                    </div>
-                  ))}
+                  {order.shippingAddress.street} {order.shippingAddress.city}
                 </td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                <td>{order.totalOrderPrice}</td>
                 <td>
                   <Link
-                    className={style.ShowButton}
                     to={`/admin/orders/${order.id}`}
+                    className={style.ShowButton}
                   >
                     Show
                   </Link>
-                  {/* <button>Delete</button> */}
                 </td>
               </tr>
             ))}
