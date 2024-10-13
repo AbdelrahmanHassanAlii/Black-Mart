@@ -9,36 +9,25 @@ import Prof from './Prof';
 import Wishlist from './wishlist/Wishlist.jsx';
 import Orders from './Orders.jsx';
 import { AiOutlineMenu } from "react-icons/ai";
-
 export default function Profile() {
   const [state, setState] = useState("profile");
   const [loginData, setLoginData] = useState(null);
-  const [orders, setOrders] = useState([]);
   const [userOrders, setUserOrders] = useState([]); 
   const [flag, setFlag] = useState(false);
+  const [userid ,setuserId]=useState(null)
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedLoginData = localStorage.getItem('loginData');
-    const storedOrders = localStorage.getItem('Orders');
     
     if (storedLoginData) {
       setLoginData(JSON.parse(storedLoginData));
-    }
-
-    if (storedOrders) {
-      setOrders(JSON.parse(storedOrders));
+      console.log(JSON.parse(storedLoginData));
     }
   }, []);
 
-  useEffect(() => {
-    if (loginData && orders.length > 0) {
-      const userId = loginData[0].Payload?.userId;
-      const filteredOrders = orders.filter(order => order.userid === userId);
-      setUserOrders(filteredOrders);
-    }
-  }, [loginData, orders]);
 
+  console.log(userid)
   const handleLogout = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -80,7 +69,7 @@ export default function Profile() {
   const renderContent = () => {
     switch (state) {
       case "profile":
-        return <Prof name={loginData[0]?.Payload?.username} email={loginData[0]?.Payload?.email} role={loginData[0]?.Payload?.role} flag={flag} />;
+        return <Prof name={loginData[0]?.Payload?.username} email={loginData[0]?.Payload?.email} role={loginData[0]?.Payload?.role} flag={flag} userid={loginData[0].Payload.userId} />;
       case "Wishlist":
         return <Wishlist flag={flag} />;
       case "Orders":
