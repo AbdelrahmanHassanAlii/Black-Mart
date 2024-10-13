@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { getOrderByID } from "../../Helper/Funcation/Order/GetOrderByID";
 import { useParams } from "react-router-dom";
-import style from "../../assets/CSS/Admin/OrderDetails.module.css"; // Import the CSS module
+import style from "../../assets/CSS/Admin/OrderDetails.module.css"; 
 import { getAllOrders } from "../../Helper/Apis/Admin/Orders/getAllOrders";
 
 export default function OrderDetails() {
-  const [orderData, setOrderData] = useState(null); // Initialize as null to handle loading state
+  const [orderData, setOrderData] = useState(null); 
   const { id } = useParams();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function OrderDetails() {
   }, [id]);
 
   if (!orderData) {
-    return <div>Loading...</div>; // Display loading state until the order is fetched
+    return <div>Loading...</div>; 
   }
 
   return (
