@@ -7,7 +7,7 @@ const GetAllReviews = async () => {
         "token":`${getToken()}`
       }
     });
-    console.log(response.data.reviews)
+
     return response.data.reviews;  
   } catch (error) {
     console.error("Error fetching reviews:", error);

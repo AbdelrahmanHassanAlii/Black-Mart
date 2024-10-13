@@ -60,7 +60,7 @@ export default function Header({ setActive,setOtherActive,Flag }) {
         </Link>
       </div>
 
-      <div className="hidden md:flex ">
+      <div className=" felx mt-5   sm:mt-0 ">
         
         <Link to={`/Categories`}>
           <p className="text-md cursor-pointer">Categories</p>

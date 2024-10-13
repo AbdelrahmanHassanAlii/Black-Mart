@@ -46,7 +46,6 @@ useEffect(() => {
       
       const subCategoryData = await getSpecificSubCategory(id);
       const categoryData = await getSpecificCategory(subCategoryData.subcategory.category);
-      console.log(categoryData)
       setCategory(categoryData.category);
     } catch (error) {
 
@@ -64,7 +63,6 @@ useEffect(() => {
     if (products.length > 0) {
       let filtered = [...products];
       const localStorageFilters = JSON.parse(localStorage.getItem('filters')) || {};
-      console.log(localStorageFilters)
       if (localStorageFilters.color) {
         filtered = filtered.filter(product => product.color.includes(localStorageFilters.color));
       }

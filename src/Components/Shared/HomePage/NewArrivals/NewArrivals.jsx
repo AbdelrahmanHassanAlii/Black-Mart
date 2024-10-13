@@ -13,16 +13,14 @@ export default function NewArrivals() {
     };
   getProducts();
     }, [])
-    console.log(products.length)
     const scrollLeft = () => {
-      console.log(containerRef.current)
       if (containerRef.current) {
         containerRef.current.scrollBy({
           left: -300, 
           behavior: 'smooth',
         });
       }
-      console.log("left")
+
     };
     const scrollRight = () => {
       containerRef.current.scrollBy({ left: 200, behavior: "smooth" });
