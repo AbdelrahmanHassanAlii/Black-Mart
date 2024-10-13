@@ -75,3 +75,73 @@
 .ShowButton:hover {
   background-color: var(--gray-color-2);
 }
+
+.current p {
+  background-color: var(--light-blue-color);
+  text-align: center;
+  color: black;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  font-weight: bold;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}
+
+.current p:hover {
+  background-color: var(--blue-color);
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.actions button {
+  width: 40%;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  transition: background-color 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.unblock {
+  background-color: var(--green-color-60);
+}
+
+.unblock:hover {
+  background-color: var(--green-color-100);
+}
+
+.block {
+  background-color: var(--red-color-2);
+}
+
+.block:hover {
+  background-color: var(--red-color-hover);
+}
+
+.delete {
+  background-color: var(--red-color-2);
+}
+
+.delete:hover {
+  background-color: var(--red-color-hover);
+}

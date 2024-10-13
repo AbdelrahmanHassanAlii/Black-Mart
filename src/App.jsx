@@ -39,6 +39,7 @@ import { useState } from "react";
 import CouponsContainer from "./Components/Admin/CouponsContainer";
 import AddCouponForm from "./Components/Admin/AddCouponForm";
 import UpdateCouponeForm from "./Components/Admin/UpdateCouponeForm";
+import UsersTable from "./Components/Admin/UsersTable";
 
 // Admin Layout
 const AdminLayout = ({ children }) => {
@@ -129,6 +130,8 @@ function App() {
                 <Route path="/coupons" element={<CouponsContainer />} />
                 <Route path="/coupons/add" element={<AddCouponForm />} />
                 <Route path="/coupons/edit/:id" element={<UpdateCouponeForm />} />
+
+                <Route path="/users" element={<UsersTable />} />
               </Routes>
             </AdminLayout>
           }
