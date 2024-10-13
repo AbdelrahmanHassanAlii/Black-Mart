@@ -15,7 +15,7 @@ import AddReview from "../../../Helper/Apis/Shared/Reviews/AddReview";
 import Swal from "sweetalert2";
 import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
 import AddtoCart from "../../../Helper/Apis/User/CartAPis/AddtoCart";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 export default function ProductPage({
   productId,
@@ -24,27 +24,31 @@ export default function ProductPage({
   sideimages,
   description,
   price,
-  quantity,
   setdata,
+  subCategory
 }){
+  const navigate = useNavigate();
   const [Cart,setCart]=useState({})
   const [products, setProducts] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const[change,setChange]=useState(false)
   const [reviews,setReviews]=useState([])
+  const [counter, setcounter] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [img, setImage] = useState(image);
+  const [selectedColor, setSelectedColor] = useState(null);
   const loginData = localStorage.getItem("loginData");
   const containerRef = useRef(null);
     const scrollLeft = () => {
       console.log(containerRef.current)
       if (containerRef.current) {
         containerRef.current.scrollBy({
-          left: -300, // Adjust this value as needed
+          left: -300, 
           behavior: 'smooth',
         });
       }
       console.log("left")
     };
-  
     const scrollRight = () => {
       containerRef.current.scrollBy({ left: 200, behavior: "smooth" });
     };
@@ -152,10 +156,7 @@ const ratechangeHandler=(e)=>{
   };
   
   
-  const [counter, setcounter] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [img, setImage] = useState(image);
-  const [selectedColor, setSelectedColor] = useState(null);
+ 
   const handelimg = (e) => {
     setImage(e.target.src);
   };
@@ -173,7 +174,7 @@ const ratechangeHandler=(e)=>{
     }));
     
   };
-  setdata(data)
+
   
   useEffect(()=>{
     setCart({
@@ -293,9 +294,9 @@ const ratechangeHandler=(e)=>{
               {(Array.isArray(products.find((product) => product._id === productId)?.size)
   ? products.find((product) => product._id === productId)?.size
   : [products.find((product) => product._id === productId)?.size]
-)?.map((size) => (
+)?.map((size, index) => (
   <div
-    key={size}
+    key={index}
     className={`rounded-full text-md w-20 h-10 flex items-center justify-center cursor-pointer hover:scale-105 ${
       isActive === size
         ? "bg-black text-white"
@@ -401,7 +402,7 @@ const ratechangeHandler=(e)=>{
             <div className="h-0.5 w-3/4 flex flex-col bg-black opacity-20 mt-4 mb-4"></div>
             <p className="opacity-50 text-lg">{review.review}</p>
             <p><span className="font-bold text.lg">Rate out of 5:</span> {review.rating}</p>
-            <p>Posted on August 14,2023</p>
+            <p>{ `posted in newDate`}</p>
           </div>
         ))}
         </div>
@@ -418,29 +419,30 @@ const ratechangeHandler=(e)=>{
       <div className="relative ">
       <button
         onClick={scrollLeft}
-        className="absolute left-0 top-1/2  transform -translate-y-1/2 bg-gray-300 p-2 rounded-full"
+        className="absolute left-0 top-1/2 z-50  transform -translate-y-1/2 bg-gray-300 p-2 rounded-full"
       >
         ◀
       </button>
       
-      <div ref={containerRef} className="flex overflow-x-auto no-scrollbar" >
-        <div className="flex gap-2">
-          {products.map((item) => (
+      <div ref={containerRef} className="flex overflow-x-auto w-full no-scrollbar" >
+        <div className="flex gap-2 pointer-events-auto justify-center w-full items-center">
+        {products.filter((product) => product.subCategory._id== subCategory).slice(3).filter(product=>product._id!=productId ).map((item) => (
+          <div key={item._id} onClick={() => navigate(`/product/${item._id}`)}>
             <ProductCard
-              key={item._id}
               name={item.name}
               price={item.price}
               image={item.imgCover}
               id={item._id}
               quantity={1}
             />
-          ))}
+          </div>
+        ))}
         </div>
       </div>
       
       <button
         onClick={scrollRight}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full"
+        className="absolute right-0 top-1/2 transform z-50 -translate-y-1/2 bg-gray-300 p-2 rounded-full"
       >
         ▶
       </button>

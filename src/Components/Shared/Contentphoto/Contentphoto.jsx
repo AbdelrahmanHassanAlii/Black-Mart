@@ -21,9 +21,9 @@ export default function Contentphoto() {
           </p>
         </div>
         <div className="bg-black ml-4 sm:ml-0 text-white rounded-full mt-4 md:mt-5 p-3 md:p-4 w-72 md:w-40 cursor-pointer text-center hover:bg-opacity-75">
-          <Link to={isLoggedIn ? '/shop' : '/Sign'}>
+          <Link to={isLoggedIn ? '/Categories' : '/Sign'}>
             <span>{isLoggedIn ? 'Start Shopping' : 'Join Us Now'}</span>
-          </Link>
+          </Link>                                                           
         </div>
         <div className="flex flex-wrap ml-auto sm:flex-nowrap gap-4 justify-center sm:gap-6 bg-transparent mt-5 md:mt-6">
           <div className="flex flex-col gap-1 justify-start">

@@ -6,7 +6,7 @@ import { FaCheck } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
 
-export default function Navbar({setGetFilters ,active }) {
+export default function Navbar({setGetFilters ,active,cat }) {
   const [isActive, setIsActive] = useState(false);
   const [selectedColor, setSelectedColor] = useState(null);
   const[open , setOpen] = useState(false)
@@ -14,7 +14,7 @@ export default function Navbar({setGetFilters ,active }) {
   const[styleopen , setstyleOpen] = useState(false)
   const[priceopen,setPriceOpen] = useState(1000)
   const[priecactive,setpriceactive]=useState(false)
-
+  const [name, setName] = useState("");
   const [filters, setFilters] = useState(() => {
     const storedFilters = localStorage.getItem('filters');
     return storedFilters ? JSON.parse(storedFilters) : {
@@ -25,8 +25,12 @@ export default function Navbar({setGetFilters ,active }) {
       style: ""
     };
   });
+  useEffect(() => {
+    if (cat && cat.name) {
+      setName(cat.name);
+    }
+  }, [cat]);
   const colors = ["brown", "orange", "red", "blue", "white", "black", "green", "gray"];
-
   const handleFilters = (key, item) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -72,15 +76,15 @@ export default function Navbar({setGetFilters ,active }) {
     localStorage.setItem('filters', JSON.stringify(filters));
     setGetFilters(filters);
   }, [filters, setGetFilters]);
-
+  
   return (
     <div className={` w-full sm:w-96  sm:flex flex-col border border-slate-300 p-6 rounded-2xl ${active?"flex":"hidden"} `}>
       <div className="flex justify-between">
         <p className="font-extrabold">Filters</p>
         <GiSettingsKnobs className="text-xl cursor-pointer" />
       </div>
-      <div className="h-0.5 w-auto bg-black opacity-20  mt-4 mb-4"></div>
-      <div>
+      <div className={`h-0.5 w-auto bg-black opacity-20  mt-4 mb-4 ${name=="Clothes"?"":"hidden"} `}></div>
+      <div className={`${name=="Clothes"?"":"hidden"}`} >
         <ul className="flex flex-col gap-3 ">
           {["T-shirts", "Shorts", "Shirts", "Hoodie", "Jeans"].map((item, index) => (
             <li className="flex justify-between items-center py-2 cursor-pointer hover:bg-black hover:text-white rounded-md p-2 duration-150" 
@@ -128,10 +132,10 @@ export default function Navbar({setGetFilters ,active }) {
       </div>
       <div className={sizeopen ? "flex gap-4 mt-4 " : "hidden"} >
     </div>
-  <div className="h-0.5 w-auto bg-black opacity-20 mt-4 mb-4"></div>
+  <div className={`h-0.5 w-auto bg-black opacity-20  mt-4 mb-4 ${name=="Clothes"?"":"hidden"} `}></div>
 
     {/* colors part*/}
-    <div className=" flex flex-col mt-5 gap-4 " >
+    <div className={`flex flex-col mt-5 gap-4 ${name=="Clothes"?"":"hidden"}`}   >
       <div className="flex justify-between">
       <p className="font-bold ">COLORS</p>
       {open ? <IoIosArrowUp className="opacity-70 cursor-pointer" onClick={handleOpen} /> : <IoIosArrowDown className="opacity-70 cursor-pointer" onClick={handleOpen} />}

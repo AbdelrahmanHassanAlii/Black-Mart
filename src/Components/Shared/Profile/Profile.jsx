@@ -60,7 +60,7 @@ export default function Profile() {
   if (!loginData) {
     return(<>
       <Header />
-      <p className="text-center text-2xl text-red-500">
+      <p className="text-center text-3xl mb-[8.9rem] text-red-500">
         No user data found
         <Link to="/sign" >
         <span className='text-black ml-5  underline text-md'>click here to join us!</span>

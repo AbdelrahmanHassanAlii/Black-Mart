@@ -1,30 +1,68 @@
-import { useState,useEffect } from 'react'
+import {useRef ,useState,useEffect } from 'react'
 import {getAllProducts} from '../../../../Helper/Apis/Shared/Product/getAllProducts'
 import ProductCard from '../../Products/ProductCard'
 import { Link } from 'react-router-dom'
 export default function NewArrivals() {
+  const containerRef=useRef(null)
   const [products,setProducts]=useState([])
   useEffect(() => {
     const getProducts = async () => {
       let ProductsData = await getAllProducts();
-      setProducts(ProductsData.data.products.slice(6));
-      
+      setProducts(ProductsData.data.products.slice(1));
+
     };
   getProducts();
     }, [])
-  return (<>
-    <div className='flex flex-col justify-center text-center overflow-y-auto   items-center gap-4 ' id="NewArrivals">
-        <h1 className='text-4xl font-extrabold '> NEW ARRIVALS</h1>
-        <div className='flex gap-5 '>
-          {products.map((item)=>{
-            return(
-            <ProductCard key={item._id} name={item.name} price={item.price} image={item.imgCover} id={item.id}  />
-          )})}
+    console.log(products.length)
+    const scrollLeft = () => {
+      console.log(containerRef.current)
+      if (containerRef.current) {
+        containerRef.current.scrollBy({
+          left: -300, 
+          behavior: 'smooth',
+        });
+      }
+      console.log("left")
+    };
+    const scrollRight = () => {
+      containerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    };
+    return (<>
+     <p className="text-3xl font-extrabold text-center w-full mt-5 sm:mb-10">
+     NewArrivals
+      </p>
+      <div className="relative ">
+      <button
+        onClick={scrollLeft}
+        className={`absolute left-0 top-1/2 z-50  transform -translate-y-1/2 bg-gray-300 p-2 rounded-full ${products.length > 6 ? "block":"hidden" }`}
+      >
+        ◀
+      </button>
+      
+      <div ref={containerRef} className="flex overflow-x-auto w-full no-scrollbar" id='New Arrivals' >
+        <div className="flex gap-2 pointer-events-auto justify-start w-full items-center">
+        {products.map((item) => (
+          <div key={item._id} onClick={() => navigate(`/product/${item._id}`)}>
+            <ProductCard
+              name={item.name}
+              price={item.price}
+              image={item.imgCover}
+              id={item._id}
+              quantity={1}
+            />
+          </div>
+        ))}
         </div>
-        <Link to={`/categories`}>
-        <div className="rounded-full bg-transparent border text-center border-zinc-900 w-80 p-2 sm:w-80 cursor-pointer hover:bg-black hover:text-white duration-150">View ALL</div>
-        </Link>
+      </div>
+      
+      <button
+        onClick={scrollRight}
+        className={`absolute right-0 top-1/2 z-50  transform -translate-y-1/2 bg-gray-300 p-2 rounded-full ${products.length > 6 ? "block":"hidden" }`}
+      >
+        ▶
+      </button>
     </div>
-    </>
-  )
-}
+  </>
+    )
+  }
+  
