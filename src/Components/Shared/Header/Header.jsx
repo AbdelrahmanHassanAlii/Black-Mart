@@ -43,21 +43,17 @@ export default function Header({ setActive,setOtherActive,Flag }) {
   }, [searchTerm, products]);
 
   const [baractive, setBarActive] = useState(false);
-  const [otherBarAcive, setOtherBarActive] = useState(false);
+
   const handleactive = () => {
     setBarActive(!baractive);
     setActive(!baractive);
   };
-const handleotheractive = () => {
-  setOtherBarActive(!otherBarAcive);
-  setOtherActive(!otherBarAcive);
-}
-console.log(url)
+
   return (
     <div className={`flex flex-wrap  sm:flex-row sm:items-center  w-full  md:justify-between  p-1 `}>
       <div className={`flex  sm:flex-nowrap  sm:items-center w-3/4 sm:w-4/5  gap-4 mb-3 items-start p-3 `}>
       <div className="flex gap-2 items-center p-2">
-        <AiOutlineMenu className="text-2xl block sm:hidden font-extrabold" onClick={Flag?handleactive:handleotheractive} />
+        <AiOutlineMenu className="text-2xl block sm:hidden font-extrabold" onClick={handleactive} />
    
         <Link to={`/`}>
           <h1 className="text-3xl md:text-4xl font-extrabold cursor-pointer">BlackMart.</h1>
