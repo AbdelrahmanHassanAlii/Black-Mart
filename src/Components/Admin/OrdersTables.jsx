@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { getAllOrders } from "../../Helper/Apis/Admin/Orders/getAllOrders";
 import style from "../../assets/CSS/Admin/OrderTables.module.css";
 import { getSpecificUser } from "../../Helper/Apis/Admin/Users/getSpecificUser";
+import { FaShippingFast } from "react-icons/fa";
 
 export default function OrdersTables() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
-  const [userDetails, setUserDetails] = useState({}); 
-  const [loadingUser, setLoadingUser] = useState(true); 
+  const [userDetails, setUserDetails] = useState({});
+  const [loadingUser, setLoadingUser] = useState(true);
 
   // Fetch orders when component mounts
   useEffect(() => {
@@ -37,24 +38,24 @@ export default function OrdersTables() {
       for (const order of orders) {
         if (order.user) {
           try {
-            const userData = await getSpecificUser(order.user); 
+            const userData = await getSpecificUser(order.user);
             // console.log(userData.data.user.username);
             if (userData?.data?.user?.username) {
-              details[order.user] = userData.data.user.username; 
+              details[order.user] = userData.data.user.username;
             } else {
               console.warn(
                 `User data returned empty for user ID: ${order.user}`
               );
-              details[order.user] = "Unknown User"; 
+              details[order.user] = "Unknown User";
             }
           } catch (error) {
             console.error(`Error fetching user for order ${order._id}:`, error);
-            details[order.user] = "Unknown User"; 
+            details[order.user] = "Unknown User";
           }
           console.log("User details:", details);
         } else {
           console.warn(`Order ${order._id} does not have a valid user ID.`);
-          details[order.user] = "Unknown User"; 
+          details[order.user] = "Unknown User";
         }
       }
       setUserDetails(details);
@@ -68,11 +69,13 @@ export default function OrdersTables() {
 
   return (
     <div className={style.ordertables}>
-      <h2>Order List</h2>
+      <h2 className="heading" style={{ width: "fit-content" }}>
+        <FaShippingFast /> Orders
+      </h2>
       {error ? (
         <p className="text-red-500">{error}</p>
       ) : loadingUser ? (
-        <p>Loading users...</p> 
+        <p>Loading users...</p>
       ) : orders.length > 0 ? (
         <table>
           <thead>
