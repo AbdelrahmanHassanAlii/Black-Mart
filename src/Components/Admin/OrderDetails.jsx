@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getOrderByID } from "../../Helper/Funcation/Order/GetOrderByID";
 import { useParams } from "react-router-dom";
 import style from "../../assets/CSS/Admin/OrderDetails.module.css"; // Import the CSS module
+import { getAllOrders } from "../../Helper/Apis/Admin/Orders/getAllOrders";
 
 export default function OrderDetails() {
   const [orderData, setOrderData] = useState(null); // Initialize as null to handle loading state
@@ -9,11 +10,14 @@ export default function OrderDetails() {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const response = await getOrderByID(id);
+      const response = await getAllOrders(id);
 
-      if (response && response.length > 0) {
-        setOrderData(response[0]); // Set the first order object from the array
-      }
+      let orders = response.data.orders;
+
+      let filteredOrder = orders.filter((order) => order._id === id);
+      console.log(filteredOrder[0]);
+
+      setOrderData(filteredOrder[0]);
     };
     fetchOrder();
   }, [id]);
@@ -27,20 +31,21 @@ export default function OrderDetails() {
       <h1 className={style.heading}>Order Details</h1>
       <div className={style.orderInfo}>
         <p>
-          <strong>User Name:</strong> {orderData.userName}
+          <strong>Payment Method:</strong> {orderData.paymentMethod}
         </p>
         <p>
-          <strong>Email:</strong> {orderData.userEmail}
+          <strong>Total Amount:</strong> {orderData.totalOrderPrice} EG
         </p>
         <p>
-          <strong>Phone Number:</strong> {orderData.phoneNumber}
+          <strong>Phone Number:</strong> {orderData.shippingAddress.phone}
         </p>
         <p>
-          <strong>Address:</strong> {orderData.address}
+          <strong>Address:</strong> {orderData.shippingAddress.street}{" "}
+          {orderData.shippingAddress.city}
         </p>
         <p>
           <strong>Order Date:</strong>{" "}
-          {new Date(orderData.date).toLocaleDateString()}
+          {new Date(orderData.createdAt).toLocaleDateString()}
         </p>
       </div>
 
@@ -56,18 +61,18 @@ export default function OrderDetails() {
           </tr>
         </thead>
         <tbody>
-          {orderData.cart.map((item, index) => (
+          {orderData.orderItems.map((item, index) => (
             <tr key={index}>
-              <td>{item.name}</td>
+              <td>{item.product.name}</td>
               <td>{item.quantity}</td>
               <td>${item.price}</td>
               <td>
                 <img
-                  src={item.image}
+                  src={item.product.imgCover}
                   alt={item.name}
                   className={style.itemImage}
                 />
-                  </td>
+              </td>
               <td>${item.price * item.quantity}</td>
             </tr>
           ))}

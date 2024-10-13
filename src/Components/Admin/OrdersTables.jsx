@@ -105,7 +105,7 @@ export default function OrdersTables() {
                 <td>{order.totalOrderPrice}</td>
                 <td>
                   <Link
-                    to={`/admin/orders/${order.id}`}
+                    to={`/admin/orders/${order._id}`}
                     className={style.ShowButton}
                   >
                     Show
