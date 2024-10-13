@@ -68,7 +68,7 @@ export default function Footer() {
       </div>
 
       {/* Footer section */}
-      <div className={`flex flex-col md:flex-row gap-8  w-full ${storedEmail?"mt-0 ":"mt-8"}`}>
+      <div className={`flex flex-col md:flex-row gap-8  p-8 w-full ${storedEmail?"mt-0 ":"mt-8"}`}>
         <div className="flex flex-col w-full md:w-1/3 gap-4">
           <p className="text-black font-extrabold text-3xl">SHOP.CO</p>
           <p className="text-black opacity-80">
