@@ -177,7 +177,7 @@ export default function Cart() {
                  <input 
                   type="text" 
                   placeholder="Enter coupoun code" 
-                  className={`outline-none border p-1 rounded-xl border-gray-300 ${coupounvalidate?"border-lime-500":""}`} 
+                  className={`outline-none border p-1 rounded-xl border-gray-300 ${coupounvalidate?"border-li-500":""}`} 
                   onChange={coupounInputHandler}
 
                 />

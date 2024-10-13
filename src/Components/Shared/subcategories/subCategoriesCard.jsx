@@ -1,19 +1,27 @@
 /* eslint-disable react/prop-types */
 import { Link, useParams } from 'react-router-dom';
-export default function subCategoryCard({ image, name ,id }) {
+export default function subCategoryCard({ image, name ,id,Flag }) {
   return (<>
-  <Link to={`/subCategory/${id}`} >
-  <div className='flex  items-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl '  >
-    <div className="max-w-xs  overflow-hidden items rounded-2xl  bg-white">
-      <img className="w-full h-48 object-cover" src={image} alt={name} />
-      <div className="py-4">
-        <p className="font-bold text-xl mb-2">{name}</p>
-        <div className='flex gap-4 items-center'> 
-      </div>
-      </div>
-      
-    </div>
-    </div>
+ <Link to={`/subCategory/${id}`} className="group">
+    <div
+  style={{ backgroundImage: `url(${image})` }}
+  className="flex shadow-lg w-72 h-72
+  rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 bg-cover bg-center
+  items-end relative group"
+>
+  <div className="bg-black/50 backdrop-blur-sm flex w-full p-4 rounded items-center justify-center text-white
+  absolute bottom-0 transition-all duration-500 ease-in-out group-hover:backdrop-blur-sm group-hover:bg-black/50
+  group-hover:h-full "
+  >
+    <h1 className="text-xl font-bold transition-opacity duration-500 ease-in-out opacity-100  group-hover:opacity-100">
+      {name}
+    </h1>
+  </div>
+</div>
+
+
+
+
     </Link>
     </>
   )

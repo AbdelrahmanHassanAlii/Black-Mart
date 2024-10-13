@@ -5,14 +5,17 @@ import { useEffect, useState } from 'react';
 import Signupoffer from '../Signupoffer/Signupoffer';
 import Footer from '../Footer/Footer';
 import { getAllProducts } from '../../../Helper/Apis/Shared/Product/getAllProducts';
+import { getSpecificSubCategory } from '../../../Helper/Apis/Shared/SubCategory/getSpecificSubCategory';
+import { getSpecificCategory } from '../../../Helper/Apis/Shared/Category/getSpecificCategory';
 import ProductCard from '../Products/ProductCard';
 import Loading from '../Loaders/Loading'; 
-
-export default function SubCategoryContent() {
+import OtherNavBar from "./OtherNavBar"
+export default function SubCategoryContent({Flag}) {
   const { id } = useParams();
-  const [subCategory, setSubCategory] = useState(null);
+  const [Category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [active, setActive] = useState(false);
+  const [otherActive, setOtherActive] = useState(false);
   const [filters, setGetFilters] = useState({});
   const [filters2, setGetFilters2] = useState({});
   const [loading, setLoading] = useState(true);
@@ -37,6 +40,22 @@ export default function SubCategoryContent() {
     };
     fetchData();
   }, [id]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      
+      const subCategoryData = await getSpecificSubCategory(id);
+      const categoryData = await getSpecificCategory(subCategoryData.subcategory.category);
+      console.log(categoryData)
+      setCategory(categoryData.category);
+    } catch (error) {
+
+    } finally {
+      setLoading(false); 
+    }
+  };
+  fetchData();
+}, [id]);
 
   useEffect(() => {
     localStorage.removeItem("filters")
@@ -45,9 +64,21 @@ export default function SubCategoryContent() {
     if (products.length > 0) {
       let filtered = [...products];
       const localStorageFilters = JSON.parse(localStorage.getItem('filters')) || {};
+      console.log(localStorageFilters)
       if (localStorageFilters.color) {
         filtered = filtered.filter(product => product.color.includes(localStorageFilters.color));
       }
+      if (localStorageFilters.price) {
+        if (localStorageFilters.price === "All Prices") {
+          filtered = filtered
+        }
+        else{
+        const prices = localStorageFilters.price.replace(/\$/g, "").split(" - ").map(price => price.trim());
+        const low = Number(prices[0]);
+        const high = Number(prices[1]);
+        filtered = filtered.filter(product => product.price >= low && product.price <= high);
+      }
+    }
       if (localStorageFilters.type) {
         filtered = filtered.filter(product => product.typeof === localStorageFilters.type);
       }
@@ -70,19 +101,14 @@ export default function SubCategoryContent() {
   return (
     <> 
       <Signupoffer />
-      <Header setActive={setActive} />
+      <Header setActive={setActive}/>
       <div className='flex gap-10 p-6'>
-        <Navbar setGetFilters={setGetFilters} active={active} />
-        <div className={`flex flex-col w-full ${active ? "hidden" : "flex"}`}>
+        <Navbar setGetFilters={setGetFilters} active={active}  cat={Category}/> 
+        <div className={`flex flex-col w-full ${active ? "hidden" : "flex"} `}>
           <div className='flex gap-4 justify-between p-3 w-full'>
             <p className='text-xl font-bold'>
-              {filters.style || subCategory?.name || "Products"}
+              {filters.style }
             </p>
-            <select name="filter" className='font-bold text-sm cursor-pointer'>
-              <option value="most">Most Popular</option>
-              <option value="latest">Latest</option>
-              <option value="price">Price</option>
-            </select>
           </div>
           <div className='flex w-[27rem] sm:w-auto flex-wrap '>
             {filteredProducts.length > 0 ? (

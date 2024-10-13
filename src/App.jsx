@@ -64,24 +64,24 @@ const AdminLayout = ({ children }) => {
 };
 
 function App() {
-  const [data, setdata] = useState({});
+  const [flag, setFlag] = useState(false);
   return (
     <>
       <Routes>
         {/* Shared Routes */}
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/admin/Categories" element={<CategoryContainer />} /> */}
-        <Route path="/category/:id" element={<CategoryContent />} />
+        <Route path="/category/:id" element={<CategoryContent setFlag={setFlag} />} />
         <Route
           path="/product/:id"
-          element={<ProductContainer setdata={setdata} />}
+          element={<ProductContainer  />}
         />
-        <Route path="/Cart" element={<Cart data1={data} />} />
+        <Route path="/Cart" element={<Cart />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<UserCategoryContainer />} />
         <Route path="/category/:id" element={<Categories />} />
-        <Route path="/subCategory/:id" element={<SubCategoryContent />} />
+        <Route path="/subCategory/:id" element={<SubCategoryContent Flag={flag} />} />
         <Route path="/order/:id" element={<CashOrderForm />} />
         <Route path="/order/checkout/:id" element={<CheckOutOrderForm/>}/>
         {/* Role-Based Redirect */}

@@ -84,7 +84,7 @@ export default function ProductCard({ id, image, price, name, description }) {
   }
 
   return (
-    <div className="flex items-center p-3 justify-center rounded-3xl  cursor-pointer duration-150  min-w-60">
+    <div className="flex items-center p-3 mr-3 mb-3 hover:scale-105 hover:shadow-xl duration-150  border justify-center rounded-3xl  cursor-pointer duration-150  min-w-60">
       <div className="max-w-xs w overflow-hidden rounded-2xl bg-white">
         <Link to={`/product/${id}`}>
           <img className="w-full h-48 object-cover rounded-3xl " src={image} alt={name} />
@@ -95,6 +95,19 @@ export default function ProductCard({ id, image, price, name, description }) {
               <p className="font-bold text-md mb-2">{name}</p>
             </Link>
             
+           
+          </div>
+          <div className='flex items-center  justify-between '>
+            <div className='flex gap-3'>
+               <span className='flex gap-1'>
+          <FaStar className=' text-yellow' />
+          <FaStar  className=' text-yellow' />
+          <FaStar  className=' text-yellow' />
+          <FaStarHalfAlt  className=' text-yellow' />
+          </span>
+          <span>3.5/ <span className='opacity-50'>5</span></span>
+            </div>
+            <div>
             {added ? (
               <FaHeartCircleCheck
                 className="text-xl text-green-100"
@@ -106,19 +119,11 @@ export default function ProductCard({ id, image, price, name, description }) {
                 onClick={handleWishlistClick} 
               />
             )}
-          </div>
-          <div className='flex items-center gap-3'>
-            <span className='flex gap-1'>
-          <FaStar className=' text-yellow' />
-          <FaStar  className=' text-yellow' />
-          <FaStar  className=' text-yellow' />
-          <FaStarHalfAlt  className=' text-yellow' />
-          </span>
-          <span>3.5/ <span className='opacity-50'>5</span></span>
+           </div>
           </div>
           
           <Link to={`/product/${id}`}>
-            <div className="flex gap-4 items-center">
+            <div className="flex justify-between w-full mt-2 items-center">
               <p className="font-bold text-xl">{price}</p>
               <div className="bg-rose-200 text-xs rounded-full items-center flex w-12 h-5 justify-center pr-2 pl-2 text-red-100">
                 - 20%

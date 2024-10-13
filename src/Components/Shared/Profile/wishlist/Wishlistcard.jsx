@@ -30,7 +30,7 @@ export default function WishlistCard({ name, price, image, id }) {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl min-w-60">
+    <div className="flex flex-wrap items-center border rounded-3xl justify-center p-3 cursor-pointer duration-150 hover:scale-105 hover:shadow-xl min-w-60">
       <div className="max-w-xs overflow-hidden rounded-2xl bg-white">
         <Link to={`/product/${id}`}>
           <img className="w-full h-48 object-cover" src={image} alt={name} />
@@ -40,13 +40,9 @@ export default function WishlistCard({ name, price, image, id }) {
             <Link to={`/product/${id}`}>
               <p className="font-bold text-md mb-2">{name}</p>
             </Link>
-            {added && (
-              <FaHeartCircleCheck
-                className="text-xl text-green-100"
-                onClick={handleRemoveFromWishlist}
-              />
-            )}
+            
           </div>
+          <div className='flex gap-16'>
           <Link to={`/product/${id}`}>
             <div className="flex gap-4 items-center">
               <p className="font-bold text-xl">{price}</p>
@@ -55,6 +51,13 @@ export default function WishlistCard({ name, price, image, id }) {
               </div>
             </div>
           </Link>
+          {added && (
+              <FaHeartCircleCheck
+                className="text-xl text-green-100"
+                onClick={handleRemoveFromWishlist}
+              />
+            )}
+                </div>
         </div>
       </div>
     </div>

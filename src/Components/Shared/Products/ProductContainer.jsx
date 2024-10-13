@@ -27,7 +27,7 @@ export default function ProductContainer({setdata}) {
   if (!product) {
     return <Loading />;
   }
-
+  console.log(product.subCategory)
   return (
     <div>
       <Signupoffer />
@@ -42,6 +42,7 @@ export default function ProductContainer({setdata}) {
           price={product.price}
           quantity={product.quantity}
           setdata={setdata}
+          subCategory={product.subCategory}
         />
       </div>
       <Footer />

@@ -4,12 +4,25 @@ import { Link } from "react-router-dom";
 export default function CategoryCard({ image, name, id }) {
   return (
     <Link to={`/category/${id}`} className="group">
-      <div className="bg-white flex flex-col justify-between shadow-lg w-72 rounded-lg overflow-hidden transform transition-transform duration-300 ease-in-out hover:scale-105">
-        <img src={image} alt={name} className="rounded-t-lg w-full  object-cover" />
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition duration-200">{name}</h3>
-        </div>
-      </div>
+    <div
+  style={{ backgroundImage: `url(${image})` }}
+  className="flex shadow-lg w-72 h-72
+  rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 bg-cover bg-center
+  items-end relative group"
+>
+  <div className="bg-black/50 backdrop-blur-sm flex w-full p-4 rounded items-center justify-center text-white
+  absolute bottom-0 transition-all duration-500 ease-in-out group-hover:backdrop-blur-sm group-hover:bg-black/50
+  group-hover:h-full "
+  >
+    <h1 className="text-xl font-bold transition-opacity duration-500 ease-in-out opacity-100  group-hover:opacity-100">
+      {name}
+    </h1>
+  </div>
+</div>
+
+
+
+
     </Link>
   );
 }
