@@ -1,7 +1,7 @@
 
 import Wishlistcard from "./wishlistcard";
 
-export default function Wishlist() {
+export default function Wishlist({flag}) {
   const wishlist = JSON.parse(localStorage.getItem("wishlist")) || []; 
 
   const loginData = JSON.parse(localStorage.getItem("loginData"));
@@ -22,10 +22,10 @@ export default function Wishlist() {
   const userwishlist = wishlist.filter((item) => item.userId === id);
   return (
     <div>
-      <div className="flex flex-col p-16">
+      <div className={`flex flex-col p-16 ${flag?"hidden":"block"}`}>
         <p className="text-3xl font-extrabold mb-10">Wishlist</p>
         {userwishlist.length > 0 ? (
-          <div className="flex">
+          <div className="flex flex-col sm:flex-row gap-3 ">
             {userwishlist.map((item) => (
               <Wishlistcard
                 key={item.id}

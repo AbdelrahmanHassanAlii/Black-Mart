@@ -1,5 +1,5 @@
-import  { useEffect, useState } from 'react';
-import { useNavigate,Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -8,32 +8,36 @@ import ProfileNavBar from './ProfileNavBar';
 import Prof from './Prof';
 import Wishlist from './wishlist/Wishlist.jsx';
 import Orders from './Orders.jsx';
+import { AiOutlineMenu } from "react-icons/ai";
+
 export default function Profile() {
-  const [state,setState]  = useState("profile")
+  const [state, setState] = useState("profile");
   const [loginData, setLoginData] = useState(null);
   const [orders, setOrders] = useState([]);
-  const [userOrders, setUserOrders] = useState([]);
+  const [userOrders, setUserOrders] = useState([]); 
+  const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const storedLoginData = localStorage.getItem('loginData');
     const storedOrders = localStorage.getItem('Orders');
+    
     if (storedLoginData) {
       setLoginData(JSON.parse(storedLoginData));
     }
 
     if (storedOrders) {
-      const parsedOrders = JSON.parse(storedOrders);
-      setOrders(parsedOrders);
-      
+      setOrders(JSON.parse(storedOrders));
     }
   }, []);
+
   useEffect(() => {
     if (loginData && orders.length > 0) {
       const userId = loginData[0].Payload?.userId;
       const filteredOrders = orders.filter(order => order.userid === userId);
       setUserOrders(filteredOrders);
     }
-  }, [loginData, orders]); 
+  }, [loginData, orders]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -53,37 +57,46 @@ export default function Profile() {
       }
     });
   };
-  useEffect(() => {
-    console.log(state)
-  }, [state])
+
+  const handleClick = () => {
+    setFlag(!flag);
+  }
 
   if (!loginData) {
-    return(<>
-      <Header />
-      <p className="text-center text-3xl mb-[8.9rem] text-red-500">
-        No user data found
-        <Link to="/sign" >
-        <span className='text-black ml-5  underline text-md'>click here to join us!</span>
-        </Link>
+    return (
+      <>
+        <Header />
+        <p className="text-center text-3xl mb-[8.9rem] text-red-500">
+          No user data found
+          <Link to="/sign">
+            <span className='text-black ml-5 underline text-md'>click here to join us!</span>
+          </Link>
         </p>
-      <Footer />
-</>  )}
+        <Footer />
+      </>
+    );
+  }
+
+  const renderContent = () => {
+    switch (state) {
+      case "profile":
+        return <Prof name={loginData[0]?.Payload?.username} email={loginData[0]?.Payload?.email} role={loginData[0]?.Payload?.role} flag={flag} />;
+      case "Wishlist":
+        return <Wishlist flag={flag} />;
+      case "Orders":
+        return <Orders userOrders={userOrders} flag={flag} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
       <Header />
-      <div className='flex p-8 pt-0 gap-3 '>
-          <ProfileNavBar name={loginData[0]?.Payload?.username} setState={setState} logout={handleLogout} />
-          {state === "profile" ? (
-    <Prof  name={loginData[0]?.Payload?.username}  email={loginData[0]?.Payload?.email} role={loginData[0]?.Payload?.role} />
-  ) : state === "Wishlist" ? (
-    <Wishlist/>
-  ) : state === "Orders" ? (
-    <Orders userOrders={userOrders}/>
-  ) : null}
-      <div>
-
-      </div>
+      <div className='flex sm:p-8 pt-0 gap-3 '>
+        <ProfileNavBar name={loginData[0]?.Payload?.username} setState={setState} logout={handleLogout} flag={flag} />
+        <AiOutlineMenu className='text-3xl cursor-pointer sm:hidden' onClick={handleClick} />
+        {renderContent()}
       </div>
       <Footer />
     </>

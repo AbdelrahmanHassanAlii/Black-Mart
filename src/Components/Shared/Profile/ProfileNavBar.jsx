@@ -2,9 +2,10 @@ import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { IoIosArchive } from "react-icons/io";
 
-export default function ProfileNavBar({name,setState,logout}) {
+export default function ProfileNavBar({name,setState,logout,flag}) {
+  console.log(flag)
   return (
-    <div className="p-14 pt-10 border flex flex-col gap-10 items-center rounded-3xl " >
+    <div className={`p-14 pt-10 border  flex-col gap-10 items-center rounded-3xl  md:flex ${flag ? "block" : "hidden"}`} >
         <div className="items-center flex flex-col gap-4">
         <img src="/logos/blank-profile-picture-973460_960_720.webp" alt=" profile" className="w-32 h-32 rounded-full border-2" />
         <span className="font-bold text-3xl">{name}</span>

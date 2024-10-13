@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import GetUserOrders from "../../../Helper/Apis/Shared/Orders/GetUserOrders";
 
-export default function Orders({ userOrders }) {
+export default function Orders({ userOrders ,flag }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Orders({ userOrders }) {
   }, []);
 
   return (
-    <div className="bg-white p-16 rounded-lg w-full">
+    <div className={`bg-white p-16 rounded-lg w-full ${flag ? "hidden" : "block"}`}>
       <h2 className="text-3xl font-extrabold text-start mb-6">Your Orders</h2>
       {data.length === 0 ? (
         <p className="text-center text-gray-500">No orders found for this user</p>
@@ -23,11 +23,11 @@ export default function Orders({ userOrders }) {
           {data.map((order, orderIndex) => (
             <div
               key={orderIndex}
-              className="border p-4 rounded-lg shadow-sm flex flex-col w-[40rem]  h-min hover:scale-105 duration-150 cursor-pointer"
+              className="border p-4 rounded-lg shadow-sm flex flex-col sm:w-[40rem]  h-min hover:scale-105 duration-150 cursor-pointer"
             >
               <p className="font-bold mb-4">Order {orderIndex + 1}</p>
               {order.orderItems.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex gap-5 mb-4">
+                <div key={itemIndex} className="flex flex-col sm:flex-row gap-5 mb-4">
                   <img
                     src={item.product.imgCover}
                     alt="img"
