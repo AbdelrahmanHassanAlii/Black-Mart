@@ -11,9 +11,9 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { RiAddLine, RiFileCloudLine } from "react-icons/ri";
 import { IoColorPalette } from "react-icons/io5";
 import { SiZenn } from "react-icons/si";
+import { RiDiscountPercentLine } from "react-icons/ri";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { RiAddLine } from "react-icons/rx";
 
 export default function AddProductForm() {
   const [categories, setCategories] = useState([]);
@@ -25,13 +25,14 @@ export default function AddProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
-    // images: [],
+    images: "",
     category: "",
     subCategory: "",
-    typeof: "",
     color: "",
+    typeof: "",
     style: "",
     size: "",
+    discount: "",
     backEndError: "",
   });
   const [product, setProduct] = useState({
@@ -41,13 +42,14 @@ export default function AddProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
-    // images: [],
+    images: [],
     category: "",
     subCategory: "",
-    typeof: "",
     color: [],
     size: [],
+    typeof: "",
     style: "",
+    discount: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -75,40 +77,8 @@ export default function AddProductForm() {
     getSubCategories();
   }, []);
 
-  // const handleChange = (e) => {
-  //   const { name, value, files, options } = e.target;
-
-  //   if (name === "imgCover") {
-  //     setProduct({
-  //       ...product,
-  //       imgCover: files[0],
-  //     });
-  //     setPreviewImage(URL.createObjectURL(files[0]));
-  //   } else if (name === "images") {
-  //     const selectedFiles = Array.from(files);
-  //     setProduct({
-  //       ...product,
-  //       images: selectedFiles,
-  //     });
-  //   } else if (name === "color" || name === "size") {
-  //     const selectedValues = Array.from(options)
-  //       .filter((option) => option.selected)
-  //       .map((option) => option.value);
-
-  //     setProduct({
-  //       ...product,
-  //       [name]: selectedValues,
-  //     });
-  //   } else {
-  //     setProduct({
-  //       ...product,
-  //       [name]: value,
-  //     });
-  //   }
-  // };
-
   const handleChange = (e) => {
-    const { name, value, files, options } = e.target;
+    const { name, value, files } = e.target;
 
     if (name === "imgCover") {
       setProduct({
@@ -116,23 +86,18 @@ export default function AddProductForm() {
         imgCover: files[0],
       });
       setPreviewImage(URL.createObjectURL(files[0]));
-    }
-    // else if (name === "images") {
-    //   const selectedFiles = Array.from(files);
-    //   setProduct({
-    //     ...product,
-    //     images: selectedFiles,
-    //   });
-    // }
-    else if (name === "color" || name === "size") {
-      const selectedValues = Array.from(options)
-        .filter((option) => option.selected)
-        .map((option) => option.value);
-
+    } else if (name === "color" || name === "size") {
+      const values = Array.from(value.split(",")).map((color) => color.trim());
       setProduct({
         ...product,
-        [name]: selectedValues,
+        [name]: values,
       });
+    } else if (name === "image1" || name === "image2") {
+      const newImage = files[0];
+      setProduct((product) => ({
+        ...product,
+        images: [...product.images, newImage],
+      }));
     } else {
       setProduct({
         ...product,
@@ -144,126 +109,6 @@ export default function AddProductForm() {
   useEffect(() => {
     console.log(product);
   }, [product]);
-
-  // const validateForm = () => {
-  //   let formIsValid = true;
-  //   let validationErrors = {};
-  //   if (!product.name) {
-  //     validationErrors.name = "Name is required";
-  //     formIsValid = false;
-  //   } else if (/^\d+$/.test(product.name)) {
-  //     validationErrors.name = "Name cannot contain only numbers";
-  //     formIsValid = false;
-  //   }
-  //   if (!product.description) {
-  //     validationErrors.description = "Description is required";
-  //     formIsValid = false;
-  //   } else if (/^\d+$/.test(product.description)) {
-  //     validationErrors.description = "Description cannot contain only numbers";
-  //     formIsValid = false;
-  //   }
-  //   if (!product.brand) {
-  //     validationErrors.brand = "Brand is required";
-  //     formIsValid = false;
-  //   }
-  //   if (!product.price) {
-  //     validationErrors.price = "Price is required";
-  //     formIsValid = false;
-  //   } else if (!/^\d+(\.\d{1,2})?$/.test(product.price)) {
-  //     validationErrors.price = "Price must be a valid number";
-  //     formIsValid = false;
-  //   }
-  //   if (!product.quantity) {
-  //     validationErrors.quantity = "Quantity is required";
-  //     formIsValid = false;
-  //   } else if (!/^\d+$/.test(product.quantity)) {
-  //     validationErrors.quantity = "Quantity must be a number";
-  //     formIsValid = false;
-  //   }
-  //   if (!product.imgCover) {
-  //     validationErrors.imgCover = "Image is required";
-  //     formIsValid = false;
-  //   } else if (!product.imgCover.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-  //     validationErrors.imgCover =
-  //       "Please upload a valid image file (jpg, jpeg, png, gif)";
-  //     formIsValid = false;
-  //   }
-
-  //   if (!product.images) {
-  //     validationErrors.images = "Images are required";
-  //     formIsValid = false;
-  //   }
-
-  //   setErrors(validationErrors);
-  //   return formIsValid;
-  // };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) {
-  //     return;
-  //   }
-
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "Do you want to add this product?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "rgb(255, 198, 51)",
-  //     cancelButtonColor: "rgb(255, 51, 51)",
-  //     confirmButtonText: "Yes, add it!",
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       const formData = new FormData();
-  //       formData.append("name", product.name);
-  //       formData.append("description", product.description);
-  //       formData.append("brand", product.brand);
-  //       formData.append("quantity", product.quantity);
-  //       formData.append("price", product.price);
-  //       formData.append("category", product.category);
-  //       formData.append("subCategory", product.subCategory);
-  //       formData.append("imgCover", product.imgCover);
-  //       formData.append("typeof", product.typeof);
-  //       formData.append("style", product.style);
-  //       product.color.forEach((color) => formData.append("color[]", color));
-  //       product.size.forEach((size) => formData.append("size[]", size));
-  //       try {
-  //         const response = await addProduct(formData);
-  //         console.log(formData);
-  //         console.log(response);
-
-  //         Swal.fire({
-  //           title: "Added!",
-  //           text: "Product has been added successfully.",
-  //           icon: "success",
-  //           confirmButtonText: "OK",
-  //           confirmButtonColor: "rgb(255, 198, 51)",
-  //         });
-  //         setProduct({
-  //           name: "",
-  //           description: "",
-  //           price: "",
-  //           quantity: "",
-  //           brand: "",
-  //           imgCover: null,
-  //           images: [],
-  //           category: "",
-  //           subCategory: "",
-  //           typeof: "",
-  //           color: [],
-  //           style: "",
-  //           size: [],
-  //         });
-  //         setPreviewImage(null);
-  //       } catch (error) {
-  //         console.error("Error adding product:", error);
-  //         setErrors((prevErrors) => ({
-  //           ...prevErrors,
-  //           backEndError: "An error occurred while adding the product.",
-  //         }));
-  //       }
-  //     }
-  //   });
-  // };
 
   const validateForm = () => {
     let formIsValid = true;
@@ -315,25 +160,15 @@ export default function AddProductForm() {
       formIsValid = false;
     }
 
-    // if (product.color.length === 0) {
-    //   validationErrors.color = "Color is required";
-    //   formIsValid = false;
-    // }
+    if (product.color.length === 0) {
+      validationErrors.color = "Color is required";
+      formIsValid = false;
+    }
 
-    // if (product.size.length === 0) {
-    //   validationErrors.size = "Size is required";
-    //   formIsValid = false;
-    // }
-
-    // if (!product.typeof) {
-    //   validationErrors.typeof = "Type is required";
-    //   formIsValid = false;
-    // }
-
-    // if (!product.style) {
-    //   validationErrors.style = "Style is required";
-    //   formIsValid = false;
-    // }
+    if (product.size.length === 0) {
+      validationErrors.size = "Size is required";
+      formIsValid = false;
+    }
 
     if (!product.category) {
       validationErrors.category = "Category is required";
@@ -345,10 +180,10 @@ export default function AddProductForm() {
       formIsValid = false;
     }
 
-    // if (!product.images.length) {
-    //   validationErrors.images = "Images are required";
-    //   formIsValid = false;
-    // }
+    if (!product.images || product.images.length === 0) {
+      validationErrors.images = "Images are required";
+      formIsValid = false;
+    }
 
     setErrors(validationErrors);
     return formIsValid;
@@ -380,18 +215,25 @@ export default function AddProductForm() {
         formData.append("category", product.category);
         formData.append("subCategory", product.subCategory);
         formData.append("imgCover", product.imgCover);
-        formData.append("typeof", product.typeof);
-        formData.append("style", product.style);
+        if (product.discount !== "") {
+          formData.append("discount", product.discount);
+        }
+        if (product.typeof !== "") {
+          formData.append("typeof", product.typeof);
+        }
+        if (product.style !== "") {
+          formData.append("style", product.style);
+        }
 
         // Append multiple images
-        // product.images.forEach((image) => formData.append("images", image));
+        product.images.forEach((image) => formData.append("images", image));
 
         // Append colors and sizes
         product.color.forEach((color) => formData.append("color[]", color));
         product.size.forEach((size) => formData.append("size[]", size));
 
         try {
-          const response = await addProduct(formData); // Assuming addProduct is the API call
+          const response = await addProduct(formData);
           console.log(response);
 
           // If response is successful, use toast for success message
@@ -415,13 +257,14 @@ export default function AddProductForm() {
               quantity: "",
               brand: "",
               imgCover: null,
-              // images: [],
+              images: [],
               category: "",
               subCategory: "",
-              typeof: "",
               color: [],
-              style: "",
               size: [],
+              style: "",
+              typeof: "",
+              discount: "",
             });
             setPreviewImage(null);
           }
@@ -444,13 +287,14 @@ export default function AddProductForm() {
               quantity: "",
               brand: "",
               imgCover: null,
-              // images: [],
+              images: [],
               category: "",
               subCategory: "",
-              typeof: "",
               color: [],
-              style: "",
               size: [],
+              style: "",
+              typeof: "",
+              discount: "",
             });
             setPreviewImage(null);
           });
@@ -569,52 +413,21 @@ export default function AddProductForm() {
           </div>
 
           <div className={style.inputContainer}>
-            <label htmlFor="type">Type</label>
+            <label htmlFor="color">Colors</label>
+            <p className={style.hint}>put (,) between colors</p>
             <div className={style.inputField}>
-              <div className={style.icon}>
-                <SiNamecheap className={style.icon} />
-              </div>
-              <input
-                type="text"
-                name="typeof"
-                id="typeof"
-                placeholder="Enter type of product"
-                onChange={handleChange}
-                value={product.typeof}
-              />
-            </div>
-            {errors.typeof && (
-              <span className={style.error}>{errors.typeof}</span>
-            )}
-          </div>
-
-          <div className={style.inputContainer}>
-            <label htmlFor="color">Color</label>
-            <div
-              className={style.inputField}
-              style={{ height: "55px", overflow: "auto" }}
-            >
               <div className={style.icon}>
                 <IoColorPalette className={style.icon} />
               </div>
-              <select
+              <input
+                type="text"
                 name="color"
                 id="color"
+                placeholder="Enter Product Colors"
                 onChange={handleChange}
                 value={product.color}
-                className={style.selectInput}
-                multiple
-              >
-                <option value="red">red</option>
-                <option value="orange">Orange</option>
-                <option value="brown">brown</option>
-                <option value="blue">blue</option>
-                <option value="green">green</option>
-                <option value="black">black</option>
-                <option value="white">white</option>
-              </select>
+              />
             </div>
-
             {errors.color && (
               <span className={style.error}>{errors.color}</span>
             )}
@@ -622,49 +435,21 @@ export default function AddProductForm() {
 
           <div className={style.inputContainer}>
             <label htmlFor="size">Size</label>
-            <div
-              className={style.inputField}
-              style={{ height: "55px", overflow: "auto" }}
-            >
+            <p className={style.hint}>put (,) between sizes</p>
+            <div className={style.inputField}>
               <div className={style.icon}>
                 <SiZenn className={style.icon} />
               </div>
-              <select
-                name="size"
-                id="size"
-                onChange={handleChange}
-                value={product.size}
-                className={style.selectInput}
-                multiple
-              >
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-                <option value="XLarge">XLarge</option>
-              </select>
-            </div>
-            {errors.size && <span className={style.error}>{errors.size}</span>}
-          </div>
-
-          <div className={style.inputContainer}>
-            <label htmlFor="style">Style</label>
-            <div className={style.inputField}>
-              <div className={style.icon}>
-                <SiNamecheap className={style.icon} />
-              </div>
               <input
                 type="text"
-                name="style"
-                id="style"
-                placeholder="Enter style of product"
+                name="size"
+                id="size"
+                placeholder="Enter Product Size"
                 onChange={handleChange}
-                value={product.style}
+                value={product.size}
               />
             </div>
-
-            {errors.style && (
-              <span className={style.error}>{errors.style}</span>
-            )}
+            {errors.color && <span className={style.error}>{errors.size}</span>}
           </div>
 
           <div className={style.inputContainer}>
@@ -679,7 +464,6 @@ export default function AddProductForm() {
                 onChange={handleChange}
                 value={product.category}
                 className={style.selectInput}
-                // required
               >
                 <option value="">Select category</option>
                 {categories.map((category) => (
@@ -707,7 +491,6 @@ export default function AddProductForm() {
                 onChange={handleChange}
                 value={product.subCategory}
                 className={style.selectInput}
-                // required
               >
                 <option value="">Select subcategory</option>
                 {subCategories.map((subCategory) => (
@@ -755,31 +538,111 @@ export default function AddProductForm() {
             </div>
           )}
 
-          {/* New Multiple Images Upload */}
-          {/* <div className={style.inputContainer}>
-            <label className={style.customUpload} htmlFor="images">
+          {errors.imgCover && <span>{errors.imgCover}</span>}
+
+          <div className={style.inputContainer}>
+            <label className={style.customUpload} htmlFor="image1">
               <div className={style.icon}>
                 <RiFileCloudLine className={style.imageIcon} />
               </div>
               <div className={style.text}>
-                <p>Upload Product Images</p>
+                <p>Upload Image 1</p>
               </div>
               <input
                 className={style.fileInput}
                 type="file"
-                id="images"
-                name="images"
+                id="image1"
+                name="image1"
                 accept=".jpg,.jpeg,.png,.gif"
-                multiple
                 onChange={handleChange}
               />
             </label>
-            {errors.images && (
-              <span className={style.error}>{errors.images}</span>
-            )}
-          </div> */}
+          </div>
 
-          {errors.imgCover && <span>{errors.imgCover}</span>}
+          <div className={style.inputContainer}>
+            <label className={style.customUpload} htmlFor="image2">
+              <div className={style.icon}>
+                <RiFileCloudLine className={style.imageIcon} />
+              </div>
+              <div className={style.text}>
+                <p>Upload Image 2</p>
+              </div>
+              <input
+                className={style.fileInput}
+                type="file"
+                id="image2"
+                name="image2"
+                accept=".jpg,.jpeg,.png,.gif"
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          {errors.images && (
+            <span className={style.error}>{errors.images}</span>
+          )}
+
+          <div className={style.inputContainer}>
+            <label htmlFor="type">Type</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="typeof"
+                id="typeof"
+                placeholder="Enter type of product"
+                onChange={handleChange}
+                value={product.typeof}
+              />
+            </div>
+            {errors.typeof && (
+              <span className={style.error}>{errors.typeof}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="style">Style</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="style"
+                id="style"
+                placeholder="Enter style of product"
+                onChange={handleChange}
+                value={product.style}
+              />
+            </div>
+
+            {errors.style && (
+              <span className={style.error}>{errors.style}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="discount">Discount</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <RiDiscountPercentLine className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="discount"
+                id="discount"
+                placeholder="Enter discount of product"
+                onChange={handleChange}
+                value={product.discount}
+              />
+            </div>
+
+            {errors.discount && (
+              <span className={style.error}>{errors.discount}</span>
+            )}
+          </div>
+
           <button className="add-btn" type="submit">
             Add Product
             <RiAddLine />

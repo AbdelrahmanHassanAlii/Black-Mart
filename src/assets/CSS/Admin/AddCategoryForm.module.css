@@ -106,3 +106,9 @@
   background-color: transparent;
   width: 100%;
 }
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--gray-color-3);
+  font-weight: bold;
+}
