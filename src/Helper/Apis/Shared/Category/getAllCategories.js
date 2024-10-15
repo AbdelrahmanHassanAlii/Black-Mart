@@ -6,9 +6,9 @@ export const getAllCategories = async () => {
 
   const response = await axios.get(url, {
     headers: {
-      "token": `${getToken()}`,
+      token: `${getToken()}`,
     },
   });
 
-  return response.data.categories; 
+  return response;
 };

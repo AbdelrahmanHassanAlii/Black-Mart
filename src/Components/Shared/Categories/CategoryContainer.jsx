@@ -13,7 +13,7 @@ export default function CategoryContainer() {
     const getCategories = async () => {
       try {
         const categoriesData = await getAllCategories();
-        setCategories(categoriesData);
+        setCategories(categoriesData.data.categories);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
