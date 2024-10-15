@@ -27,9 +27,9 @@ export default function UpdateProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
-    // images: [],
+    images: "",
     category: "",
-    subCategory: "",
+    subcategory: "",
     typeof: "",
     color: "",
     style: "",
@@ -43,17 +43,17 @@ export default function UpdateProductForm() {
     quantity: "",
     brand: "",
     imgCover: null,
-    // images: [],
+    images: [],
     category: "",
-    subCategory: "",
+    subcategory: "",
     typeof: "",
     color: [],
     size: [],
     style: "",
+    discount: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
 
-  // Fetch categories and subcategories
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -79,7 +79,7 @@ export default function UpdateProductForm() {
   useEffect(() => {
     const getProductData = async () => {
       try {
-        const response = await getSpecificProduct(id); // Fetch the product by ID
+        const response = await getSpecificProduct(id);
         const productData = response.data.product;
         setProduct({
           name: productData.name,
@@ -88,12 +88,14 @@ export default function UpdateProductForm() {
           quantity: productData.quantity,
           brand: productData.brand,
           imgCover: productData.imgCover,
+          images: productData.images,
           category: productData.category,
-          subCategory: productData.subCategory,
+          subcategory: productData.subCategory,
           typeof: productData.typeof,
           color: productData.color,
           size: productData.size,
           style: productData.style,
+          discount: productData.discount,
         });
         setPreviewImage(productData.imgCover);
         console.log(productData);
@@ -114,6 +116,18 @@ export default function UpdateProductForm() {
       });
       console.log(product);
       setPreviewImage(URL.createObjectURL(files[0]));
+    } else if (name === "color" || name === "size") {
+      const values = Array.from(value.split(",")).map((color) => color.trim());
+      setProduct({
+        ...product,
+        [name]: values,
+      });
+    } else if (name === "image1" || name === "image2") {
+      const newImage = files[0];
+      setProduct((product) => ({
+        ...product,
+        images: [...product.images, newImage],
+      }));
     } else {
       setProduct({
         ...product,
@@ -172,6 +186,27 @@ export default function UpdateProductForm() {
         "Please upload a valid image file (jpg, jpeg, png, gif)";
       formIsValid = false;
     }
+
+    if (product.color.length === 0) {
+      validationErrors.color = "Color is required";
+      formIsValid = false;
+    }
+
+    if (product.size.length === 0) {
+      validationErrors.size = "Size is required";
+      formIsValid = false;
+    }
+
+    if (!product.category) {
+      validationErrors.category = "Category is required";
+      formIsValid = false;
+    }
+
+    if (!product.subcategory) {
+      validationErrors.subcategory = "Subcategory is required";
+      formIsValid = false;
+    }
+
     setErrors(validationErrors);
     return formIsValid;
   };
@@ -198,30 +233,30 @@ export default function UpdateProductForm() {
         formData.append("brand", product.brand);
         formData.append("quantity", product.quantity);
         formData.append("price", product.price);
-        formData.append("typeof", product.typeof);
-        // formData.append("color", product.color);
-        // formData.append("size", product.size);
-        formData.append("style", product.style);
         formData.append("category", product.category);
         formData.append("subcategory", product.subcategory);
         if (product.imgCover instanceof File) {
           formData.append("imgCover", product.imgCover);
         }
+        if (product.discount !== "") {
+          formData.append("discount", product.discount);
+        }
+        if (product.typeof !== "") {
+          formData.append("typeof", product.typeof);
+        }
+        if (product.style !== "") {
+          formData.append("style", product.style);
+        }
+
+        // Append multiple images
+        // product.images.forEach((image) => formData.append("images", image));
 
         product.color.forEach((color) => formData.append("color[]", color));
         product.size.forEach((size) => formData.append("size[]", size));
 
         try {
-          const response = await updateProduct(id, formData); // Update the product with the API
+          const response = await updateProduct(id, formData);
           console.log(response);
-
-          // Swal.fire({
-          //   title: "Updated!",
-          //   text: "Product has been updated successfully.",
-          //   icon: "success",
-          //   confirmButtonText: "OK",
-          //   confirmButtonColor: "rgb(255, 198, 51)",
-          // });
 
           toast.success("Product has been updated successfully.", {
             position: "top-right",
@@ -242,12 +277,14 @@ export default function UpdateProductForm() {
             quantity: "",
             brand: "",
             imgCover: null,
+            images: [],
             category: "",
             subcategory: "",
             typeof: "",
             color: "",
             size: "",
             style: "",
+            discount: "",
           });
           setPreviewImage(null);
         } catch (error) {
@@ -364,27 +401,8 @@ export default function UpdateProductForm() {
           </div>
 
           <div className={style.inputContainer}>
-            <label htmlFor="brand">Type</label>
-            <div className={style.inputField}>
-              <div className={style.icon}>
-                <SiNamecheap className={style.icon} />
-              </div>
-              <input
-                type="text"
-                name="typeof"
-                id="type"
-                placeholder="Enter Product Type"
-                onChange={handleChange}
-                value={product.typeof}
-              />
-            </div>
-            {errors.brand && (
-              <span className={style.error}>{errors.typeof}</span>
-            )}
-          </div>
-
-          <div className={style.inputContainer}>
-            <label htmlFor="brand">Color</label>
+            <label htmlFor="brand">Colors</label>
+            <p className={style.hint}>put (,) between sizes</p>
             <div className={style.inputField}>
               <div className={style.icon}>
                 <SiNamecheap className={style.icon} />
@@ -405,6 +423,7 @@ export default function UpdateProductForm() {
 
           <div className={style.inputContainer}>
             <label htmlFor="brand">Size</label>
+            <p className={style.hint}>put (,) between sizes</p>
             <div className={style.inputField}>
               <div className={style.icon}>
                 <SiNamecheap className={style.icon} />
@@ -420,54 +439,6 @@ export default function UpdateProductForm() {
             </div>
             {errors.brand && <span className={style.error}>{errors.size}</span>}
           </div>
-
-          <div className={style.inputContainer}>
-            <label htmlFor="brand">Style</label>
-            <div className={style.inputField}>
-              <div className={style.icon}>
-                <SiNamecheap className={style.icon} />
-              </div>
-              <input
-                type="text"
-                name="style"
-                id="style"
-                placeholder="Enter Product Style"
-                onChange={handleChange}
-                value={product.style}
-              />
-            </div>
-            {errors.brand && (
-              <span className={style.error}>{errors.style}</span>
-            )}
-          </div>
-
-          <div className={style.inputContainer}>
-            <label htmlFor="imgCover">Image</label>
-            <div className={style.inputField}>
-              <div className={style.icon}>
-                <RiFileCloudLine className={style.icon} />
-              </div>
-              <input
-                type="file"
-                name="imgCover"
-                id="imgCover"
-                onChange={handleChange}
-              />
-            </div>
-            {errors.imgCover && (
-              <span className={style.error}>{errors.imgCover}</span>
-            )}
-          </div>
-
-          {previewImage && (
-            <div className={style.previewImage}>
-              <img
-                src={previewImage}
-                alt="Preview"
-                className={style.imagePreview}
-              />
-            </div>
-          )}
 
           <div className={style.inputContainer}>
             <label htmlFor="category">Category</label>
@@ -519,6 +490,75 @@ export default function UpdateProductForm() {
               <span className={style.error}>{errors.subcategory}</span>
             )}
           </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Type</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="typeof"
+                id="type"
+                placeholder="Enter Product Type"
+                onChange={handleChange}
+                value={product.typeof}
+              />
+            </div>
+            {errors.brand && (
+              <span className={style.error}>{errors.typeof}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="brand">Style</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <SiNamecheap className={style.icon} />
+              </div>
+              <input
+                type="text"
+                name="style"
+                id="style"
+                placeholder="Enter Product Style"
+                onChange={handleChange}
+                value={product.style}
+              />
+            </div>
+            {errors.brand && (
+              <span className={style.error}>{errors.style}</span>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <label htmlFor="imgCover">Image</label>
+            <div className={style.inputField}>
+              <div className={style.icon}>
+                <RiFileCloudLine className={style.icon} />
+              </div>
+              <input
+                type="file"
+                name="imgCover"
+                id="imgCover"
+                onChange={handleChange}
+              />
+            </div>
+            {errors.imgCover && (
+              <span className={style.error}>{errors.imgCover}</span>
+            )}
+          </div>
+
+          {previewImage && (
+            <div className={style.previewImage}>
+              <img
+                src={previewImage}
+                alt="Preview"
+                className={style.imagePreview}
+              />
+            </div>
+          )}
+
           {errors.backEndError && (
             <span className={style.error}>{errors.backEndError}</span>
           )}
