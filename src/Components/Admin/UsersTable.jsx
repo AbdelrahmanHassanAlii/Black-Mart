@@ -43,73 +43,73 @@ export default function UsersTable() {
         console.log(error);
       }
     }
-    };
-    
-    const handleBlock = async (userId) => {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, block it!",
-      });
-      if (result.isConfirmed) {
-        try {
-          const response = await blockUser(userId);
-          if (response.status === 200) {
-            toast.success("User has been blocked successfully!", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-                pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-                theme: "colored",
-            });
-          } else {
-              Swal.fire("Error!", "Failed to block user.", "error");
-            }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
+  };
 
-    const handleUnBlock = async (userId) => {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, unblock it!",
-      });
-      if (result.isConfirmed) {
-        try {
-          const response = await unBlockUser(userId);
-          if (response.status === 200) {
-            toast.success("User has been unblocked successfully!", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-                pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-                theme: "colored",
-            });
-          } else {
-              Swal.fire("Error!", "Failed to unblock user.", "error");
-            }
-        } catch (error) {
-          console.log(error);
+  const handleBlock = async (userId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, block it!",
+    });
+    if (result.isConfirmed) {
+      try {
+        const response = await blockUser(userId);
+        if (response.status === 200) {
+          toast.success("User has been blocked successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          Swal.fire("Error!", "Failed to block user.", "error");
         }
+      } catch (error) {
+        console.log(error);
       }
-    };
+    }
+  };
+
+  const handleUnBlock = async (userId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, unblock it!",
+    });
+    if (result.isConfirmed) {
+      try {
+        const response = await unBlockUser(userId);
+        if (response.status === 200) {
+          toast.success("User has been unblocked successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          Swal.fire("Error!", "Failed to unblock user.", "error");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   useEffect(() => {
     const getUsers = async () => {
@@ -125,6 +125,7 @@ export default function UsersTable() {
   }, [users]);
   return (
     <div className={style.ordertables}>
+      <div className="title">Users List</div>
       <table>
         <thead>
           <tr>
@@ -150,18 +151,33 @@ export default function UsersTable() {
               ) : (
                 <td className={style.actions}>
                   {user.isBlocked ? (
-                    <button onClick={() => handleUnBlock(user._id)} className={style.unblock}>Unblock</button>
+                    <button
+                      onClick={() => handleUnBlock(user._id)}
+                      className={style.unblock}
+                    >
+                      Unblock
+                    </button>
                   ) : (
-                    <button onClick={() => handleBlock(user._id)} className={style.block}>Block</button>
+                    <button
+                      onClick={() => handleBlock(user._id)}
+                      className={style.block}
+                    >
+                      Block
+                    </button>
                   )}
-                  <button onClick={() => handleDelete(user._id)} className={style.delete}>Delete</button>
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className={style.delete}
+                  >
+                    Delete
+                  </button>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
-          </table>
-          <ToastContainer />
+      </table>
+      <ToastContainer />
     </div>
   );
 }

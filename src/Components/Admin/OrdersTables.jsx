@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { getAllOrders } from "../../Helper/Apis/Admin/Orders/getAllOrders";
 import style from "../../assets/CSS/Admin/OrderTables.module.css";
 import { getSpecificUser } from "../../Helper/Apis/Admin/Users/getSpecificUser";
-import { FaShippingFast } from "react-icons/fa";
 
 export default function OrdersTables() {
   const [orders, setOrders] = useState([]);
@@ -69,9 +68,7 @@ export default function OrdersTables() {
 
   return (
     <div className={style.ordertables}>
-      <h2 className="heading" style={{ width: "fit-content" }}>
-        <FaShippingFast /> Orders
-      </h2>
+      <div className="title">Orders List</div>
       {error ? (
         <p className="text-red-500">{error}</p>
       ) : loadingUser ? (
