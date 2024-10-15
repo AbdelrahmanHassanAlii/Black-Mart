@@ -63,7 +63,7 @@ export default function CheckOutOrderForm() {
       console.log(response.data.session.url)
       window.open(`${response.data.session.url}`,"_blank");
       navigate("/")
-
+      ClearCart()
       setPhoneNumber("");
       setStreet("");
       setCity("");

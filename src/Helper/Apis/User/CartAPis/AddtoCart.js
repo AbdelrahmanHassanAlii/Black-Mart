@@ -18,7 +18,6 @@ try {
       }
     );
 
-    console.log(response.data);
     return response;
   } catch (error) {
     console.error("Error adding product to cart:", error.response?.data || error.message);

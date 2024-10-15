@@ -42,7 +42,6 @@ export default function CategoryContent({setFlag}) {
         const filteredCategory = categoryData.find(
           (category) => category._id === id
         );
-        console.log(filteredCategory.name);
         if (filteredCategory.name === "Clothes") {
           setFlag(true);
         }

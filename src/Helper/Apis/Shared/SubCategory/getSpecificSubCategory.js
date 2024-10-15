@@ -10,7 +10,6 @@ export const getSpecificSubCategory = async (subcategoryID) => {
         "token": `${getToken()}`, 
       },
     });
-    console.log(response.data);
     return response.data; 
   } catch (error) {
     

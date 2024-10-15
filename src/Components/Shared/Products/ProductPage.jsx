@@ -16,7 +16,8 @@ import Swal from "sweetalert2";
 import { getAllProducts } from "../../../Helper/Apis/Shared/Product/getAllProducts";
 import AddtoCart from "../../../Helper/Apis/User/CartAPis/AddtoCart";
 import { Link,useNavigate } from "react-router-dom";
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function ProductPage({
   productId,
   image,
@@ -40,14 +41,12 @@ export default function ProductPage({
   const loginData = localStorage.getItem("loginData");
   const containerRef = useRef(null);
     const scrollLeft = () => {
-      console.log(containerRef.current)
       if (containerRef.current) {
         containerRef.current.scrollBy({
           left: -300, 
           behavior: 'smooth',
         });
       }
-      console.log("left")
     };
     const scrollRight = () => {
       containerRef.current.scrollBy({ left: 200, behavior: "smooth" });
@@ -147,14 +146,13 @@ const ratechangeHandler=(e)=>{
   const sentReviewHandler = async () => {
     try {
       const response = await AddReview(reviewToSent);
-      await Swal.fire("Review Posted!", "You submitted your review!", "success")
-      setChange(!change)
+      toast.success('Review posted successfully', { position:"top-right" });
+      setChange(!change);
     } catch (error) {
       console.error("Error posting review:", error);
-      await Swal.fire("Error!", "you already submitted your review", "error");
+      toast.error('You already submitted a review', { position: "top-right" });
     }
   };
-  
   
  
   const handelimg = (e) => {
@@ -182,18 +180,17 @@ const ratechangeHandler=(e)=>{
       data:data
     })
   },[data])
-  console.log(Cart)   
   const sendDataHandler = async () => {
     try {
       if (productId) {
-        await AddtoCart(Cart); 
-        Swll.fire("Good job!", "Product added to cart!", "success");
+        await AddtoCart(Cart);
+        toast.success('Product added to cart', { position: "top-right"});
       } else {
-        Swll.fire("Error", "Product ID is missing or invalid!", "error");
+        toast.error('Product ID is missing or invalid', { position: "top-right" });
       }
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      Swll.fire("Error", "Failed to add product to cart.", "error");
+      toast.error('Failed to add product to cart', { position:"top-right" });
     }
   };
   useEffect(() => {
@@ -208,7 +205,7 @@ const ratechangeHandler=(e)=>{
     };
     fetchReviews(); 
   }, [change]);
-  return (
+  return (<>
     <div className="flex flex-col sm:gap-5 justify-center ">
       <div className="sm:flex sm:p-6 sm:gap-7 justify-around  ">
         {/*display images part */}
@@ -447,7 +444,10 @@ const ratechangeHandler=(e)=>{
         ▶
       </button>
     </div>
+    
     </div>
+    <ToastContainer />
+    </>
   );
 
 }

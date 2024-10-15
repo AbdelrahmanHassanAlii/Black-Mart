@@ -11,7 +11,6 @@ export const getSpecificCategory = async (categoryID) => {
       },
     });
 
-    console.log(response.data);
     return response.data; 
   } catch (error) {
     
