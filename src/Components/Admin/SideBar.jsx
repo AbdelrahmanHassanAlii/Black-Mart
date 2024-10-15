@@ -11,6 +11,7 @@ import { RiCoupon3Fill } from "react-icons/ri";
 import style from "../../assets/CSS/Admin/SideBar.module.css";
 import { deleteItemFromLS } from "../../Helper/Funcation/LocalStorage/DeleteItemFromLS";
 import Swal from "sweetalert2";
+import { getName } from "./../../Helper/Funcation/LocalStorage/GetName";
 export default function SideBar() {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -38,7 +39,7 @@ export default function SideBar() {
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
           alt="admin photo"
         />
-        {/* <p className={style.name}>Abdelrahman</p> */}
+        <p className={style.name}>Hello, {getName()}</p>
       </div>
       <div className={style.middle}>
         <ul>
