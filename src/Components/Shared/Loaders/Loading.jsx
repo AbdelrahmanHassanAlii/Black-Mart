@@ -6,11 +6,12 @@ export default function Loading() {
       <div className={style.Loader}>
         <p>loading</p>
         <div className={style.Words}>
-          <span className={style.Word}>posts</span>
-          <span className={style.Word}>images</span>
-          <span className={style.Word}>followers</span>
-          <span className={style.Word}>hashtags</span>
-          <span className={style.Word}>posts</span>
+          <span className={style.Word}>Categories</span>
+          <span className={style.Word}>Users</span>
+          <span className={style.Word}>Sub-Categories</span>
+          <span className={style.Word}>Products</span>
+          <span className={style.Word}>Coupons</span>
+          <span className={style.Word}>Orders</span>
         </div>
       </div>
     </div>
