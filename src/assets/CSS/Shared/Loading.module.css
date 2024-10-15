@@ -13,7 +13,7 @@
   display: grid;
   border: 4px solid #0000;
   border-radius: 50%;
-  border-right-color: var(--yellow-color);
+  border-right-color: var(--blue-color);
   animation: tri-spinner 1s infinite linear;
 }
 
@@ -61,7 +61,7 @@
   display: block;
   height: 100%;
   padding-left: 6px;
-  color: var(--yellow-color);
+  color: var(--blue-color);
   animation: cycle-words 5s infinite;
 }
 
