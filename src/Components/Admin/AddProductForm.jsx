@@ -57,7 +57,7 @@ export default function AddProductForm() {
     const getCategories = async () => {
       try {
         const response = await getAllCategories();
-        setCategories(response);
+        setCategories(response.data.categories);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }

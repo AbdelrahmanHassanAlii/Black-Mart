@@ -40,14 +40,12 @@ export default function UpdateSubCategoryForm() {
         // if (categoriesData) {
         //   console.log("Fetching categories data:", categoriesData);
         // }
-        setCategories(categoriesData);
+        setCategories(categoriesData.data.categories);
 
         const subCategoryData = await getSpecificSubCategory(id);
-        if (subCategoryData) {
-          // console.log(
-          //   "Fetching subcategory data:",
-          //   subCategoryData.subcategory.img
-          // );
+        console.log(subCategoryData.subcategory);
+
+        if (subCategoryData.subcategory) {
           setSubCategory({
             name: subCategoryData.subcategory.name || "",
             img: subCategoryData.subcategory.img || null,
@@ -165,7 +163,7 @@ export default function UpdateSubCategoryForm() {
             theme: "colored",
           });
 
-          setPreviewImage(null); 
+          setPreviewImage(null);
         } catch (error) {
           console.error("Error updating subcategory:", error);
           setErrors((prevErrors) => ({
@@ -213,14 +211,17 @@ export default function UpdateSubCategoryForm() {
               className={style.selectInput}
             >
               <option value="">Select Category</option>
-              {categories?
+              {categories ? (
                 categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  Loading...
                 </option>
-              )):
-                <option value="" disabled>Loading...</option>
-              }
+              )}
             </select>
           </div>
           {errors.category && (

@@ -8,7 +8,6 @@ import { getAllCategories } from "../../Helper/Apis/Shared/Category/getAllCatego
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TbCategoryFilled } from "react-icons/tb";
-
 export default function AddSubCategoryForm() {
   const [errors, setErrors] = useState({
     name: "",
@@ -30,7 +29,8 @@ export default function AddSubCategoryForm() {
       try {
         const categoriesData = await getAllCategories();
         if (categoriesData) {
-          setCategories(categoriesData);
+          setCategories(categoriesData.data.categories);
+          
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
